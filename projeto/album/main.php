@@ -33,6 +33,10 @@
                 $btn = "<a href='index.php?page=2&id=" . $linha->id . "' class='btn btn-warning'>Alterar</a>";
                 $btn .= "<a href='index.php?page=3&id=" . $linha->id . "' class='btn btn-danger'>Excluir</a>";
 
+                $duracao = $linha->duracao;  
+                $minutos = floor($duracao / 60);  
+                $segundos = $duracao % 60; 
+
                 echo "<tr>";
                 echo "<td>" . $btn . "</td>";
                 echo "<td>{$linha->id}</td>";
@@ -40,7 +44,7 @@
                 echo "<td><img src='{$linha->capa}' width='100'></td>";
                 echo "<td>{$linha->data_lancamento}</td>";
                 echo "<td>{$linha->qtd_musicas}</td>";
-                echo "<td>{$linha->duracao}</td>";
+                echo "<td>{$minutos} min {$segundos} sec</td>";
                 echo "</tr>";
             }
         }

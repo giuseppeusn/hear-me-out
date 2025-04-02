@@ -1,11 +1,12 @@
 <?php
-	if(isset($_POST['nome'], $_POST['capa'], $_POST['data_lancamento'], $_POST['duracaoo'])){
+	if(isset($_POST['nome'], $_POST['capa'], $_POST['data_lancamento'], $_POST['duracao'], $_POST['qtd_musicas'])){
 		$oMysql = connect_db();
-		$query = "UPDATE artista 
+		$query = "UPDATE album
 			SET nome = '".$_POST['nome']."', 
-				biografia = '".$_POST['capa']."', 
-				imagem = '".$_POST['data_lancament0']."', 
-				data_formacao = '".$_POST['duracao']."' 
+				capa = '".$_POST['capa']."', 
+				data_lancamento = '".$_POST['data_lancamento']."', 
+				duracao = '".$_POST['duracao']."',
+				qtd_musicas = '".$_POST['qtd_musicas']."'
 			WHERE id = ".$_GET['id'];
 		$resultado = $oMysql->query($query);
 		header('location: index.php');
@@ -40,7 +41,7 @@
 			</div>
 
 			<div class="mb-3">
-				<label for="data_formacao" class="form-label">Data de lançamento</label>
+				<label for="data_lancamento" class="form-label">Data de lançamento</label>
 				<input type="date" name="data_lancamento" class="form-control">
 			</div>
 
