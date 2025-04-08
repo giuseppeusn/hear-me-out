@@ -1,6 +1,6 @@
 <?php
   function connect_db() {
-    $db_name = "db_teste";
+    $db_name = "hear_me_out";
     $db_user = "root";
     $db_pass = "";
     $db_host = "localhost:3306";
