@@ -3,9 +3,7 @@
 <body>
 <div class="container mt-3">
     <h2>Lista de álbuns</h2>
-    <button type="button" class="btn btn-success" onclick="window.location.href='index.php?page=1'">Inserir novo álbum</button>
-
-
+    <a type="button" class="btn btn-success" href="index.php?page=1">Inserir novo álbum</a>
     <table class="table table-striped">
         <thead>
             <tr>
