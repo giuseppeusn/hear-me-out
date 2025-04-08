@@ -1,14 +1,11 @@
 <?php
-
-
-
-if(isset($_POST['nome']) && isset($_POST['capa']) && isset($_POST['data_lancamento']) && isset($_POST['duracao']) && isset($_POST['qtd_musicas']) && isset($_POST['id_artista'])){
-			$oMysql = connect_db();
-			$query = "INSERT INTO album (nome,capa,data_lancamento,duracao,qtd_musicas,id_artista) 
-						VALUES ('".$_POST['nome']."', '".$_POST['capa']."', '".$_POST['data_lancamento']."', '".$_POST['duracao']."', '".$_POST['qtd_musicas']."', '".$_POST['id_artista']."')";
-			$resultado = $oMysql->query($query);
-			header('location: index.php');
-		}
+	if(isset($_POST['nome']) && isset($_POST['capa']) && isset($_POST['data_lancamento']) && isset($_POST['duracao']) && isset($_POST['qtd_musicas']) && isset($_POST['id_artista'])){
+		$oMysql = connect_db();
+		$query = "INSERT INTO album (nome,capa,data_lancamento,duracao,qtd_musicas,id_artista) 
+					VALUES ('".$_POST['nome']."', '".$_POST['capa']."', '".$_POST['data_lancamento']."', '".$_POST['duracao']."', '".$_POST['qtd_musicas']."', '".$_POST['id_artista']."')";
+		$resultado = $oMysql->query($query);
+		header('location: index.php');
+	}
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -27,7 +24,7 @@ if(isset($_POST['nome']) && isset($_POST['capa']) && isset($_POST['data_lancamen
 
 		<form
 			method="POST"
-			action="index.php?page=1">
+			>
 
             <label class="form-label">nome:</label>
 			<input
