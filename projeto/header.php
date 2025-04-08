@@ -19,10 +19,10 @@
         <a class="nav-link" href="/hear-me-out/projeto/artista/">Artista</a>
       </li>
       <li class="nav-item">
-        <a class="nav-link" href="/hear-me-out/projeto/album/">Álbum</a>
+        <a class="nav-link" href="/hear-me-out/projeto/album/">Álbuns</a>
       </li>
       <li class="nav-item">
-        <a class="nav-link" href="#">Críticos</a>
+        <a class="nav-link" href="/hear-me-out/projeto/critico/">Críticos</a>
       </li>
       <li class="nav-item">
         <a class="nav-link" href="#">Músicas</a>
@@ -41,9 +41,9 @@
             Cadastro
           </a>
           <ul class="dropdown-menu" aria-labelledby="navbarDarkDropdownMenuLink">
-            <li><a class="dropdown-item" href="#">Artista</a></li>
-            <li><a class="dropdown-item" href="#">Crítico</a></li>
-            <li><a class="dropdown-item" href="#">Usuário</a></li>
+            <li><a class="dropdown-item" href="/hear-me-out/projeto/artista?page=1">Artista</a></li>
+            <li><a class="dropdown-item" href="/hear-me-out/projeto/critico?page=1">Crítico</a></li>
+            <li><a class="dropdown-item" href="/hear-me-out/projeto/usuario?page=1">Usuário</a></li>
           </ul>
       </li>
     </ul>
