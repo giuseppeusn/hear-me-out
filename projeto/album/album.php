@@ -33,8 +33,8 @@
         
         if ($resultado) {
             while ($linha = $resultado->fetch_object()) {
-                $btn = "<a href='alterar.php" . $linha->id . "' class='btn btn-warning'>Alterar</a>";
-                $btn .= "<a href='delete.php" . $linha->id . "' class='btn btn-danger'>Excluir</a>";
+                $btn = "<a href='index.php?page=2&id=" . $linha->id . "' class='btn btn-warning'>Alterar</a>";
+                $btn .= "<a href='index.php?page=3&id=" . $linha->id . "' class='btn btn-danger'>Excluir</a>";
 
                 $duracao = $linha->duracao;  
                 $minutos = floor($duracao / 60);  

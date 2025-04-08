@@ -76,7 +76,7 @@ if(isset($_POST['nome']) && isset($_POST['capa']) && isset($_POST['data_lancamen
 
 			<button
 				type="submit"
-				class="btn btn-primary" onclick="window.location.href='album.php'"> Enviar </button>
+				class="btn btn-primary"> Enviar </button>
 		
 		</form>
 
