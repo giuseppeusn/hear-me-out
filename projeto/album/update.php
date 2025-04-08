@@ -56,7 +56,7 @@
 			</div>
 
 
-			<button type="submit" class="btn btn-primary">Atualizar</button>
+			<button type="submit" class="btn btn-primary" onclick="window.location.href='album.php'">Atualizar</button>
 		</form>
 </div>
 
