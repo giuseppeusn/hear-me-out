@@ -1,6 +1,6 @@
 <?php
-  include("header.php");
-  include("connect.php");
+  include("../header.php");
+  include("../connect.php");
 
   if(isset($_GET["page"])) {
     if($_GET["page"] == 1) {
@@ -10,10 +10,10 @@
     } else if($_GET["page"] == 3) {
       include("delete.php");
     } else {
-      include("main.php");
+      include("critico.php");
     }
   } else {
-    include("main.php");
+    include("critico.php");
   }
 
 ?>
