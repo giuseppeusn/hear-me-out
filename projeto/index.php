@@ -1,6 +1,8 @@
 <?php
-include_once "conexao.php";
-include "navbar.php";
+include "connect.php";
+include "header.php";
+
+$conexao = connect_db();
 ?>
 
 <!doctype html>

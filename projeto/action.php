@@ -1,6 +1,8 @@
 <?php
 session_start();
-include "conexao.php";
+include "connect.php";
+
+$conexao = connect_db();
 
 function msg(){
     $_SESSION['mensagem'] = "Operação realizada com sucesso!";

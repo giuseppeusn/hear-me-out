@@ -1,6 +1,8 @@
 <?php
-include "navbar.php";
-include "conexao.php";
+include "header.php";
+include "connect.php";
+
+$conexao = connect_db();
 
 $id = $_GET["id"];
 $query_read = "SELECT * from musica where id = $id";

@@ -1,5 +1,7 @@
 <?php
-include "conexao.php";
+include "connect.php";
+
+$conexao = connect_db();
 
 $id = $_GET['id'];
 if(isset($id)){
