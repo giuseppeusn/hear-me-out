@@ -1,14 +1,11 @@
 <?php
-
-
-
-if(isset($_POST['nome']) && isset($_POST['biografia']) && isset($_POST['cpf']) && isset($_POST['email']) && isset($_POST['data_nasc']) && isset($_POST['site']) && isset($_POST['genero'])){
-			$oMysql = connect_db();
-			$query = "INSERT INTO critico (nome,biografia,cpf,email,data_nasc,site,genero) 
-						VALUES ('".$_POST['nome']."', '".$_POST['biografia']."', '".$_POST['cpf']."','".$_POST['email']."', '".$_POST['data_nasc']."', '".$_POST['site']."', '".$_POST['genero']."' )";
-			$resultado = $oMysql->query($query);
-			header('location: index.php');
-		}
+	if(isset($_POST['nome']) && isset($_POST['biografia']) && isset($_POST['cpf']) && isset($_POST['email']) && isset($_POST['data_nasc']) && isset($_POST['site']) && isset($_POST['genero'])){
+		$oMysql = connect_db();
+		$query = "INSERT INTO critico (nome,biografia,cpf,email,data_nasc,site,genero,senha,aprovado) 
+					VALUES ('".$_POST['nome']."', '".$_POST['biografia']."', '".$_POST['cpf']."','".$_POST['email']."', '".$_POST['data_nasc']."', '".$_POST['site']."', '".$_POST['genero']."', '".$_POST['senha']."', false)";
+		$resultado = $oMysql->query($query);
+		header('location: index.php');
+	}
 ?>
 <!DOCTYPE html>
 <html lang="pt-BR">
@@ -18,9 +15,9 @@ if(isset($_POST['nome']) && isset($_POST['biografia']) && isset($_POST['cpf']) &
   <h2>Cadastrar crítico</h2>
   <p></p>    
 
-		<form
-			method="POST"
-			action="index.php?page=1">
+			<form
+				method="POST"
+			>
 
             <label class="form-label">nome:</label>
 			<input
@@ -65,14 +62,19 @@ if(isset($_POST['nome']) && isset($_POST['biografia']) && isset($_POST['cpf']) &
                 class="form-control"
                 placeholder="Digite aqui seu site">
 
-            <label class="form-label">Gênero:</label>
-            <label class="form-label">Gênero:</label>
+            <label class="form-label">Gênero:</label><br>
 
-			<select name="genero" class="form-control">
+			<select name="genero" class="form-select">
     			<option value="M">Masculino</option>
     			<option value="F">Feminino</option>
     			<option value="I">Indefinido</option>
-			</select>
+			</select><br>
+			<label class="form-label">Senha:</label>
+			<input
+					type="password"
+					name="senha"
+					class="form-control"
+					placeholder="Digite aqui a sua senha.">
 		
 			<button
 				type="submit"
