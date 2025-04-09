@@ -31,19 +31,29 @@
       </li>
     </ul>
     <ul class="navbar-nav">
-      <li class="nav-item">
-        <a class="nav-link" href="#">Login</a>
-      </li>
-      <li class="nav-item dropdown">
-        <a class="nav-link dropdown-toggle" href="#" id="navbarDarkDropdownMenuLink" role="button" data-bs-toggle="dropdown" aria-expanded="false">
-          Cadastro
-        </a>
-        <ul class="dropdown-menu" aria-labelledby="navbarDarkDropdownMenuLink">
-          <li><a class="dropdown-item" href="/hear-me-out/projeto/artista?page=1">Artista</a></li>
-          <li><a class="dropdown-item" href="/hear-me-out/projeto/critico?page=1">Crítico</a></li>
-          <li><a class="dropdown-item" href="/hear-me-out/projeto/usuario?page=1">Usuário</a></li>
-        </ul>
-      </li>
+      
+      <?php
+        session_start();
+        if (isset($_SESSION['authenticated']) && $_SESSION['authenticated'] === true) {
+          echo '<li class="nav-item">
+            <a class="nav-link" href="/hear-me-out/projeto/logout.php">Sair</a>
+          </li>';
+        } else {
+          echo '<li class="nav-item">
+            <a class="nav-link" href="/hear-me-out/projeto/login.php">Login</a>
+          </li>
+          <li class="nav-item dropdown">
+            <a class="nav-link dropdown-toggle" href="#" id="navbarDarkDropdownMenuLink" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+              Cadastro
+            </a>
+            <ul class="dropdown-menu" aria-labelledby="navbarDarkDropdownMenuLink">
+              <li><a class="dropdown-item" href="/hear-me-out/projeto/artista?page=1">Artista</a></li>
+              <li><a class="dropdown-item" href="/hear-me-out/projeto/critico?page=1">Crítico</a></li>
+              <li><a class="dropdown-item" href="/hear-me-out/projeto/usuario?page=1">Usuário</a></li>
+            </ul>
+          </li>';
+        }
+      ?>
     </ul>
   </div>
 </nav>
