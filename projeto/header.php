@@ -21,13 +21,13 @@
         <a class="nav-link" href="/hear-me-out/projeto/album/">Álbuns</a>
       </li>
       <li class="nav-item">
-        <a class="nav-link" href="/hear-me-out/projeto/critico/">Críticos</a>
-      </li>
-      <li class="nav-item">
         <a class="nav-link" href="/hear-me-out/projeto/musica/">Músicas</a>
       </li>
       <li class="nav-item">
-        <a class="nav-link" href="/hear-me-out/projeto/critico/">Usuários</a>
+        <a class="nav-link" href="/hear-me-out/projeto/critico/">Críticos</a>
+      </li>
+      <li class="nav-item">
+        <a class="nav-link" href="/hear-me-out/projeto/usuario/">Usuários</a>
       </li>
     </ul>
     <ul class="navbar-nav">
