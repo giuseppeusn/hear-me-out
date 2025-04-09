@@ -2,7 +2,7 @@
 <html lang="pt-BR">
 <body>
 <div class="container mt-3">
-    <h2>Lista de Criticos</h2>
+    <h2>Lista de críticos</h2>
     <table class="table table-striped">
         <thead>
             <tr>

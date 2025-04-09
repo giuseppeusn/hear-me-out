@@ -9,7 +9,7 @@
 </head>
 <body>
 <div class="container mt-3">
-    <h2>Lista de usuarios</h2>
+    <h2>Lista de usuários</h2>
     <table class="table table-striped">
         <thead>
             <tr>

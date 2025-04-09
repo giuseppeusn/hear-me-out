@@ -12,7 +12,7 @@
 <body>
 
 <div class="container mt-3">
-  <h2>CADASTRO - ALBUM</h2>
+  <h2>Cadastrar álbum</h2>
   <p></p>    
 
 		<form

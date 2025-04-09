@@ -21,7 +21,7 @@ if(isset($_POST['nome']) && isset($_POST['email']) && isset($_POST['CPF'])){
 <body>
 
 <div class="container mt-3">
-  <h2>CADASTRO - USUÁRIO</h2>
+  <h2>Cadastrar usuário</h2>
   <p></p>    
 
 		<form

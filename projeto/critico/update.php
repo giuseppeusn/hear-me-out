@@ -19,7 +19,7 @@
 <body>
 
 <div class="container mt-3">
-  <h2>CRUD - Atualizar - ID: <?php echo $_GET['id']; ?></h2>
+  <h2>Atualizar cadastro crítico - ID: <?php echo $_GET['id']; ?></h2>
   <p>Preencha os campos abaixo para atualizar o registro:</p>    
 
 		<form

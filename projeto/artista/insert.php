@@ -15,7 +15,7 @@ if(isset($_POST['nome']) && isset($_POST['biografia']) && isset($_POST['imagem']
 <body>
 
 <div class="container mt-3">
-  <h2>CADASTRO - ARTISTA</h2>
+  <h2>Cadastrar artista</h2>
   <p></p>    
 
 		<form

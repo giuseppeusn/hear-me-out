@@ -15,7 +15,7 @@ if(isset($_POST['nome']) && isset($_POST['biografia']) && isset($_POST['cpf']) &
 <body>
 
 <div class="container mt-3">
-  <h2>CADASTRO - CRITICO</h2>
+  <h2>Cadastrar crítico</h2>
   <p></p>    
 
 		<form
