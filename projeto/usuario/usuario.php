@@ -16,8 +16,12 @@
                 <th>#</th>
                 <th>ID</th>
                 <th>Nome</th>
-                <th>Email</th>
+                <th>email</th>
                 <th>CPF</th>
+                <th>Data_nasc</th>
+                <th>Senha</th>
+                <th>Genero</th>
+                <th>Permissao</th>
             </tr>
         </thead>
         <tbody>
@@ -37,6 +41,10 @@
                 echo "<td>{$linha->nome}</td>";
                 echo "<td>{$linha->email}</td>";
                 echo "<td>{$linha->CPF}</td>";
+                echo "<td>{$linha->data_nasc}</td>";
+                echo "<td>{$linha->senha}</td>";
+                echo "<td>{$linha->genero}</td>";
+                echo "<td>{$linha->permissao}</td>";
 
                 echo "</tr>";
             }

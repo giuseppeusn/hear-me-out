@@ -1,6 +1,6 @@
 <?php
 
-if(isset($_POST['nome']) && isset($_POST['email']) && isset($_POST['CPF'])){
+if(isset($_POST['nome']) && isset($_POST['email']) && isset($_POST['CPF']) && isset($_POST['email']) && isset($_POST['data_nasc']) && isset($_POST['senha']) && isset($_POST['genero']) && isset($_POST['permissao'])){
 			$oMysql = connect_db();
 			$query = "INSERT INTO usuario (nome,email,CPF) 
 						VALUES ('".$_POST['nome']."', '".$_POST['email']."', '".$_POST['CPF']."')";
@@ -51,6 +51,32 @@ if(isset($_POST['nome']) && isset($_POST['email']) && isset($_POST['CPF'])){
 				class="form-control"
 				placeholder="Digite aqui o seu CPF.">
             
+			<label class="form-label">Data de nascimento:</label>
+			<input
+				type="date"
+				name="data_nasc"
+				class="form-control"
+				placeholder="Coloque a sua data de nascimento aqui.">
+
+			<label class="form-label">Coloque a sua senha:</label>
+			<input
+				type="password"
+				name="senha"
+				class="form-control"
+				placeholder="Digite aqui a sua senha.">
+
+			<div class="mb-3">
+			<labe for="genero">	Qual o seu Gênero?</a>
+			<select name="genero">
+				<option value="M">Masculino</option>
+				<option value="F">Feminino</option>
+			</select>
+			</div>
+
+            
+
+            
+
 
 			<button
 				type="submit"

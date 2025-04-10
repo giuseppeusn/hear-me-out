@@ -1,10 +1,15 @@
 <?php
-	if(isset($_POST['nome'], $_POST['email'], $_POST['CPF'])){
+	if(isset($_POST['nome'], $_POST['email'], $_POST['CPF'], $_POST['data_nasc'], $_POST['senha'], $_POST['genero'], $_POST['permissao'])){
 		$oMysql = connect_db();
 		$query = "UPDATE usuario 
 			SET nome = '".$_POST['nome']."', 
 				email = '".$_POST['email']."', 
-				CPF = '".$_POST['CPF']."'
+				CPF = '".$_POST['CPF']."',
+				data_nasc = '".$_POST['data_nasc']."',
+				senha = '".$_POST['senha']."',
+				genero = '".$_POST['genero']."'
+				permissao = '".$_POST['permissao']."'  
+
 			WHERE id = ".$_GET['id'];
 		$resultado = $oMysql->query($query);
 		header('location: index.php');
@@ -41,8 +46,31 @@
 
 			<div class="mb-3">
 				<label for="CPF" class="form-label">CPF</label>
-				<input type="text" name="CPF" class="form-control" placeholder="CPF">
+				<input type="number" name="CPF" class="form-control" placeholder="CPF">
 			</div>
+
+
+			<div class="mb-3">
+				<label for="data_nasc" class="form-label">data_nasc</label>
+				<input type="date" name="data_nasc" class="form-control" placeholder="data_nasc">
+			</div>
+
+			<div class="mb-3">
+				<label for="senha" class="form-label">Senha:</label>
+				<input type="password" name="senha" class="form-control" placeholder="senha">
+			</div>
+
+			<div class="mb-3">
+			<labe for="genero">	Qual o seu Gênero?</a>
+			<select name="genero">
+				<option value="M">Masculino</option>
+				<option value="F">Feminino</option>
+			</select>
+			</div>
+
+			<div class="mb-3">
+			<labe for="permissoes" value="normal"></labe>
+			</div>		
 
 
 			<button type="submit" class="btn btn-primary">Atualizar</button>
