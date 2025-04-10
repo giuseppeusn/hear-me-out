@@ -6,6 +6,7 @@ CREATE TABLE artista (
 	id INT PRIMARY KEY AUTO_INCREMENT,
     nome VARCHAR(60) NOT NULL,
 	biografia VARCHAR(1000) NOT NULL,
+    email VARCHAR(40) NOT NULL,
     imagem VARCHAR(500) NOT NULL,
     data_formacao DATE NOT NULL,
     pais VARCHAR(100) NOT NULL,
