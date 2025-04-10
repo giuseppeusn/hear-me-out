@@ -1,8 +1,8 @@
 <?php
-	if(isset($_POST['nome']) && isset($_POST['biografia']) && isset($_POST['imagem']) && isset($_POST['data_formacao']) && isset($_POST['pais']) && isset($_POST['site_oficial']) && isset($_POST['genero'])){
+	if(isset($_POST['nome']) && isset($_POST['email']) && isset($_POST['biografia']) && isset($_POST['imagem']) && isset($_POST['data_formacao']) && isset($_POST['pais']) && isset($_POST['site_oficial']) && isset($_POST['genero'])){
 		$oMysql = connect_db();
-		$query = "INSERT INTO artista (nome,biografia,imagem,data_formacao,pais,site_oficial,genero,senha) 
-					VALUES ('".$_POST['nome']."', '".$_POST['biografia']."', '".$_POST['imagem']."','".$_POST['data_formacao']."', '".$_POST['pais']."', '".$_POST['site_oficial']."', '".$_POST['genero']."', '".$_POST['senha']."' )";
+		$query = "INSERT INTO artista (nome,email,biografia,imagem,data_formacao,pais,site_oficial,genero,senha) 
+					VALUES ('".$_POST['nome']."', '".$_POST['email']."', '".$_POST['biografia']."', '".$_POST['imagem']."','".$_POST['data_formacao']."', '".$_POST['pais']."', '".$_POST['site_oficial']."', '".$_POST['genero']."', '".$_POST['senha']."' )";
 		$resultado = $oMysql->query($query);
 		header('location: index.php');
 	}
@@ -19,20 +19,26 @@
 			method="POST"
 		>
 
-			<label class="form-label">nome:</label>
+			<label class="form-label">Nome:</label>
 			<input
 				type="text"
 				name="nome"
 				class="form-control"
 				placeholder="Digite aqui o seu texto."
 			>
-			<label class="form-label">biografia:</label>
+			<label class="form-label">Email:</label>
+			<input
+				type="email"
+				name="email"
+				class="form-control"
+				placeholder="Digite aqui o seu texto.">
+			<label class="form-label">Biografia:</label>
 			<input
 				type="text"
 				name="biografia"
 				class="form-control"
 				placeholder="Digite aqui o seu texto.">
-			<label class="form-label">imagem:</label>
+			<label class="form-label">Imagem:</label>
 			<input
 				type="text"
 				name="imagem"

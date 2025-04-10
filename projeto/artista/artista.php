@@ -9,6 +9,7 @@
                 <th>#</th>
                 <th>ID</th>
                 <th>Nome</th>
+                <th>Email</th>
                 <th>Biografia</th>
                 <th>Imagem</th>
                 <th>Data de Formacao</th>
@@ -32,6 +33,7 @@
                 echo "<td>" . $btn . "</td>";
                 echo "<td>{$linha->id}</td>";
                 echo "<td>{$linha->nome}</td>";
+                echo "<td>{$linha->email}</td>";
                 echo "<td>{$linha->biografia}</td>";
                 echo "<td><img src='{$linha->imagem}' width='100'></td>";
                 echo "<td>{$linha->data_formacao}</td>";
