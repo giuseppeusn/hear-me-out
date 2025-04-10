@@ -13,7 +13,7 @@ function searchArtistaAlbum($conexao, $artista_musica, $album_musica){
     $query_artista = "SELECT id FROM artista WHERE nome = '$artista_musica'";
     $query_album = "SELECT id FROM album WHERE nome = '$album_musica'";
 
-    $resultado_artista = mysqli_query(mysql: $conexao, query: $query_artista);
+    $resultado_artista = mysqli_query($conexao, $query_artista);
     $resultado_album = mysqli_query($conexao, $query_album);
     
     if (mysqli_num_rows($resultado_artista) > 0) {
