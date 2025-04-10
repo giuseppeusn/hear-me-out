@@ -2,10 +2,11 @@
   include("header.php");
   include("connect.php");
 
-  $email = $_POST['email'];
-  $senha = $_POST['senha'];
-
+  
   if (isset($_POST['email']) && isset($_POST['senha'])) {
+    $email = $_POST['email'];
+    $senha = $_POST['senha'];
+    
     session_start();
 
     $mysql = connect_db();
