@@ -25,7 +25,7 @@ $conexao = connect_db();
         <h3 class="">Crud de Músicas</h2>
       </div>
       <div class="col">
-        <a class="btn btn-success float-end" href="create.php">Adicionar</a>
+        <a class="btn btn-success float-end" href="index.php?page=1">Adicionar</a>
       </div>
     </div>
 
@@ -57,8 +57,8 @@ $conexao = connect_db();
             echo "<td>" . $i["nome_artista"] . "</td>";
             echo "<td>" . $i["nome_album"] . "</td>";
             echo '<td>
-            <a href="editar.php?id=' . $i["id"] . '"class="btn btn-success btn-sm">Editar</a>
-            <a href="excluir.php?id=' . $i["id"] . '"class="btn btn-danger btn-sm">Excluir</a>
+            <a href="index.php?page=2&id=' . $i["id"] . '"class="btn btn-success btn-sm">Editar</a>
+            <a href="index.php?page=3&id=' . $i["id"] . '"class="btn btn-danger btn-sm">Excluir</a>
                   </td>';
             echo "</tr>";
           }
