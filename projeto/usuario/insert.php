@@ -2,7 +2,7 @@
 
 if(isset($_POST['nome']) && isset($_POST['email']) && isset($_POST['CPF']) && isset($_POST['email']) && isset($_POST['data_nasc']) && isset($_POST['senha']) && isset($_POST['genero']) && isset($_POST['permissao'])){
 			$oMysql = connect_db();
-			$query = "INSERT INTO usuario (nome,email,CPF) 
+			$query = "INSERT INTO usuario (nome,email,CPF,email,data_nasc,senha,genero,permissao) 
 						VALUES ('".$_POST['nome']."', '".$_POST['email']."', '".$_POST['CPF']."')";
 			$resultado = $oMysql->query($query);
 			header('location: index.php');
@@ -22,7 +22,7 @@ if(isset($_POST['nome']) && isset($_POST['email']) && isset($_POST['CPF']) && is
 
 <div class="container mt-3">
   <h2>CADASTRO - USUÁRIO</h2>
-  <p></p>    
+ 
 
 		<form
 			method="POST"
@@ -73,6 +73,9 @@ if(isset($_POST['nome']) && isset($_POST['email']) && isset($_POST['CPF']) && is
 			</select>
 			</div>
 
+			<div class="mb-3">
+			<labe for="permissoes" value="normal"></labe>
+			</div>		
             
 
             
