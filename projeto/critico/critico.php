@@ -2,26 +2,25 @@
 <html lang="pt-BR">
 <body>
 <div class="container mt-3">
-    <h2>Lista de usuários</h2>
+    <h2>Lista de críticos</h2>
     <table class="table table-striped">
         <thead>
-            
             <tr>
                 <th>#</th>
                 <th>ID</th>
                 <th>Nome</th>
-                <th>email</th>
+                <th>Biografia</th>
                 <th>CPF</th>
-                <th>Data_nasc</th>
-                <th>Senha</th>
+                <th>Email</th>
+                <th>Data nascimento</th>
+                <th>Site</th>
                 <th>Genero</th>
-                <th>Permissao</th>
             </tr>
         </thead>
         <tbody>
         <?php
         $conexao = connect_db(); 
-        $query = "SELECT * FROM usuario";
+        $query = "SELECT * FROM critico";
         $resultado = $conexao->query($query);
         
         if ($resultado) {
@@ -33,17 +32,15 @@
                 echo "<td>" . $btn . "</td>";
                 echo "<td>{$linha->id}</td>";
                 echo "<td>{$linha->nome}</td>";
+                echo "<td>{$linha->biografia}</td>";
+                echo "<td>{$linha->cpf}</td>";
                 echo "<td>{$linha->email}</td>";
-                echo "<td>{$linha->CPF}</td>";
                 echo "<td>{$linha->data_nasc}</td>";
-                echo "<td>{$linha->senha}</td>";
+                echo "<td><a href='{$linha->site}' target='_blank'>{$linha->site}</a></td>";
                 echo "<td>{$linha->genero}</td>";
-                echo "<td>{$linha->permissao}</td>";
-
                 echo "</tr>";
             }
         }
-        
         ?>
         </tbody>
     </table>
