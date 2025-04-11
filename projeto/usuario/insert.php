@@ -78,8 +78,6 @@ if(isset($_POST['nome']) && isset($_POST['email']) && isset($_POST['CPF']) && is
 			</div>		
             
 
-            
-
 
 			<button
 				type="submit"
