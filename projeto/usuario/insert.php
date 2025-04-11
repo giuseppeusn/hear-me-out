@@ -1,9 +1,9 @@
 <?php
 
-if(isset($_POST['nome']) && isset($_POST['email']) && isset($_POST['CPF']) && isset($_POST['email']) && isset($_POST['data_nasc']) && isset($_POST['senha']) && isset($_POST['genero']) && isset($_POST['permissao'])){
+if(isset($_POST['nome']) && isset($_POST['email']) && isset($_POST['cpf']) && isset($_POST['data_nasc']) && isset($_POST['senha']) && isset($_POST['genero'])){
 			$oMysql = connect_db();
-			$query = "INSERT INTO usuario (nome,email,CPF,email,data_nasc,senha,genero,permissao) 
-						VALUES ('".$_POST['nome']."', '".$_POST['email']."', '".$_POST['CPF']."')";
+			$query = "INSERT INTO usuario (nome,email,cpf,data_nasc,senha,genero,permissao) 
+						VALUES ('".$_POST['nome']."', '".$_POST['email']."', '".$_POST['cpf']."', '".$_POST['data_nasc']."', '".$_POST['senha']."', '".$_POST['genero']."', 'normal')";
 			$resultado = $oMysql->query($query);
 			header('location: index.php');
 		}
@@ -19,7 +19,7 @@ if(isset($_POST['nome']) && isset($_POST['email']) && isset($_POST['CPF']) && is
 
 		<form
 			method="POST"
-			action="index.php?page=1">
+		>
 
             <label class="form-label">nome:</label>
 			<input
@@ -40,7 +40,7 @@ if(isset($_POST['nome']) && isset($_POST['email']) && isset($_POST['CPF']) && is
             <label class="form-label">CPF:</label>
 			<input
 				type="text"
-				name="CPF"
+				name="cpf"
 				class="form-control"
 				placeholder="Digite aqui o seu CPF.">
             
@@ -65,13 +65,6 @@ if(isset($_POST['nome']) && isset($_POST['email']) && isset($_POST['CPF']) && is
 				<option value="F">Feminino</option>
 			</select>
 			</div>
-
-			<div class="mb-3">
-			<labe for="permissoes" value="normal"></labe>
-			</div>		
-            
-
-
 			<button
 				type="submit"
 				class="btn btn-primary"> Enviar </button>
