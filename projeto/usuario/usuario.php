@@ -12,6 +12,7 @@
     <h2>Lista de usuarios</h2>
     <table class="table table-striped">
         <thead>
+            
             <tr>
                 <th>#</th>
                 <th>ID</th>
