@@ -30,7 +30,6 @@
                 $duracao = $linha->duracao;  
                 $minutos = floor($duracao / 60);  
                 $segundos = $duracao % 60; 
-
                 echo "<tr>";
                 echo "<td>" . $btn . "</td>";
                 echo "<td>{$linha->id}</td>";
