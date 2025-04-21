@@ -1,6 +1,5 @@
 <?php
-include "connect.php";
-include "header.php";
+include_once ("../connect.php");
 
 $conexao = connect_db();
 ?>
