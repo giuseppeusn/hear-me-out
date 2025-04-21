@@ -1,6 +1,6 @@
 <?php
 session_start();
-include "../connect.php";
+include_once  "../connect.php";
 
 $conexao = connect_db();
 
@@ -61,7 +61,7 @@ if (isset($_POST['create'])) {
 
 if (isset($_POST['edit'])) {
 
-    // Pegando os valores do formulário
+    // pega os valores do formulário
     $id = mysqli_real_escape_string($conexao, $_POST['id_hidden']);
     $nome_musica = mysqli_real_escape_string($conexao, $_POST['nome_musica']);
     $duracao_musica = (int) $_POST['duracao_musica']; // Garante que seja um número

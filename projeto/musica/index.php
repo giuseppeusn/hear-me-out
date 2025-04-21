@@ -1,6 +1,6 @@
 <?php
   include("../header.php");
-  include("../connect.php");
+  include_once ("../connect.php");
 
   session_start();
 

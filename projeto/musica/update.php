@@ -1,6 +1,5 @@
 <?php
-include "header.php";
-include "connect.php";
+include_once ("../connect.php");
 
 $conexao = connect_db();
 
@@ -9,8 +8,8 @@ $query_read = "SELECT * from musica where id = $id";
 $resultado_musicas = mysqli_query($conexao, $query_read);
 $musicas = mysqli_fetch_assoc($resultado_musicas);
 if (!$musicas) {
-    session_start();
-    $_SESSION['mensagem'] = "muda na url nao seu puto";
+    unset($_SESSION['mensagem']);
+    $_SESSION['mensagem'] = "Música não encontrada. Mudou na URL.";
     header("Location: index.php");
     die;
 }
