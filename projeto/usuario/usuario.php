@@ -34,7 +34,7 @@
                 echo "<td>{$linha->id}</td>";
                 echo "<td>{$linha->nome}</td>";
                 echo "<td>{$linha->email}</td>";
-                echo "<td>{$linha->CPF}</td>";
+                echo "<td>{$linha->cpf}</td>";
                 echo "<td>{$linha->data_nasc}</td>";
                 echo "<td>{$linha->senha}</td>";
                 echo "<td>{$linha->genero}</td>";

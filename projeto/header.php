@@ -33,7 +33,6 @@
     <ul class="navbar-nav">
       
       <?php
-        session_start();
         if (isset($_SESSION['authenticated']) && $_SESSION['authenticated'] === true) {
           echo '<li class="nav-item">
             <a class="nav-link" href="/hear-me-out/projeto/logout.php">Sair</a>
