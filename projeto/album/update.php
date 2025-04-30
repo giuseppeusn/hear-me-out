@@ -32,27 +32,27 @@
 			>		
 			<div class="mb-3">
 				<label for="nome" class="form-label">Nome</label>
-				<input type="text" name="nome" class="form-control" placeholder="Digite o nome">
+				<input type="text" name="nome" class="form-control" placeholder="Digite o nome" value='<?php echo $nome ?>'>
 			</div>
 
 			<div class="mb-3">
 				<label for="imagem" class="form-label">capa</label>
-				<input type="text" name="capa" class="form-control" placeholder="URL da imagem">
+				<input type="text" name="capa" class="form-control" placeholder="URL da imagem" value='<?php echo $capa ?>'>
 			</div>
 
 			<div class="mb-3">
 				<label for="data_lancamento" class="form-label">Data de lançamento</label>
-				<input type="date" name="data_lancamento" class="form-control">
+				<input type="date" name="data_lancamento" class="form-control" value='<?php echo $data_lancamento ?>'>
 			</div>
 
 			<div class="mb-3">
 				<label for="duracao" class="form-label">Duração (em segundos)</label>
-				<input type="number" name="duracao" class="form-control" placeholder="Digite a duração">
+				<input type="number" name="duracao" class="form-control" placeholder="Digite a duração" value='<?php echo $duracao ?>'>
 			</div>
 
 			<div class="mb-3">
 				<label for="qtd_musicas" class="form-label">Número de músicas</label>
-				<input type="number" name="qtd_musicas" class="form-control" placeholder="Digite a quantidade de músicas">
+				<input type="number" name="qtd_musicas" class="form-control" placeholder="Digite a quantidade de músicas" value='<?php echo $qtd_musicas ?>'>
 			</div>
 
 
