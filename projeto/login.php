@@ -24,7 +24,9 @@
     $artista = $mysql->query($queryArtista);
 
     if ($artista->num_rows > 0) {
+      $row = $artista->fetch_assoc();
       $_SESSION['authenticated'] = true;
+      $_SESSION['id_artista'] = $row['id'];
       $mysql->close();
       header("location: /hear-me-out/projeto/artista/index.php");
       exit();

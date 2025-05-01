@@ -1,23 +1,50 @@
 <?php
-	if(isset($_POST['nome']) && isset($_POST['capa']) && isset($_POST['data_lancamento']) && isset($_POST['duracao']) && isset($_POST['qtd_musicas']) && isset($_POST['id_artista'])){
-		$oMysql = connect_db();
-		$query = "INSERT INTO album (nome,capa,data_lancamento,duracao,qtd_musicas,id_artista) 
-					VALUES ('".$_POST['nome']."', '".$_POST['capa']."', '".$_POST['data_lancamento']."', '".$_POST['duracao']."', '".$_POST['qtd_musicas']."', '".$_POST['id_artista']."')";
-		$resultado = $oMysql->query($query);
-		header('location: index.php');
+$id_artista = $_SESSION['id_artista'];
+if(isset($_POST['nome']) && isset($_POST['capa']) && isset($_POST['data_lancamento']) && isset($_POST['duracao']) && isset($_POST['qtd_musicas'])){
+			$nome = trim($_POST['nome']);
+			$capa = trim($_POST['capa']);
+			$data = $_POST['data_lancamento'];
+			$duracao = $_POST['duracao'];
+			$qtd_musicas = $_POST['qtd_musicas'];
+
+			$erros = [];
+
+			if (empty($nome)) $erros[] = "O nome do álbum é obrigatório.";
+			if (empty($capa)) $erros[] = "O link da capa é obrigatório.";
+			if (!filter_var($capa, FILTER_VALIDATE_URL)) $erros[] = "O link da capa não é válido.";
+			if (empty($data)) $erros[] = "A data de lançamento é obrigatória.";
+			if (!is_numeric($duracao) || $duracao <= 0) $erros[] = "A duração deve ser um número positivo.";
+			if (!is_numeric($qtd_musicas) || $qtd_musicas <= 0) $erros[] = "A quantidade de músicas deve ser um número positivo.";
+			if(empty($erros)){
+				$oMysql = connect_db();
+				$query = "INSERT INTO album (nome,capa,data_lancamento,duracao,qtd_musicas,id_artista) 
+							VALUES ('$nome', '$capa', '$data', '$duracao', '$qtd_musicas','$id_artista')";
+				$resultado = $oMysql->query($query);
+				header('location: index.php');
+				exit; } else { foreach ($erros as $erro){
+					echo "<div style='color:red; margin-left:20px;'>$erro</div>";
+				}
+		}
 	}
 ?>
 <!DOCTYPE html>
 <html lang="en">
+<head>
+  <title>Lista de Registros</title>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+</head>
 <body>
 
 <div class="container mt-3">
-  <h2>Cadastrar álbum</h2>
+  <h2>CADASTRO - ALBUM</h2>
   <p></p>    
 
 		<form
 			method="POST"
-			>
+			action="index.php?page=1">
 
             <label class="form-label">nome:</label>
 			<input
@@ -57,12 +84,7 @@
 				placeholder="Digite aqui o número de músicas">
 				
 
-			<label class="form-label">ID do artista:</label>
-			<input
-				type="number"
-				name="id_artista"
-				class="form-control"
-				placeholder="Digite aqui o número do id do artista">
+
 
 			<button
 				type="submit"
