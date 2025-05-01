@@ -4,16 +4,16 @@
 <div class="container mt-3">
     <h2>Lista de álbuns</h2>
     <a type="button" class="btn btn-success" href="index.php?page=1">Inserir novo álbum</a>
-    <table class="table table-striped">
+    <table id=tabelaAlbum class="table table-striped">
         <thead>
             <tr>
-                <th>#</th>
+                <th>Capa</th>
                 <th>Nome</th>
                 <th>Artista</th>
-                <th>Capa</th>
                 <th>Data de lançamento</th>
                 <th>Número de músicas</th>
                 <th>Duração</th>
+                <th>#</th>
             </tr>
         </thead>
         <tbody>
@@ -43,14 +43,15 @@
                 $duracao = $linha->duracao;  
                 $minutos = floor($duracao / 60);  
                 $segundos = $duracao % 60; 
+
                 echo "<tr>";
-                echo "<td>" . $btn . "</td>";
+                echo "<td><img src='{$linha->capa}' width='100'></td>";
                 echo "<td>{$linha->album_nome}</td>";
                 echo "<td>{$linha->artista_nome}</td>";
-                echo "<td><img src='{$linha->capa}' width='100'></td>";
                 echo "<td>{$linha->data_lancamento}</td>";
                 echo "<td>{$linha->qtd_musicas}</td>";
                 echo "<td>{$minutos} min {$segundos} sec</td>";
+                echo "<td>" . $btn . "</td>";                
                 echo "</tr>";
             }
         }
