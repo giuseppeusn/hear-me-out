@@ -1,8 +1,7 @@
 <?php
   include("../header.php");
-  include("../connect.php");
+  include_once("../connect.php");
 
-  session_start();
 
   if (!isset($_SESSION['authenticated']) || $_SESSION['authenticated'] !== true) {
     header("location: /hear-me-out/projeto/login.php");
