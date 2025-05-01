@@ -13,6 +13,9 @@
 <nav class="navbar navbar-expand-sm bg-light">
   <div class="container-fluid justify-content-between">
     <ul class="navbar-nav">
+      <!-- <li class="nav-item">
+        <a class="nav-link" href="/hear-me-out/projeto">Home</a>
+      </li> -->
       <li class="nav-item">
         <a class="nav-link" href="/hear-me-out/projeto/artista/">Artista</a>
       </li>
