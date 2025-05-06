@@ -62,7 +62,7 @@
 			</div>
 
 			<div class="mb-3">
-			<labe for="permissoes" value="normal"></labe>
+			<labe for="permissao" value="normal"></labe>
 			</div>		
 
 

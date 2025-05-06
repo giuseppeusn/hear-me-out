@@ -67,7 +67,7 @@ if(isset($_POST['nome']) && isset($_POST['email']) && isset($_POST['CPF']) && is
 			</div>
 
 			<div class="mb-3">
-			<labe for="permissoes" value="normal"></labe>
+			<labe for="permissao" value="normal"></labe>
 			</div>		
             
 
