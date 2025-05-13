@@ -15,6 +15,7 @@
 
     if ($usuario->num_rows > 0) {
       $_SESSION['authenticated'] = true;
+      $_SESSION['nome'] = $usuario->fetch_assoc()['nome'];
       $mysql->close();
       header("location: /hear-me-out/projeto/index.php");
       exit();
@@ -27,6 +28,7 @@
       $row = $artista->fetch_assoc();
       $_SESSION['authenticated'] = true;
       $_SESSION['id_artista'] = $row['id'];
+      $_SESSION['nome'] = $row['nome'];
       $mysql->close();
       header("location: /hear-me-out/projeto/artista/index.php");
       exit();
@@ -37,6 +39,7 @@
 
     if ($critico->num_rows > 0) {
       $_SESSION['authenticated'] = true;
+      $_SESSION['nome'] = $critico->fetch_assoc()['nome'];
       $mysql->close();
       header("location: /hear-me-out/projeto/critico/index.php");
       exit();
