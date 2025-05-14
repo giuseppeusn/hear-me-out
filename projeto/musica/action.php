@@ -9,6 +9,7 @@ function msg(){
     header("Location: index.php");
     exit;
 }
+
 function searchArtistaAlbum($conexao, $artista_musica, $album_musica){
     $query_artista = "SELECT id FROM artista WHERE nome = '$artista_musica'";
     $query_album = "SELECT id FROM album WHERE nome = '$album_musica'";
@@ -40,7 +41,7 @@ function searchArtistaAlbum($conexao, $artista_musica, $album_musica){
 }
 
 if (isset($_POST['create'])) {
-    // Pegando os valores do formulário
+    // pega os valores do formulário
     $nome_musica = mysqli_real_escape_string($conexao, $_POST['nome_musica']);
     $duracao_musica = (int) $_POST['duracao_musica']; // Garante que seja um número
     $data_lancamento_musica = mysqli_real_escape_string($conexao, $_POST['data_lancamento_musica']);
@@ -53,7 +54,7 @@ if (isset($_POST['create'])) {
 
     $query = "INSERT INTO musica (nome, duracao, data_lancamento, capa, id_artista, id_album) 
                   VALUES ('$nome_musica', $duracao_musica, '$data_lancamento_musica', '$capa_musica_arquivo', '$artista_musica', '$album_musica')";
-    // Executando a query
+    // executa a query
     if(mysqli_query($conexao, $query)){
         msg();
     }

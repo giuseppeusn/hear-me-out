@@ -2,6 +2,20 @@
   include("header.php");
   include("connect.php");
 
+  if (isset($_SESSION['sucesso_cadastro'])){
+    echo "<script src='https://cdn.jsdelivr.net/npm/sweetalert2@11'></script>";
+		echo "<script>
+		Swal.fire({
+			title: 'Cadastrado com sucesso! Por favor faça o login.',
+			icon: 'success',
+			draggable: true,
+      timer: 4000,
+			});
+			</script>";
+      unset($_SESSION['sucesso_cadastro']);
+}
+
+
   
   if (isset($_POST['email']) && isset($_POST['senha'])) {
     $email = $_POST['email'];
@@ -51,7 +65,7 @@
 ?>
 
 <!DOCTYPE html>
-<html lang="en">
+<html lang="pt-BR">
 <body>
   <div class="container w-50 h-auto mt-5"> 
     <h2 class="text-center">Login</h2>
