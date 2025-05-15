@@ -15,6 +15,8 @@
       include("update.php");
     } else if($_GET["page"] == 3) {
       include("delete.php");
+    } else if($_GET["page"] == 4) {
+      include("paginaAlbum.php"); 
     } else {
       include("album.php");
     }
