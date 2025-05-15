@@ -11,6 +11,19 @@ if ((!isset($_SESSION['authenticated']) || $_SESSION['authenticated'] != true) &
   exit();
 }
 
+if (isset($_SESSION["sucesso_edit"])){
+  echo "<script src='https://cdn.jsdelivr.net/npm/sweetalert2@11'></script>";
+  echo "<script>
+    Swal.fire({
+      title: 'Artista editado com sucesso!',
+      icon: 'success',
+      draggable: true,
+      timer: 4000,
+      });
+      </script>";
+  unset($_SESSION['sucesso_edit']);
+}
+
 if (isset($_GET["page"])) {
   if ($_GET["page"] == 1) {
     include("insert.php");

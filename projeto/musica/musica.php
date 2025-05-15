@@ -19,7 +19,7 @@ $conexao = connect_db();
 
   <div class="container-md mt-3">
     <?php 
-    if(isset($_SESSION['mensagem'])){
+    if(isset($_SESSION['sucesso_cadastro'])){
       echo "<script src='https://cdn.jsdelivr.net/npm/sweetalert2@11'></script>";
       echo "<script>
 		Swal.fire({
@@ -29,9 +29,22 @@ $conexao = connect_db();
       timer: 4000,
 			});
 			</script>";
-      unset($_SESSION['mensagem']);
-      
-    } ?>
+      unset($_SESSION['sucesso_cadastro']);
+    }
+    if(isset($_SESSION['sucesso_edit'])){
+      echo "<script src='https://cdn.jsdelivr.net/npm/sweetalert2@11'></script>";
+      echo "<script>
+		Swal.fire({
+			title: 'Música editada com sucesso!',
+			icon: 'success',
+			draggable: true,
+      timer: 4000,
+			});
+			</script>";
+      unset($_SESSION['sucesso_edit']);
+    }
+    
+    ?>
     <div class="row">
       <div class="col">
         <h3 class="">Crud de Músicas</h2>

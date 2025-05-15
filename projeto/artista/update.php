@@ -97,6 +97,7 @@ if (isset($_POST['edit'])) {
 				genero = '" . $_POST['genero'] . "' 
 			WHERE id = " . $_GET['id'];
 		$resultado = $oMysql->query($query);
+		$_SESSION['sucesso_edit'] = true;
 		header('location: index.php');
 
 	}

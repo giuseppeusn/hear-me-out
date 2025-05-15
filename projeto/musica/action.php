@@ -47,9 +47,15 @@ function validarCampos()
     }
     return true;
 }
-function msg()
+function msg_cadastro()
 {
-    $_SESSION['mensagem'] = true;
+    $_SESSION['sucesso_cadastro'] = true;
+    header("Location: index.php");
+    exit;
+}
+
+function msg_edit(){
+    $_SESSION['sucesso_edit'] = true;
     header("Location: index.php");
     exit;
 }
@@ -108,7 +114,7 @@ if (isset($_POST['create'])) {
                   VALUES ('$nome_musica', $duracao_musica, '$data_lancamento_musica', '$capa_musica_arquivo', '$artista_musica', '$album_musica')";
     // executa a query
     if (mysqli_query($conexao, $query)) {
-        msg();
+        msg_cadastro();
     }
 }
 
@@ -131,7 +137,7 @@ if (isset($_POST['edit'])) {
 
     $query_update = "UPDATE musica SET nome = '$nome_musica', duracao = '$duracao_musica', data_lancamento = '$data_lancamento_musica', capa = '$capa_musica_arquivo', id_artista = '$artista_musica', id_album = '$album_musica' where id = '$id'";
     if (mysqli_query($conexao, $query_update)) {
-        msg();
+        msg_edit();
     }
 }
 

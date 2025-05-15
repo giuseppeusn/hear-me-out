@@ -103,79 +103,63 @@ if (isset($_POST['create'])) {
 
 	<div class="container mt-3">
 		<h2>Cadastrar crítico</h2>
-		<p style="color:gray" class="mb-2">campo obrigatório*</p>
-		<form
-			method="POST">
+		<p style="color:gray" class="mb-2">Campo obrigatório *</p>
 
-			<label class="form-label">Nome: *</label>
-			<input
-				type="text"
-				name="nome"
-				class="form-control mb-2"
-				placeholder="Digite aqui o seu texto.">
+		<form method="POST">
+			<div class="mb-2">
+				<label for="nome" class="form-label">Nome: *</label>
+				<input type="text" id="nome" name="nome" class="form-control" placeholder="Digite aqui o seu nome." value="<?php echo $_POST['nome'] ?? ''; ?>">
+			</div>
 
+			<div class="mb-2">
+				<label for="biografia" class="form-label">Biografia: *</label>
+				<input type="text" id="biografia" name="biografia" class="form-control" placeholder="Digite aqui sua biografia." value="<?php echo $_POST['biografia'] ?? ''; ?>">
+			</div>
 
-			<label class="form-label">Biografia: *</label>
-			<input
-				type="text"
-				name="biografia"
-				class="form-control mb-2"
-				placeholder="Digite aqui o seu texto.">
+			<div class="mb-2">
+				<label for="cpf" class="form-label">CPF: *</label>
+				<input type="text" id="cpf" name="cpf" class="form-control" onkeypress="MascaraCPF(this, event)" maxlength="14"
+					placeholder="Digite seu CPF." value="<?php echo $_POST['cpf'] ?? ''; ?>">
+			</div>
 
+			<div class="mb-2">
+				<label for="email" class="form-label">Email:</label>
+				<input type="email" id="email" name="email" class="form-control" placeholder="Digite seu email." value="<?php echo $_POST['email'] ?? ''; ?>">
+			</div>
 
-			<label class="form-label">CPF: *</label>
-			<input
-				type="text"
-				name="cpf"
-				class="form-control mb-2"
-				onkeypress="MascaraCPF(this, event)"
-				maxlength="14"
-				placeholder="Digite aqui o seu cpf.">
+			<div class="mb-2">
+				<label for="data_nasc" class="form-label">Data de nascimento: *</label>
+				<input type="date" id="data_nasc" name="data_nasc" class="form-control" value="<?php echo $_POST['data_nasc'] ?? ''; ?>">
+			</div>
 
+			<div class="mb-2">
+				<label for="site" class="form-label">Site: *</label>
+				<input type="url" id="site" name="site" class="form-control" placeholder="Digite o link do seu site." value="<?php echo $_POST['site'] ?? ''; ?>">
+			</div>
 
-			<label class="form-label">Email: </label>
-			<input
-				type="text"
-				name="email"
-				class="form-control mb-2"
-				placeholder="Digite aqui seu email.">
+			<div class="mb-2">
+				<label for="genero" class="form-label">Gênero: *</label>
+				<select name="genero" id="genero" class="form-select">
+					<option value="" disabled <?php echo empty($_POST['genero']) ? 'selected' : ''; ?>>Selecione</option>
+					<option value="M" <?php echo ($_POST['genero'] ?? '') === 'M' ? 'selected' : ''; ?>>Masculino</option>
+					<option value="F" <?php echo ($_POST['genero'] ?? '') === 'F' ? 'selected' : ''; ?>>Feminino</option>
+					<option value="I" <?php echo ($_POST['genero'] ?? '') === 'I' ? 'selected' : ''; ?>>Indefinido</option>
+				</select>
+			</div>
 
-			<label class="form-label">Data nascimento: *</label>
-			<input
-				type="date"
-				name="data_nasc"
-				class="form-control mb-2">
+			<div class="mb-3">
+				<label for="senha" class="form-label">Senha: *</label>
+				<input type="password" id="senha" name="senha" class="form-control" placeholder="Digite sua senha." autocomplete="off">
+			</div>
 
-			<label class="form-label">Site: *</label>
-			<input
-				type="text"
-				name="site"
-				class="form-control mb-2"
-				placeholder="Digite aqui seu site">
-
-			<label class="form-label">Gênero: *</label>
-			<select name="genero" class="form-select mb-2">
-				<option value="M">Masculino</option>
-				<option value="F">Feminino</option>
-				<option value="I">Indefinido</option>
-			</select>
-			<label class="form-label">Senha: *</label>
-			<input
-				type="password"
-				name="senha"
-				class="form-control mb-3"
-				placeholder="Digite aqui a sua senha.">
-
-			<button
-				type="submit"
-				name="create"
-				class="btn btn-primary"> Enviar </button>
-
+			<button type="submit" name="create" class="btn btn-primary">Enviar</button>
 		</form>
 
 		<script src="../validarCampos.js"></script>
-
 	</div>
+
+	<script src="../validarCampos.js"></script>
+
 
 </body>
 

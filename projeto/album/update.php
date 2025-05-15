@@ -114,20 +114,10 @@ if (isset($_POST['edit'])) {
                 Swal.fire({
                     icon: 'success',
                     title: 'Sucesso!',
-                    text: 'Álbum atualizado com sucesso!',
+                    text: 'Álbum editado com sucesso!',
                     draggable: true
                 }).then(() => {
                     window.location.href = 'index.php';
-                });
-            </script>";
-        } else {
-            echo "<script src='https://cdn.jsdelivr.net/npm/sweetalert2@11'></script>";
-            echo "<script>
-                Swal.fire({
-                    icon: 'error',
-                    title: 'Erro!',
-                    text: 'Erro ao atualizar o álbum!',
-                    draggable: true
                 });
             </script>";
         }

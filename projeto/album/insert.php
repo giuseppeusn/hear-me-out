@@ -125,30 +125,52 @@ if (isset($_POST['create'])) {
 <!DOCTYPE html>
 <html lang="en">
 
+<!DOCTYPE html>
+<html lang="pt-BR">
+
+<head>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<title>Cadastro de Álbum</title>
+	<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet"
+		integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
+</head>
+
 <body>
 	<div class="container mt-3">
-		<h2>CADASTRO - ÁLBUM</h2>
-		<p style="color:gray" class="mb-0">Campo obrigatório*</p>
+		<h2>Cadastro - Álbum</h2>
+		<p style="color:gray" class="mb-0">Campo obrigatório *</p>
 
-		<form method="POST" action="">
-			<label class="form-label">Nome: *</label>
-			<input type="text" name="nome" class="form-control" placeholder="Digite aqui o nome do álbum">
+		<form method="POST">
+			<div class="mb-2">
+				<label for="nome" class="form-label">Nome: *</label>
+				<input type="text" id="nome" name="nome" class="form-control" placeholder="Digite o nome do álbum" value="<?php echo $_POST['nome'] ?? ''; ?>">
+			</div>
 
-			<label class="form-label">Capa: *</label>
-			<input type="text" name="capa" class="form-control" placeholder="Digite aqui o link da capa">
+			<div class="mb-2">
+				<label for="capa" class="form-label">Capa (URL): *</label>
+				<input type="url" id="capa" name="capa" class="form-control" placeholder="Digite o link da imagem da capa" value="<?php echo $_POST['capa'] ?? ''; ?>">
+			</div>
 
-			<label class="form-label">Data de lançamento: *</label>
-			<input type="date" name="data_lancamento" class="form-control">
+			<div class="mb-2">
+				<label for="data_lancamento" class="form-label">Data de lançamento: *</label>
+				<input type="date" id="data_lancamento" name="data_lancamento" class="form-control" value="<?php echo $_POST['data_lancamento'] ?? ''; ?>">
+			</div>
 
-			<label class="form-label">Duração do álbum (em segundos): *</label>
-			<input type="number" name="duracao" class="form-control" placeholder="Digite aqui a duração do álbum">
+			<div class="mb-2">
+				<label for="duracao" class="form-label">Duração do álbum (em segundos): *</label>
+				<input type="number" id="duracao" name="duracao" class="form-control" placeholder="Ex: 3600 para 1 hora" min="1" value="<?php echo $_POST['duracao'] ?? ''; ?>">
+			</div>
 
-			<label class="form-label">Número de músicas: *</label>
-			<input type="number" name="qtd_musicas" class="form-control" placeholder="Digite aqui o número de músicas">
+			<div class="mb-3">
+				<label for="qtd_musicas" class="form-label">Número de músicas: *</label>
+				<input type="number" id="qtd_musicas" name="qtd_musicas" class="form-control" placeholder="Ex: 10" min="1" value="<?php echo $_POST['qtd_musicas'] ?? ''; ?>">
+			</div>
 
-			<button type="submit" name="create" class="btn btn-primary mt-3">Enviar</button>
+			<button type="submit" name="create" class="btn btn-primary">Enviar</button>
 		</form>
 	</div>
-</body>
 
-</html>
+	<script src="../validarCampos.js"></script>
+
+</body>

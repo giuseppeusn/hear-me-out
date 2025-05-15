@@ -103,26 +103,25 @@ if (isset($_POST['create'])) {
 
 	<div class="container mt-3">
 		<h2>Cadastrar usuário</h2>
-		<p style="color:gray" class="mb-0">campo obrigatório*</p>
+		<p style="color:gray" class="mb-2">Campo obrigatório *</p>
 
-		<form
-			method="POST">
+		<form method="POST">
 
 			<label class="form-label pt-2">Nome: *</label>
 			<input
 				type="text"
 				name="nome"
 				class="form-control"
-				placeholder="Digite aqui o seu Nome">
-
+				placeholder="Digite aqui o seu Nome"
+				value="<?php echo $_POST['nome'] ?? ''; ?>">
 
 			<label class="form-label pt-2">Email: *</label>
 			<input
 				type="text"
 				name="email"
 				class="form-control"
-				placeholder="Digite aqui o seu texto.">
-
+				placeholder="Digite aqui o seu texto."
+				value="<?php echo $_POST['email'] ?? ''; ?>">
 
 			<label class="form-label pt-2">CPF:</label>
 			<input
@@ -131,36 +130,38 @@ if (isset($_POST['create'])) {
 				class="form-control"
 				placeholder="Digite aqui o seu CPF"
 				maxlength="14"
-				onkeypress="MascaraCPF(this, event)">
+				onkeypress="MascaraCPF(this, event)"
+				value="<?php echo $_POST['cpf'] ?? ''; ?>">
+
 			<label class="form-label pt-2">Data de nascimento: *</label>
 			<input
 				type="date"
 				name="data_nasc"
 				class="form-control"
-				placeholder="Coloque a sua data de nascimento aqui.">
+				placeholder="Coloque a sua data de nascimento aqui."
+				value="<?php echo $_POST['data_nasc'] ?? ''; ?>">
 
 			<label class="form-label pt-2">Coloque a sua senha: *</label>
 			<input
 				type="password"
 				name="senha"
 				class="form-control"
-				placeholder="Digite aqui a sua senha.">
-
+				placeholder="Digite aqui a sua senha."
 			<div class="mb-2 mt-2">
-				<label for="genero pt-2"> Qual o seu Gênero? *</a>
-					<select name="genero" class="form-select mt-1 mb-1">
-						<option value="M">Masculino</option>
-						<option value="F">Feminino</option>
-					</select>
+				<label for="genero pt-2">Qual o seu Gênero? *</label>
+				<select name="genero" class="form-select mt-1 mb-1">
+					<option value="M" <?php if (isset($_POST['genero']) && $_POST['genero'] == 'M') echo 'selected'; ?>>Masculino</option>
+					<option value="F" <?php if (isset($_POST['genero']) && $_POST['genero'] == 'F') echo 'selected'; ?>>Feminino</option>
+				</select>
+				<button
+					type="submit"
+					name="create"
+					class="btn btn-primary mt-2">Enviar</button>
 			</div>
-			<button
-				type="submit"
-				name="create"
-				class="btn btn-primary">Enviar</button>
+
 		</form>
 	</div>
 
 	<script src="../validarCampos.js"></script>
 </body>
-
 </html>
