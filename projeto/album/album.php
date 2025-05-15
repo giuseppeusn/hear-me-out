@@ -1,8 +1,5 @@
 <!DOCTYPE html>
 <html lang="pt-BR">
-<head>
-  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
-</head>
 <body>
 
 <div class="container mt-3">
@@ -42,8 +39,8 @@
                 <img class='card-img-top' src='{$linha->capa}' alt='Capa do álbum'>
                 <div class='card-body'>
                   <h4 class='card-title'>{$linha->album_nome}</h4>
-                  <p class='card-text'><strong>Qtd de músicas:</strong> {$linha->qtd_musicas}</p>
-                  <p class='card-text'><strong>Artista:</strong> {$linha->artista_nome}</p>
+                  <p class='card-text'><b>Qtd de músicas:</b> {$linha->qtd_musicas}</p>
+                  <p class='card-text'><b>Artista:</b> {$linha->artista_nome}</p>
                   $btnVerAlbum
                   $btnAlterar
                   $btnExcluir
