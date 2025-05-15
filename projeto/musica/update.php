@@ -8,8 +8,7 @@ $query_read = "SELECT * from musica where id = $id";
 $resultado_musicas = mysqli_query($conexao, $query_read);
 $musicas = mysqli_fetch_assoc($resultado_musicas);
 if (!$musicas) {
-    unset($_SESSION['mensagem']);
-    $_SESSION['mensagem'] = "Música não encontrada. Mudou na URL.";
+    $_SESSION['erro_edit'] = true;
     header("Location: index.php");
     die;
 }
@@ -44,9 +43,6 @@ if ($naosei2 = mysqli_fetch_assoc($query_album)) {
 
 <body>
     <div class="container-md mt-3">
-        <?php
-        include "mensagem.php";
-        ?>
         <div class="row">
             <div class="col">
                 <h3 class="">Editar música:</h2>

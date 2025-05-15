@@ -11,9 +11,6 @@
 
 <body>
     <div class="container-md mt-3">
-        <?php
-        include "mensagem.php";
-        ?>
         <div class="row">
             <div class="col">
                 <h3 class="">Adicionar nova música:</h2>

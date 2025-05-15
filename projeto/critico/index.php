@@ -2,7 +2,7 @@
 include("../header.php");
 include("../connect.php");
 
-if (session_status() === PHP_SESSION_DISABLED) {
+if (session_status() === PHP_SESSION_NONE) {
   session_start();
 }
 

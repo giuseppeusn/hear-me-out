@@ -18,7 +18,20 @@ $conexao = connect_db();
 <body>
 
   <div class="container-md mt-3">
-    <?php include "mensagem.php"; ?>
+    <?php 
+    if(isset($_SESSION['mensagem'])){
+      echo "<script src='https://cdn.jsdelivr.net/npm/sweetalert2@11'></script>";
+      echo "<script>
+		Swal.fire({
+			title: 'Música cadastrada com sucesso!',
+			icon: 'success',
+			draggable: true,
+      timer: 4000,
+			});
+			</script>";
+      unset($_SESSION['mensagem']);
+      
+    } ?>
     <div class="row">
       <div class="col">
         <h3 class="">Crud de Músicas</h2>

@@ -86,9 +86,11 @@ if (isset($_POST['create'])) {
 				</script>";
 	} else {
 		$oMysql = connect_db();
+		$cpf = preg_replace('/[^0-9]/', '', $_POST['cpf']); // remove mascara do cpf
 		$query = "INSERT INTO critico (nome,biografia,cpf,email,data_nasc,site,genero,senha,aprovado) 
-					VALUES ('" . $_POST['nome'] . "', '" . $_POST['biografia'] . "', '" . $_POST['cpf'] . "','" . $_POST['email'] . "', '" . $_POST['data_nasc'] . "', '" . $_POST['site'] . "', '" . $_POST['genero'] . "', '" . $_POST['senha'] . "', false)";
+					VALUES ('" . $_POST['nome'] . "', '" . $_POST['biografia'] . "', '" . $cpf . "','" . $_POST['email'] . "', '" . $_POST['data_nasc'] . "', '" . $_POST['site'] . "', '" . $_POST['genero'] . "', '" . $_POST['senha'] . "', false)";
 		$resultado = $oMysql->query($query);
+		$_SESSION['sucesso_cadastro'] = true;
 		header('location: index.php');
 	}
 }
@@ -101,68 +103,67 @@ if (isset($_POST['create'])) {
 
 	<div class="container mt-3">
 		<h2>Cadastrar crítico</h2>
-		<p></p>
-
+		<p style="color:gray" class="mb-2">campo obrigatório*</p>
 		<form
 			method="POST">
 
-			<label class="form-label">nome:</label>
+			<label class="form-label">Nome: *</label>
 			<input
 				type="text"
 				name="nome"
-				class="form-control"
+				class="form-control mb-2"
 				placeholder="Digite aqui o seu texto.">
 
 
-			<label class="form-label">biografia:</label>
+			<label class="form-label">Biografia: *</label>
 			<input
 				type="text"
 				name="biografia"
-				class="form-control"
+				class="form-control mb-2"
 				placeholder="Digite aqui o seu texto.">
 
 
-			<label class="form-label">cpf:</label>
+			<label class="form-label">CPF: *</label>
 			<input
 				type="text"
 				name="cpf"
-				class="form-control"
+				class="form-control mb-2"
 				onkeypress="MascaraCPF(this, event)"
 				maxlength="14"
 				placeholder="Digite aqui o seu cpf.">
 
 
-			<label class="form-label">email:</label>
+			<label class="form-label">Email: </label>
 			<input
 				type="text"
 				name="email"
-				class="form-control">
+				class="form-control mb-2"
+				placeholder="Digite aqui seu email.">
 
-			<label class="form-label">data nascimento:</label>
+			<label class="form-label">Data nascimento: *</label>
 			<input
 				type="date"
 				name="data_nasc"
-				class="form-control">
+				class="form-control mb-2">
 
-			<label class="form-label">Site</label>
+			<label class="form-label">Site: *</label>
 			<input
 				type="text"
 				name="site"
-				class="form-control"
+				class="form-control mb-2"
 				placeholder="Digite aqui seu site">
 
-			<label class="form-label">Gênero:</label><br>
-
-			<select name="genero" class="form-select">
+			<label class="form-label">Gênero: *</label>
+			<select name="genero" class="form-select mb-2">
 				<option value="M">Masculino</option>
 				<option value="F">Feminino</option>
 				<option value="I">Indefinido</option>
-			</select><br>
-			<label class="form-label">Senha:</label>
+			</select>
+			<label class="form-label">Senha: *</label>
 			<input
 				type="password"
 				name="senha"
-				class="form-control"
+				class="form-control mb-3"
 				placeholder="Digite aqui a sua senha.">
 
 			<button
