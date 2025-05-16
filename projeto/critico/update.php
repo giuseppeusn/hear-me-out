@@ -54,6 +54,54 @@ if (isset($_POST['edit'])) {
 		return false; // false = nao vai entrar no if / data correta
 	}
 
+	function validarEmailCPF($cpf, $email, $id)
+	{
+		if ($oMysql = connect_db()) {
+			$cpf = preg_replace('/[^0-9]/', '', $cpf);
+			$email = mysqli_real_escape_string($oMysql, $email);
+
+			$query = "SELECT id, cpf, email,
+				CASE
+					WHEN cpf = '$cpf' AND email = '$email' THEN 'CPF e email'
+					WHEN cpf = '$cpf' THEN 'CPF'
+					WHEN email = '$email' THEN 'email'
+				END AS duplicado
+			FROM usuario
+			WHERE (cpf = '$cpf' OR email = '$email') AND id != '$id'
+			
+			UNION
+			
+			SELECT id, cpf, email,
+				CASE
+					WHEN cpf = '$cpf' AND email = '$email' THEN 'CPF e email'
+					WHEN cpf = '$cpf' THEN 'CPF'
+					WHEN email = '$email' THEN 'email'
+				END AS duplicado
+			FROM critico
+			WHERE (cpf = '$cpf' OR email = '$email') AND id != '$id'
+
+			UNION
+			
+			SELECT id, '' AS CPF, email,
+				CASE
+					WHEN email = '$email' THEN 'email'
+					ELSE ''
+				END AS duplicado
+			FROM artista
+			WHERE email = '$email' AND id != '$id'";
+
+			$resultado = mysqli_query($oMysql, $query);
+
+			if (mysqli_num_rows($resultado) > 0) {
+				$resultado_array = mysqli_fetch_assoc($resultado);
+				$duplicado = $resultado_array['duplicado'];
+				return [true, $duplicado];
+			}
+
+			return [false, ""];
+		}
+	}
+
 	if (!camposPreenchidos(['nome', 'biografia', 'cpf', 'email', 'data_nasc', 'site', 'genero'])) {
 		echo "<script src='https://cdn.jsdelivr.net/npm/sweetalert2@11'></script>";
 		echo "<script>
@@ -85,6 +133,16 @@ if (isset($_POST['edit'])) {
 				draggable: true
 				})
 				</script>";
+	} elseif (($array = validarEmailCPF($_POST['cpf'], $_POST['email'], $_GET['id'])) && $array[0] === true) {
+		echo "<script src='https://cdn.jsdelivr.net/npm/sweetalert2@11'></script>";
+		echo "<script>
+			Swal.fire({
+				icon: 'error',
+				title: 'Erro!',
+				text: 'Já existe outro usuário com esse " . $array[1] . ".',
+				draggable: true
+				})
+				</script>";
 	} else {
 		$oMysql = connect_db();
 		$cpf = preg_replace('/[^0-9]/', '', $_POST['cpf']); // remove mascara do cpf
@@ -113,40 +171,45 @@ if (isset($_POST['edit'])) {
 		<p>Preencha os campos abaixo para atualizar o registro:</p>
 
 		<form method="POST">
-			<div class="mb-3">
+			<div class="mb-2">
 				<label for="nome" class="form-label">Nome</label>
 				<input type="text" name="nome" class="form-control" placeholder="Digite o nome">
 			</div>
 
-			<div class="mb-3">
+			<div class="mb-2">
 				<label for="biografia" class="form-label">Biografia</label>
 				<textarea name="biografia" class="form-control" placeholder="Digite a biografia"></textarea>
 			</div>
 
-			<div class="mb-3">
-				<label for="cpf" class="form-label">CPF</label>
+			<div class="mb-2">
+				<label for="cpf" class="form-label">CPF: </label>
 				<input type="text" name="cpf" class="form-control" placeholder="Digite o CPF" maxlength="14"
-				onkeypress="MascaraCPF(this, event)">
+					onkeypress="MascaraCPF(this, event)">
 			</div>
 
-			<div class="mb-3">
-				<label for="email" class="form-label">Email</label>
+			<div class="mb-2">
+				<label for="email" class="form-label">Email: </label>
 				<input type="text" name="email" class="form-control" placeholder="Digite o email">
 			</div>
 
-			<div class="mb-3">
-				<label for="data_nasc" class="form-label">Data Nascimento</label>
+			<div class="mb-2">
+				<label for="data_nasc" class="form-label">Data Nascimento: </label>
 				<input type="date" name="data_nasc" class="form-control">
 			</div>
 
-			<div class="mb-3">
-				<label for="site" class="form-label">Site</label>
+			<div class="mb-2">
+				<label for="site" class="form-label">Site: </label>
 				<input type="text" name="site" class="form-control" placeholder="Digite o site">
 			</div>
 
 			<div class="mb-3">
-				<label for="genero" class="form-label">Gênero</label>
-				<input type="text" name="genero" class="form-control" placeholder="Digite o gênero">
+				<label for="genero" class="">Qual o seu Gênero?</a>
+					<select name="genero" class="form-select mt-1">
+						<option value="" disabled selected>Selecione</option>
+						<option value="M">Masculino</option>
+						<option value="F">Feminino</option>
+						<option value="I">Indefinido</option>
+					</select>
 			</div>
 
 			<button type="submit" name="edit" class="btn btn-primary">Atualizar</button>

@@ -29,6 +29,54 @@ if (isset($_POST['create'])) {
 		return false; // false = nao vai entrar no if / data correta
 	}
 
+	function validarEmailCPF($cpf, $email)
+	{
+		if ($oMysql = connect_db()) {
+			$cpf = preg_replace('/[^0-9]/', '', $cpf);
+			$email = mysqli_real_escape_string($oMysql, $email);
+
+			$query = "SELECT id, cpf, email,
+				CASE
+					WHEN cpf = '$cpf' AND email = '$email' THEN 'CPF e email'
+					WHEN cpf = '$cpf' THEN 'CPF'
+					WHEN email = '$email' THEN 'email'
+				END AS duplicado
+			FROM usuario
+			WHERE cpf = '$cpf' OR email = '$email'
+			
+			UNION
+			
+			SELECT id, cpf, email,
+				CASE
+					WHEN cpf = '$cpf' AND email = '$email' THEN 'CPF e email'
+					WHEN cpf = '$cpf' THEN 'CPF'
+					WHEN email = '$email' THEN 'email'
+				END AS duplicado
+			FROM critico
+			WHERE cpf = '$cpf' OR email = '$email'
+			
+			UNION
+			
+			SELECT id, '' AS CPF, email,
+				CASE
+					WHEN email = '$email' THEN 'email'
+					ELSE ''
+				END AS duplicado
+			FROM artista
+			WHERE email = '$email'";
+
+			$resultado = mysqli_query($oMysql, $query);
+
+			if (mysqli_num_rows($resultado) > 0) {
+				$resultado_array = mysqli_fetch_assoc($resultado);
+				$duplicado = $resultado_array['duplicado'];
+				return [true, $duplicado];
+			}
+
+			return [false, ""];
+		}
+	}
+
 	if (!camposPreenchidos(['nome', 'email', 'biografia', 'imagem', 'data_formacao', 'pais', 'site_oficial', 'genero', 'senha'])) {
 		echo "<script src='https://cdn.jsdelivr.net/npm/sweetalert2@11'></script>";
 		echo "<script>
@@ -40,7 +88,7 @@ if (isset($_POST['create'])) {
 					})
 				</script>";
 		unset($_SESSION['campos_vazios']);
-	}elseif (validarData($_POST['data_formacao'])) {
+	} elseif (validarData($_POST['data_formacao'])) {
 		echo "<script src='https://cdn.jsdelivr.net/npm/sweetalert2@11'></script>";
 		echo "<script>
 				Swal.fire({
@@ -50,6 +98,16 @@ if (isset($_POST['create'])) {
 					draggable: true
 					})
 					</script>";
+	} elseif (($array = validarEmailCPF($_POST['cpf'], $_POST['email'])) && $array[0] === true) {
+		echo "<script src='https://cdn.jsdelivr.net/npm/sweetalert2@11'></script>";
+		echo "<script>
+			Swal.fire({
+				icon: 'error',
+				title: 'Erro!',
+				text: 'Já existe um usuário com esse " . $array[1] . ".',
+				draggable: true
+				})
+				</script>";
 	} else {
 		$oMysql = connect_db();
 		$query = "INSERT INTO artista (nome,email,biografia,imagem,data_formacao,pais,site_oficial,genero,senha) 
@@ -81,7 +139,7 @@ if (isset($_POST['create'])) {
 
 			<div class="mb-2">
 				<label for="biografia" class="form-label">Biografia: *</label>
-				<input type="text" id="biografia" name="biografia" class="form-control" placeholder="Digite a biografia." value="<?php echo $_POST['biografia'] ?? ''; ?>">
+				<textarea type="text" id="biografia" name="biografia" class="form-control" placeholder="Digite a biografia." value="<?php echo $_POST['biografia'] ?? ''; ?>"></textarea>
 			</div>
 
 			<div class="mb-2">
@@ -107,7 +165,7 @@ if (isset($_POST['create'])) {
 			<div class="mb-2">
 				<label for="genero" class="form-label">Gênero: *</label>
 				<select id="genero" name="genero" class="form-select">
-					<option value="" disabled <?php echo empty($_POST['genero']) ? 'selected' : ''; ?>>Selecione o gênero</option>
+					<option value="" disabled <?php echo empty($_POST['genero']) ? 'selected' : ''; ?>>Selecione</option>
 					<option value="M" <?php echo ($_POST['genero'] ?? '') === 'M' ? 'selected' : ''; ?>>Masculino</option>
 					<option value="F" <?php echo ($_POST['genero'] ?? '') === 'F' ? 'selected' : ''; ?>>Feminino</option>
 					<option value="I" <?php echo ($_POST['genero'] ?? '') === 'I' ? 'selected' : ''; ?>>Indefinido</option>

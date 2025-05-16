@@ -54,6 +54,55 @@ if (isset($_POST['create'])) {
 		return false; // false = nao vai entrar no if / data correta
 	}
 
+	function validarEmailCPF($cpf, $email)
+	{
+		if ($oMysql = connect_db()) {
+			$cpf = preg_replace('/[^0-9]/', '', $cpf);
+			$email = mysqli_real_escape_string($oMysql, $email);
+
+			$query = "SELECT id, cpf, email,
+				CASE
+					WHEN cpf = '$cpf' AND email = '$email' THEN 'CPF e email'
+					WHEN cpf = '$cpf' THEN 'CPF'
+					WHEN email = '$email' THEN 'email'
+				END AS duplicado
+			FROM usuario
+			WHERE cpf = '$cpf' OR email = '$email'
+			
+			UNION
+			
+			SELECT id, cpf, email,
+				CASE
+					WHEN cpf = '$cpf' AND email = '$email' THEN 'CPF e email'
+					WHEN cpf = '$cpf' THEN 'CPF'
+					WHEN email = '$email' THEN 'email'
+				END AS duplicado
+			FROM critico
+			WHERE cpf = '$cpf' OR email = '$email'
+			
+			UNION
+			
+			SELECT id, '' AS CPF, email,
+				CASE
+					WHEN email = '$email' THEN 'email'
+					ELSE ''
+				END AS duplicado
+			FROM artista
+			WHERE email = '$email'";
+
+			$resultado = mysqli_query($oMysql, $query);
+
+			if (mysqli_num_rows($resultado) > 0) {
+				$resultado_array = mysqli_fetch_assoc($resultado);
+				$duplicado = $resultado_array['duplicado'];
+				return [true, $duplicado];
+			}
+
+			return [false, ""];
+		}
+	}
+
+
 	if (!camposPreenchidos(['nome', 'email', 'cpf', 'data_nasc', 'senha', 'genero'])) {
 		echo "<script src='https://cdn.jsdelivr.net/npm/sweetalert2@11'></script>";
 		echo "<script>
@@ -85,7 +134,17 @@ if (isset($_POST['create'])) {
 				draggable: true
 				})
 				</script>";
-	} else{
+	} elseif (($array = validarEmailCPF($_POST['cpf'], $_POST['email'])) && $array[0] === true) {
+		echo "<script src='https://cdn.jsdelivr.net/npm/sweetalert2@11'></script>";
+		echo "<script>
+			Swal.fire({
+				icon: 'error',
+				title: 'Erro!',
+				text: 'Já existe um usuário com esse " . $array[1] . ".',
+				draggable: true
+				})
+				</script>";
+	} else {
 		$oMysql = connect_db();
 		$cpf = preg_replace('/[^0-9]/', '', $_POST['cpf']); // remove mascara do cpf
 		$query = "INSERT INTO usuario (nome,email,cpf,data_nasc,senha,genero,permissao) 
@@ -103,7 +162,7 @@ if (isset($_POST['create'])) {
 
 	<div class="container mt-3">
 		<h2>Cadastrar usuário</h2>
-		<p style="color:gray" class="mb-2">Campo obrigatório *</p>
+		<p style="color:gray" class="mb-1">Campo obrigatório *</p>
 
 		<form method="POST">
 
@@ -137,31 +196,35 @@ if (isset($_POST['create'])) {
 			<input
 				type="date"
 				name="data_nasc"
-				class="form-control"
+				class="form-control mb-2"
 				placeholder="Coloque a sua data de nascimento aqui."
 				value="<?php echo $_POST['data_nasc'] ?? ''; ?>">
 
+			<label for="genero pt-2">Qual o seu Gênero? *</label>
+			<select name="genero" class="form-select mt-2 mb-1">
+				<option value="" disabled <?php echo empty($_POST['genero']) ? 'selected' : ''; ?>>Selecione</option>
+				<option value="M" <?php if (isset($_POST['genero']) && $_POST['genero'] == 'M') echo 'selected'; ?>>Masculino</option>
+				<option value="F" <?php if (isset($_POST['genero']) && $_POST['genero'] == 'F') echo 'selected'; ?>>Feminino</option>
+				<option value="I" <?php echo ($_POST['genero'] ?? '') === 'I' ? 'selected' : ''; ?>>Indefinido</option>
+			</select>
 			<label class="form-label pt-2">Coloque a sua senha: *</label>
 			<input
 				type="password"
 				name="senha"
 				class="form-control"
 				placeholder="Digite aqui a sua senha."
-			<div class="mb-2 mt-2">
-				<label for="genero pt-2">Qual o seu Gênero? *</label>
-				<select name="genero" class="form-select mt-1 mb-1">
-					<option value="M" <?php if (isset($_POST['genero']) && $_POST['genero'] == 'M') echo 'selected'; ?>>Masculino</option>
-					<option value="F" <?php if (isset($_POST['genero']) && $_POST['genero'] == 'F') echo 'selected'; ?>>Feminino</option>
-				</select>
-				<button
-					type="submit"
-					name="create"
-					class="btn btn-primary mt-2">Enviar</button>
-			</div>
+				class="mb-2">
+			<button
+				type="submit"
+				name="create"
+				class="btn btn-primary mt-2">Enviar
+			</button>
+	</div>
 
-		</form>
+	</form>
 	</div>
 
 	<script src="../validarCampos.js"></script>
 </body>
+
 </html>

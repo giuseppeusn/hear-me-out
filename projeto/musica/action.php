@@ -54,7 +54,8 @@ function msg_cadastro()
     exit;
 }
 
-function msg_edit(){
+function msg_edit()
+{
     $_SESSION['sucesso_edit'] = true;
     header("Location: index.php");
     exit;
@@ -73,7 +74,7 @@ function searchArtistaAlbum($conexao, $artista_musica, $album_musica)
             foreach ($resultado_artista as $i) {
                 $artista_musica = $i['id'];
             }
-        }else{
+        } else {
             $_SESSION['erro_artista'] = $artista_musica;
             header('Location: index.php?page=1');
             exit;
@@ -83,7 +84,7 @@ function searchArtistaAlbum($conexao, $artista_musica, $album_musica)
             foreach ($resultado_album as $i) { // mesma coisa do fetch_assoc, nesse caso o foreach itera o objeto e ao mesmo tempo da fetch assoc em todas as linhas.
                 $album_musica = $i['id'];
             }
-        }else{
+        } else {
             $_SESSION['erro_album'] = $album_musica;
             header('Location: index.php?page=1');
             exit;
@@ -105,7 +106,6 @@ if (isset($_POST['create'])) {
         header('Location: index.php?page=1');
         exit;
     }
-
 
     // buscar artista e album 
     list($artista_musica, $album_musica) = searchArtistaAlbum($conexao, $artista_musica, $album_musica);
@@ -140,5 +140,3 @@ if (isset($_POST['edit'])) {
         msg_edit();
     }
 }
-
-?>

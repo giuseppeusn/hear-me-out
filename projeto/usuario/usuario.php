@@ -26,8 +26,8 @@
         
         if ($resultado) {
             while ($linha = $resultado->fetch_object()) {
-                $btn = "<a href='index.php?page=2&id=" . $linha->id . "' class='btn btn-warning'>Alterar</a>";
-                $btn .= "<a href='index.php?page=3&id=" . $linha->id . "' class='btn btn-danger'>Excluir</a>";
+                $btn = "<a href='index.php?page=2&id=" . $linha->id . "' class='btn btn-warning btn-sm'>Alterar</a>";
+                $btn .= "<a href='index.php?page=3&id=" . $linha->id . "' class='btn btn-danger btn-sm m-1'>Excluir</a>";
 
                 echo "<tr>";
                 echo "<td>" . $btn . "</td>";

@@ -53,6 +53,55 @@ if (isset($_POST['create'])) {
 		return false; // false = nao vai entrar no if / data correta
 	}
 
+	function validarEmailCPF($cpf, $email)
+	{
+		if ($oMysql = connect_db()) {
+			$cpf = preg_replace('/[^0-9]/', '', $cpf);
+			$email = mysqli_real_escape_string($oMysql, $email);
+
+			$query = "SELECT id, cpf, email,
+				CASE
+					WHEN cpf = '$cpf' AND email = '$email' THEN 'CPF e email'
+					WHEN cpf = '$cpf' THEN 'CPF'
+					WHEN email = '$email' THEN 'email'
+				END AS duplicado
+			FROM usuario
+			WHERE cpf = '$cpf' OR email = '$email'
+			
+			UNION
+			
+			SELECT id, cpf, email,
+				CASE
+					WHEN cpf = '$cpf' AND email = '$email' THEN 'CPF e email'
+					WHEN cpf = '$cpf' THEN 'CPF'
+					WHEN email = '$email' THEN 'email'
+				END AS duplicado
+			FROM critico
+			WHERE cpf = '$cpf' OR email = '$email'
+			
+			UNION
+			
+			SELECT id, '' AS CPF, email,
+				CASE
+					WHEN email = '$email' THEN 'email'
+					ELSE ''
+				END AS duplicado
+			FROM artista
+			WHERE email = '$email'";
+
+			$resultado = mysqli_query($oMysql, $query);
+
+			if (mysqli_num_rows($resultado) > 0) {
+				$resultado_array = mysqli_fetch_assoc($resultado);
+				$duplicado = $resultado_array['duplicado'];
+				return [true, $duplicado];
+			}
+
+			return [false, ""];
+		}
+	}
+
+
 	if (!camposPreenchidos(['nome', 'biografia', 'cpf', 'email', 'data_nasc', 'site', 'genero', 'senha'])) {
 		echo "<script src='https://cdn.jsdelivr.net/npm/sweetalert2@11'></script>";
 		echo "<script>
@@ -81,6 +130,16 @@ if (isset($_POST['create'])) {
 				icon: 'error',
 				title: 'Erro!',
 				text: 'Data de nascimento inválida!',
+				draggable: true
+				})
+				</script>";
+	} elseif (($array = validarEmailCPF($_POST['cpf'], $_POST['email'])) && $array[0] === true) {
+		echo "<script src='https://cdn.jsdelivr.net/npm/sweetalert2@11'></script>";
+		echo "<script>
+			Swal.fire({
+				icon: 'error',
+				title: 'Erro!',
+				text: 'Já existe um usuário com esse " . $array[1] . ".',
 				draggable: true
 				})
 				</script>";
@@ -113,7 +172,7 @@ if (isset($_POST['create'])) {
 
 			<div class="mb-2">
 				<label for="biografia" class="form-label">Biografia: *</label>
-				<input type="text" id="biografia" name="biografia" class="form-control" placeholder="Digite aqui sua biografia." value="<?php echo $_POST['biografia'] ?? ''; ?>">
+				<textarea type="text" id="biografia" name="biografia" class="form-control" placeholder="Digite a biografia." value="<?php echo $_POST['biografia'] ?? ''; ?>"></textarea>
 			</div>
 
 			<div class="mb-2">
