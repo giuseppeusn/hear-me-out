@@ -4,17 +4,13 @@
 	if ($listaReadAlbum = mysqli_fetch_assoc($queryReadAlbum)) {
 		$nome = $listaReadAlbum['nome'];
 		$capa = $listaReadAlbum['capa'];
-		$duracao = $listaReadAlbum['duracao'];
 		$data_lancamento = $listaReadAlbum['data_lancamento'];
-		$qtd_musicas = $listaReadAlbum['qtd_musicas'];
 	}
-	if(isset($_POST['nome'], $_POST['capa'], $_POST['data_lancamento'], $_POST['duracao'], $_POST['qtd_musicas'])){
+	if(isset($_POST['nome'], $_POST['capa'], $_POST['data_lancamento'])){
 		$query = "UPDATE album
 			SET nome = '".$_POST['nome']."', 
 				capa = '".$_POST['capa']."', 
 				data_lancamento = '".$_POST['data_lancamento']."', 
-				duracao = '".$_POST['duracao']."',
-				qtd_musicas = '".$_POST['qtd_musicas']."'
 			WHERE id = ".$_GET['id'];
 		$resultado = $oMysql->query($query);
 		header('location: index.php');
@@ -45,17 +41,6 @@
 				<label for="data_lancamento" class="form-label">Data de lançamento</label>
 				<input type="date" name="data_lancamento" class="form-control" value='<?php echo ($data_lancamento)?>'>
 			</div>
-
-			<div class="mb-3">
-				<label for="duracao" class="form-label">Duração (em segundos)</label>
-				<input type="number" name="duracao" class="form-control" placeholder="Digite a duração" value='<?php echo ($duracao)?>'>
-			</div>
-
-			<div class="mb-3">
-				<label for="qtd_musicas" class="form-label">Número de músicas</label>
-				<input type="number" name="qtd_musicas" class="form-control" placeholder="Digite a quantidade de músicas" value='<?php echo ($qtd_musicas)?>'>
-			</div>
-
 
 			<button type="submit" class="btn btn-primary">Atualizar</button>
 		</form>

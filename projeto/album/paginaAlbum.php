@@ -34,10 +34,8 @@
 
                 album.id AS album_id,
                 album.nome AS album_nome,
-                album.duracao AS album_duracao,
                 album.data_lancamento AS album_data,
                 album.capa AS album_capa,
-                album.qtd_musicas AS album_musicas,
                 album.id_artista AS album_artista_id,
 
                 artista.id AS artista_id,
@@ -60,7 +58,7 @@
                 $btnAlterarMusica = "<a href='/hear-me-out/projeto/musica/update.php?page=2&id=" . $linha->musica_id . "' class='btn btn-warning me-2'>Alterar</a>";
                 $btnExcluirMusica = "<a href='/hear-me-out/projeto/musica/delete.php?page=3&id=" . $linha->musica_id . "' class='btn btn-danger'>Excluir</a>";
                 $btnVoltar =  "<a href='index.php?page=0&id=" . $linha->album_id . "' class='btn btn-light'>< Voltar</a>";
-                $tempoAlbum = $linha->album_duracao;  
+                $tempoAlbum = 100;  
                 $minutos = floor($tempoAlbum / 60);  
                 $segundos = $tempoAlbum % 60; 
 
@@ -78,9 +76,6 @@
                                         <div>
                                             <p class='text-uppercase mb-1' style='font-size: 12px;'>Album</p>
                                             <h1 style='font-size: 48px; font-weight: bold; margin: 0;'>{$linha->album_nome}</h1>
-                                            <p class='mt-3' style='font-size: 16px; '>
-                                                <b>{$linha->artista_nome}</b> • {$linha->album_musicas} músicas, {$minutos} min {$segundos} sec
-                                            </p>
                                         </div>
                                     </div>
                                 </div>
@@ -92,7 +87,6 @@
                 echo "<td>{$linha->musica_id}</td>";
                 echo "<td>{$linha->musica_nome}<br>{$linha->artista_nome}</td>";
                 echo "<td>AINDA NAO FEITO</td>";
-                echo "<td>{$linha->musica_duracao}</td>";
                 echo "<td>".$btnAlterarMusica.$btnExcluirMusica."</td>";
                 echo "</tr>";
                 
