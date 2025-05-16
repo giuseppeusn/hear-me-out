@@ -14,8 +14,11 @@
     $usuario = $mysql->query($queryUsuario);
 
     if ($usuario->num_rows > 0) {
+      $row = $usuario->fetch_assoc();
       $_SESSION['authenticated'] = true;
-      $_SESSION['nome'] = $usuario->fetch_assoc()['nome'];
+      $row = $usuario->fetch_assoc();
+      $_SESSION['nome'] = $row['nome']; 
+      $_SESSION['permissao'] = $row['permissao']; 
       $mysql->close();
       header("location: /hear-me-out/projeto/index.php");
       exit();
@@ -29,6 +32,8 @@
       $_SESSION['authenticated'] = true;
       $_SESSION['id_artista'] = $row['id'];
       $_SESSION['nome'] = $row['nome'];
+      $_SESSION['permissao'] = 'artista';
+
       $mysql->close();
       header("location: /hear-me-out/projeto/artista/index.php");
       exit();
@@ -38,8 +43,10 @@
     $critico = $mysql->query($queryCritico);
 
     if ($critico->num_rows > 0) {
+      $row = $critico->fetch_assoc();
       $_SESSION['authenticated'] = true;
-      $_SESSION['nome'] = $critico->fetch_assoc()['nome'];
+      $_SESSION['nome'] = $row['nome'];
+      $_SESSION['permissao'] = 'critico';
       $mysql->close();
       header("location: /hear-me-out/projeto/critico/index.php");
       exit();
@@ -52,6 +59,7 @@
 
 <!DOCTYPE html>
 <html lang="en">
+<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 <body>
   <div class="container w-50 h-auto mt-5"> 
     <h2 class="text-center">Login</h2>
@@ -69,5 +77,6 @@
       <button type="submit" class="btn btn-primary">Entrar</button>
     </form>
   </div>
+ 
 </body>
 </html>
