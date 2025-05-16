@@ -7,47 +7,51 @@
 <body>
 <script>
   function abrirFormularioAlbum() {
-  Swal.fire({
-    title: 'Cadastrar Álbum',
-    html:
-      `<input id="nome" class="swal2-input" placeholder="Nome do Álbum">` +
-      `<input id="capa" class="swal2-input" placeholder="Capa do Álbum (URL ou nome do arquivo)">` +
-      `<input id="data" type="date" class="swal2-input" placeholder="Data de Lançamento">`,
-    confirmButtonText: 'Salvar',
-    showCancelButton: true,
-    focusConfirm: false,
-    showCloseButton: true,
-    preConfirm: () => {
-      const nome = document.getElementById('nome').value;
-      const capa = document.getElementById('capa').value;
-      const data = document.getElementById('data').value;
+    Swal.fire({
+      title: 'Cadastrar Álbum',
+      html:
+        `<input id="nome" class="swal2-input" placeholder="Nome do Álbum">` +
+        `<input id="capa" class="swal2-input" placeholder="Capa do Álbum (URL ou nome do arquivo)">` +
+        `<input id="data" type="date" class="swal2-input" placeholder="Data de Lançamento">`,
+      confirmButtonText: 'Salvar',
+      showCancelButton: true,
+      showCloseButton: true,
+      focusConfirm: false,
+      preConfirm: () => {
+        const nome = document.getElementById('nome').value;
+        const capa = document.getElementById('capa').value;
+        const data = document.getElementById('data').value;
 
-      if (!nome || !capa || !data) {
-        Swal.showValidationMessage('Preencha todos os campos!');
-        return false;
+        if (!nome || !capa || !data) {
+          Swal.showValidationMessage('Preencha todos os campos!');
+          return false;
+        }
+
+        return { nome, capa, data };
       }
-
-      return { nome, capa, data };
-    }
-  }).then((resultado) => {
-    fetch('insert.php', {
-      method: 'POST',
-      headers: {
-        'Content-Type': 'application/json'
-      },
-      body: JSON.stringify(resultado.value)
-    })
-    .then(response => response.text())
-    .then(data => {
-      Swal.fire('Sucesso!', data, 'success');
-      window.location.reload();
-    })
-    .catch(error => {
-      Swal.fire('Erro!', 'Não foi possível salvar.', 'error');
+    }).then((resultado) => {
+      if (resultado.isConfirmed) {
+        fetch('insert.php', {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json'
+          },
+          body: JSON.stringify(resultado.value)
+        })
+        .then(response => response.text())
+        .then(data => {
+          Swal.fire('Sucesso!', data, 'success').then(() => {
+            window.location.reload();
+          });
+        })
+        .catch(error => {
+          Swal.fire('Erro!', 'Não foi possível salvar.', 'error');
+        });
+      }
     });
-  });
-}
+  }
 </script>
+
 
 
 <div class="container mt-3">
