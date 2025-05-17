@@ -12,7 +12,8 @@ CREATE TABLE artista (
     pais VARCHAR(100) NOT NULL,
     site_oficial VARCHAR(255) NOT NULL,
     genero VARCHAR(20) NOT NULL,
-    senha VARCHAR(40) NOT NULL
+    senha VARCHAR(255) NOT NULL,
+    aprovado BOOL NOT NULL
 );
 
 CREATE TABLE usuario (
@@ -21,7 +22,7 @@ CREATE TABLE usuario (
     cpf VARCHAR(11) NOT NULL,
     email VARCHAR(40) NOT NULL,
     data_nasc DATE NOT NULL,
-    senha VARCHAR(40) NOT NULL,
+    senha VARCHAR(255) NOT NULL,
     genero ENUM('M','F','I'),
     permissao ENUM('normal','admin')
 );
@@ -31,9 +32,9 @@ CREATE TABLE critico (
     nome VARCHAR(60) NOT NULL,
     cpf VARCHAR(11) NOT NULL,
     email VARCHAR(40) NOT NULL,
-    biografia VARCHAR(1000 ) NOT NULL,
+    biografia VARCHAR(1000) NOT NULL,
     data_nasc DATE NOT NULL,
-    senha VARCHAR(40) NOT NULL,
+    senha VARCHAR(255) NOT NULL,
     genero ENUM('M','F','I'),
     site VARCHAR(255) NOT NULL,
     aprovado BOOL NOT NULL
@@ -42,10 +43,8 @@ CREATE TABLE critico (
 CREATE TABLE album (
 	id INT PRIMARY KEY AUTO_INCREMENT,
     nome VARCHAR(60) NOT NULL,
-    duracao INT NOT NULL,
     data_lancamento DATE NOT NULL,
     capa VARCHAR(500) NOT NULL,
-    qtd_musicas INT NOT NULL,
     id_artista INT NOT NULL,
     
     FOREIGN KEY (id_artista) REFERENCES artista(id)
@@ -119,6 +118,30 @@ CREATE TABLE avaliacao_album(
     FOREIGN KEY (id_avaliacao) REFERENCES avaliacao(id),
     FOREIGN KEY (id_album) REFERENCES album(id)
 );
-    
-    
+
+CREATE VIEW view_musicas_com_nomes AS
+SELECT
+    musica.id,
+    musica.nome AS nome_musica,
+    album.nome AS nome_album,
+    artista.nome AS nome_artista,
+    musica.duracao,
+    musica.data_lancamento,
+    musica.capa
+FROM
+    musica
+JOIN album ON musica.id_album = album.id
+JOIN artista ON musica.id_artista = artista.id;
+
+CREATE VIEW view_albuns_com_nomes AS
+SELECT
+    artista.id,
+    album.nome AS nome_album,
+    artista.nome AS nome_artista,
+    album.duracao,
+    album.data_lancamento,
+    album.capa
+FROM
+    album
+JOIN artista ON album.id_artista = artista.id;
     

@@ -1,0 +1,16 @@
+.swiper {
+  width: 100%;
+  padding: 1rem;
+}
+
+.swiper-slide {
+  display: flex;
+  justify-content: center;
+}
+
+.swiper-button-next-1,
+.swiper-button-prev-1,
+.swiper-button-next-2,
+.swiper-button-prev-2 {
+  color: white !important;
+}
