@@ -17,48 +17,56 @@ if (isset($_SESSION['sucesso_cadastro'])) {
 
 
 
+$mysql = connect_db();
 if (isset($_POST['email']) && isset($_POST['senha'])) {
-  $email = $_POST['email'];
+  $email = mysqli_real_escape_string($mysql, $_POST['email']);
   $senha = $_POST['senha'];
 
   if (session_status() === PHP_SESSION_NONE) {
     session_start();
   }
 
-  $mysql = connect_db();
-  $queryUsuario = "SELECT * FROM usuario WHERE email = '" . $email . "' AND senha = '" . $senha . "'";
+  $queryUsuario = "SELECT * FROM usuario WHERE email = '$email'";
   $usuario = $mysql->query($queryUsuario);
+  $usuario_array = mysqli_fetch_assoc($usuario);
 
   if ($usuario->num_rows > 0) {
-    $_SESSION['authenticated'] = true;
-    $_SESSION['nome'] = $usuario->fetch_assoc()['nome'];
-    $mysql->close();
-    header("location: /hear-me-out/projeto/index.php");
-    exit();
+    if (password_verify($senha, $usuario_array['senha'])) {
+      $_SESSION['authenticated'] = true;
+      $_SESSION['nome'] = $usuario_array['nome'];
+      $mysql->close();
+      header("location: /hear-me-out/projeto/index.php");
+      exit();
+    }
   }
 
-  $queryArtista = "SELECT * FROM artista WHERE email = '" . $email . "' AND senha = '" . $senha . "'";
+  $queryArtista = "SELECT * FROM artista WHERE email = '$email'";
   $artista = $mysql->query($queryArtista);
+  $artista_array = mysqli_fetch_assoc($artista);
 
   if ($artista->num_rows > 0) {
-    $row = $artista->fetch_assoc();
-    $_SESSION['authenticated'] = true;
-    $_SESSION['id_artista'] = $row['id'];
-    $_SESSION['nome'] = $row['nome'];
-    $mysql->close();
-    header("location: /hear-me-out/projeto/artista/index.php");
-    exit();
+    if (password_verify($senha, $artista_array['senha'])) {
+      $_SESSION['authenticated'] = true;
+      $_SESSION['id_artista'] = $artista_array['id'];
+      $_SESSION['nome'] = $artista_array['nome'];
+      $mysql->close();
+      header("location: /hear-me-out/projeto/artista/index.php");
+      exit();
+    }
   }
 
-  $queryCritico = "SELECT * FROM critico WHERE email = '" . $email . "' AND senha = '" . $senha . "'";
+  $queryCritico = "SELECT * FROM critico WHERE email = '$email'";
   $critico = $mysql->query($queryCritico);
+  $critico_array = mysqli_fetch_assoc($critico);
 
   if ($critico->num_rows > 0) {
-    $_SESSION['authenticated'] = true;
-    $_SESSION['nome'] = $critico->fetch_assoc()['nome'];
-    $mysql->close();
-    header("location: /hear-me-out/projeto/critico/index.php");
-    exit();
+    if (password_verify($senha, $critico_array['senha'])) {
+      $_SESSION['authenticated'] = true;
+      $_SESSION['nome'] = $critico_array['nome'];
+      $mysql->close();
+      header("location: /hear-me-out/projeto/critico/index.php");
+      exit();
+    }
   }
 
   $mysql->close();

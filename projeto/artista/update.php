@@ -103,7 +103,7 @@ if (isset($_POST['edit'])) {
 	}
 
 
-	if (!camposPreenchidos(['nome', 'email', 'biografia', 'imagem', 'data_formacao', 'pais', 'site_oficial', 'genero', 'senha'])) {
+	if (!camposPreenchidos(['nome', 'email', 'biografia', 'imagem', 'data_formacao', 'pais', 'site_oficial', 'genero'])) {
 		echo "<script src='https://cdn.jsdelivr.net/npm/sweetalert2@11'></script>";
 		echo "<script>
 		Swal.fire({
@@ -153,7 +153,8 @@ if (isset($_POST['edit'])) {
 				data_formacao = '" . $_POST['data_formacao'] . "', 
 				pais = '" . $_POST['pais'] . "', 
 				site_oficial = '" . $_POST['site_oficial'] . "', 
-				genero = '" . $_POST['genero'] . "' 
+				genero = '" . $_POST['genero'] . "',
+				senha = '". $_POST['senha'] ."' 
 			WHERE id = " . $_GET['id'];
 		$resultado = $oMysql->query($query);
 		$_SESSION['sucesso_edit'] = true;
@@ -172,36 +173,36 @@ if (isset($_POST['edit'])) {
 
 		<form method="POST">
 			<div class="mb-2">
-				<label for="nome" class="form-label">Nome</label>
+				<label for="nome" class="form-label">Nome: </label>
 				<input type="text" name="nome" class="form-control" placeholder="Digite o nome">
 			</div>
 
 			<div class="mb-2">
-				<label for="biografia" class="form-label">Biografia</label>
+				<label for="biografia" class="form-label">Biografia:</label>
 				<textarea name="biografia" class="form-control" placeholder="Digite a biografia"></textarea>
 			</div>
 
 			<div class="mb-2">
-				<label for="imagem" class="form-label">Imagem</label>
+				<label for="imagem" class="form-label">Imagem:</label>
 				<input type="text" name="imagem" class="form-control" placeholder="URL da imagem">
 			</div>
 
 			<div class="mb-2">
-				<label for="data_formacao" class="form-label">Data de Formação</label>
+				<label for="data_formacao" class="form-label">Data de Formação:</label>
 				<input type="date" name="data_formacao" class="form-control">
 			</div>
 
 			<div class="mb-2">
-				<label for="pais" class="form-label">País</label>
+				<label for="pais" class="form-label">País:</label>
 				<input type="text" name="pais" class="form-control" placeholder="Digite o país">
 			</div>
 
 			<div class="mb-2">
-				<label for="site_oficial" class="form-label">Site Oficial</label>
+				<label for="site_oficial" class="form-label">Site Oficial:</label>
 				<input type="text" name="site_oficial" class="form-control" placeholder="Digite o site oficial">
 			</div>
 
-			<div class="mb-3">
+			<div class="mb-2">
 				<label for="genero" class="">Qual o seu Gênero?</a>
 					<select name="genero" class="form-select mt-1">
 						<option value="" disabled selected>Selecione</option>
@@ -210,7 +211,11 @@ if (isset($_POST['edit'])) {
 						<option value="I">Indefinido</option>
 					</select>
 			</div>
-
+			<div class="mb-3">
+				<label for="senha" class="form-label">Senha: (vazio para não mudar)</label>
+				<input type="password" id="senha" name="senha" class="form-control" placeholder="Digite sua senha."
+					autocomplete="off">
+			</div>
 			<button type="submit" name="edit" class="btn btn-primary">Atualizar</button>
 		</form>
 	</div>

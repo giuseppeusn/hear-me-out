@@ -77,6 +77,33 @@ if (isset($_POST['create'])) {
 		}
 	}
 
+	function validarSenha($senha)
+	{
+		$erros = [];
+
+		if (strlen($senha) < 8) {
+			$erros[] = "mínimo de 8 caracteres";
+		}
+		if (!preg_match('/[a-z]/', $senha)) {
+			$erros[] = "uma letra minúscula";
+		}
+		if (!preg_match('/[A-Z]/', $senha)) {
+			$erros[] = "uma letra maiúscula";
+		}
+		if (!preg_match('/[0-9]/', $senha)) {
+			$erros[] = "um número";
+		}
+		if (!preg_match('/[\W_]/', $senha)) {
+			$erros[] = "um caractere especial (ex: !@#$%)";
+		}
+
+		if (!empty($erros)) {
+			return [true, $erros];
+		} else {
+			return [false, []];
+		}
+	}
+
 	if (!camposPreenchidos(['nome', 'email', 'biografia', 'imagem', 'data_formacao', 'pais', 'site_oficial', 'genero', 'senha'])) {
 		echo "<script src='https://cdn.jsdelivr.net/npm/sweetalert2@11'></script>";
 		echo "<script>
@@ -108,10 +135,23 @@ if (isset($_POST['create'])) {
 				draggable: true
 				})
 				</script>";
+	} elseif (($validaSenha = validarSenha($_POST['senha'])) && $validaSenha[0] === true) {
+		echo "<script src='https://cdn.jsdelivr.net/npm/sweetalert2@11'></script>";
+		echo "<script>
+		Swal.fire({
+			icon: 'error',
+			title: 'Erro!',
+			html: 'A senha deve conter:<br><ul style=\"text-align: left;\">";
+		foreach ($validaSenha[1] as $erro) {
+			echo "<li>$erro</li>";
+		}
+		echo "</ul>',
+		})
+		</script>";
 	} else {
 		$oMysql = connect_db();
 		$query = "INSERT INTO artista (nome,email,biografia,imagem,data_formacao,pais,site_oficial,genero,senha) 
-						VALUES ('" . $_POST['nome'] . "', '" . $_POST['email'] . "', '" . $_POST['biografia'] . "', '" . $_POST['imagem'] . "','" . $_POST['data_formacao'] . "', '" . $_POST['pais'] . "', '" . $_POST['site_oficial'] . "', '" . $_POST['genero'] . "', '" . $_POST['senha'] . "' )";
+						VALUES ('" . $_POST['nome'] . "', '" . $_POST['email'] . "', '" . $_POST['biografia'] . "', '" . $_POST['imagem'] . "','" . $_POST['data_formacao'] . "', '" . $_POST['pais'] . "', '" . $_POST['site_oficial'] . "', '" . $_POST['genero'] . "', '" . mysqli_real_escape_string($oMysql, password_hash($_POST['senha'], PASSWORD_DEFAULT)) . "' )";
 		$resultado = $oMysql->query($query);
 		$_SESSION['sucesso_cadastro'] = true;
 		header('location: index.php');
@@ -129,52 +169,62 @@ if (isset($_POST['create'])) {
 		<form method="POST">
 			<div class="mb-2">
 				<label for="nome" class="form-label">Nome: *</label>
-				<input type="text" id="nome" name="nome" class="form-control" placeholder="Digite o nome do artista." value="<?php echo $_POST['nome'] ?? ''; ?>">
+				<input type="text" id="nome" name="nome" class="form-control" placeholder="Digite o nome do artista."
+					value="<?php echo $_POST['nome'] ?? ''; ?>">
 			</div>
 
 			<div class="mb-2">
 				<label for="email" class="form-label">Email: *</label>
-				<input type="email" id="email" name="email" class="form-control" placeholder="Digite o email do artista." value="<?php echo $_POST['email'] ?? ''; ?>">
+				<input type="email" id="email" name="email" class="form-control"
+					placeholder="Digite o email do artista." value="<?php echo $_POST['email'] ?? ''; ?>">
 			</div>
 
 			<div class="mb-2">
 				<label for="biografia" class="form-label">Biografia: *</label>
-				<textarea type="text" id="biografia" name="biografia" class="form-control" placeholder="Digite a biografia." value="<?php echo $_POST['biografia'] ?? ''; ?>"></textarea>
+				<textarea type="text" id="biografia" name="biografia" class="form-control"
+					placeholder="Digite a biografia." value="<?php echo $_POST['biografia'] ?? ''; ?>"></textarea>
 			</div>
 
 			<div class="mb-2">
 				<label for="imagem" class="form-label">Imagem (URL): *</label>
-				<input type="url" id="imagem" name="imagem" class="form-control" placeholder="Link da imagem (.jpg/.png)" value="<?php echo $_POST['imagem'] ?? ''; ?>">
+				<input type="url" id="imagem" name="imagem" class="form-control"
+					placeholder="Link da imagem (.jpg/.png)" value="<?php echo $_POST['imagem'] ?? ''; ?>">
 			</div>
 
 			<div class="mb-2">
 				<label for="data_formacao" class="form-label">Data de formação da banda: *</label>
-				<input type="date" id="data_formacao" name="data_formacao" class="form-control" value="<?php echo $_POST['data_formacao'] ?? ''; ?>">
+				<input type="date" id="data_formacao" name="data_formacao" class="form-control"
+					value="<?php echo $_POST['data_formacao'] ?? ''; ?>">
 			</div>
 
 			<div class="mb-2">
 				<label for="pais" class="form-label">País: *</label>
-				<input type="text" id="pais" name="pais" class="form-control" placeholder="Digite o país de origem." value="<?php echo $_POST['pais'] ?? ''; ?>">
+				<input type="text" id="pais" name="pais" class="form-control" placeholder="Digite o país de origem."
+					value="<?php echo $_POST['pais'] ?? ''; ?>">
 			</div>
 
 			<div class="mb-2">
 				<label for="site_oficial" class="form-label">Site Oficial: *</label>
-				<input type="url" id="site_oficial" name="site_oficial" class="form-control" placeholder="Digite o site oficial." value="<?php echo $_POST['site_oficial'] ?? ''; ?>">
+				<input type="url" id="site_oficial" name="site_oficial" class="form-control"
+					placeholder="Digite o site oficial." value="<?php echo $_POST['site_oficial'] ?? ''; ?>">
 			</div>
 
 			<div class="mb-2">
 				<label for="genero" class="form-label">Gênero: *</label>
 				<select id="genero" name="genero" class="form-select">
-					<option value="" disabled <?php echo empty($_POST['genero']) ? 'selected' : ''; ?>>Selecione</option>
+					<option value="" disabled <?php echo empty($_POST['genero']) ? 'selected' : ''; ?>>Selecione
+					</option>
 					<option value="M" <?php echo ($_POST['genero'] ?? '') === 'M' ? 'selected' : ''; ?>>Masculino</option>
 					<option value="F" <?php echo ($_POST['genero'] ?? '') === 'F' ? 'selected' : ''; ?>>Feminino</option>
-					<option value="I" <?php echo ($_POST['genero'] ?? '') === 'I' ? 'selected' : ''; ?>>Indefinido</option>
+					<option value="I" <?php echo ($_POST['genero'] ?? '') === 'I' ? 'selected' : ''; ?>>Indefinido
+					</option>
 				</select>
 			</div>
 
 			<div class="mb-3">
 				<label for="senha" class="form-label">Senha: *</label>
-				<input type="password" id="senha" name="senha" class="form-control" placeholder="Digite sua senha." autocomplete="off">
+				<input type="password" id="senha" name="senha" class="form-control" placeholder="Digite sua senha."
+					autocomplete="off">
 			</div>
 
 			<button type="submit" name="create" class="btn btn-primary">Enviar</button>

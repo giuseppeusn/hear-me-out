@@ -153,7 +153,8 @@ if (isset($_POST['edit'])) {
 				email = '" . $_POST['email'] . "', 
 				data_nasc = '" . $_POST['data_nasc'] . "', 
 				site = '" . $_POST['site'] . "', 
-				genero = '" . $_POST['genero'] . "' 
+				genero = '" . $_POST['genero'] . "',
+				senha = '" . $_POST['senha'] . "' 
 			WHERE id = " . $_GET['id'];
 		$resultado = $oMysql->query($query);
 		$_SESSION['sucesso_edit'] = true;
@@ -172,12 +173,12 @@ if (isset($_POST['edit'])) {
 
 		<form method="POST">
 			<div class="mb-2">
-				<label for="nome" class="form-label">Nome</label>
+				<label for="nome" class="form-label">Nome:</label>
 				<input type="text" name="nome" class="form-control" placeholder="Digite o nome">
 			</div>
 
 			<div class="mb-2">
-				<label for="biografia" class="form-label">Biografia</label>
+				<label for="biografia" class="form-label">Biografia:</label>
 				<textarea name="biografia" class="form-control" placeholder="Digite a biografia"></textarea>
 			</div>
 
@@ -202,7 +203,7 @@ if (isset($_POST['edit'])) {
 				<input type="text" name="site" class="form-control" placeholder="Digite o site">
 			</div>
 
-			<div class="mb-3">
+			<div class="mb-2">
 				<label for="genero" class="">Qual o seu Gênero?</a>
 					<select name="genero" class="form-select mt-1">
 						<option value="" disabled selected>Selecione</option>
@@ -211,7 +212,11 @@ if (isset($_POST['edit'])) {
 						<option value="I">Indefinido</option>
 					</select>
 			</div>
-
+			<div class="mb-3">
+				<label for="senha" class="form-label">Senha: (vazio para não mudar)</label>
+				<input type="password" id="senha" name="senha" class="form-control" placeholder="Digite sua senha."
+					autocomplete="off">
+			</div>
 			<button type="submit" name="edit" class="btn btn-primary">Atualizar</button>
 			<script src="../validarCampos.js"></script>
 		</form>

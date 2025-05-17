@@ -32,7 +32,8 @@ if (isset($_POST['create'])) {
 				$soma += $cpf[$c] * (($t + 1) - $c);
 			}
 			$digito = (10 * $soma) % 11;
-			if ($digito == 10) $digito = 0;
+			if ($digito == 10)
+				$digito = 0;
 			if ($cpf[$t] != $digito) {
 				return true;
 			}
@@ -102,6 +103,32 @@ if (isset($_POST['create'])) {
 		}
 	}
 
+	function validarSenha($senha)
+	{
+		$erros = [];
+
+		if (strlen($senha) < 8) {
+			$erros[] = "mínimo de 8 caracteres";
+		}
+		if (!preg_match('/[a-z]/', $senha)) {
+			$erros[] = "uma letra minúscula";
+		}
+		if (!preg_match('/[A-Z]/', $senha)) {
+			$erros[] = "uma letra maiúscula";
+		}
+		if (!preg_match('/[0-9]/', $senha)) {
+			$erros[] = "um número";
+		}
+		if (!preg_match('/[\W_]/', $senha)) {
+			$erros[] = "um caractere especial (ex: !@#$%)";
+		}
+
+		if (!empty($erros)) {
+			return [true, $erros];
+		} else {
+			return [false, []];
+		}
+	}
 
 	if (!camposPreenchidos(['nome', 'email', 'cpf', 'data_nasc', 'senha', 'genero'])) {
 		echo "<script src='https://cdn.jsdelivr.net/npm/sweetalert2@11'></script>";
@@ -144,11 +171,24 @@ if (isset($_POST['create'])) {
 				draggable: true
 				})
 				</script>";
+	} elseif (($validaSenha = validarSenha($_POST['senha'])) && $validaSenha[0] === true) {
+		echo "<script src='https://cdn.jsdelivr.net/npm/sweetalert2@11'></script>";
+		echo "<script>
+		Swal.fire({
+			icon: 'error',
+			title: 'Erro!',
+			html: 'A senha deve conter:<br><ul style=\"text-align: left;\">";
+		foreach ($validaSenha[1] as $erro) {
+			echo "<li>$erro</li>";
+		}
+		echo "</ul>',
+		})
+		</script>";
 	} else {
 		$oMysql = connect_db();
 		$cpf = preg_replace('/[^0-9]/', '', $_POST['cpf']); // remove mascara do cpf
 		$query = "INSERT INTO usuario (nome,email,cpf,data_nasc,senha,genero,permissao) 
-							VALUES ('" . $_POST['nome'] . "', '" . $_POST['email'] . "', '" . $cpf . "', '" . $_POST['data_nasc'] . "', '" . $_POST['senha'] . "', '" . $_POST['genero'] . "', 'normal')";
+							VALUES ('" . $_POST['nome'] . "', '" . $_POST['email'] . "', '" . $cpf . "', '" . $_POST['data_nasc'] . "', '" . mysqli_real_escape_string($oMysql, password_hash($_POST['senha'], PASSWORD_DEFAULT)) . "', '" . $_POST['genero'] . "', 'normal')";
 		$resultado = $oMysql->query($query);
 		$_SESSION['sucesso_cadastro'] = true;
 		header('location: index.php');
@@ -167,57 +207,36 @@ if (isset($_POST['create'])) {
 		<form method="POST">
 
 			<label class="form-label pt-2">Nome: *</label>
-			<input
-				type="text"
-				name="nome"
-				class="form-control"
-				placeholder="Digite aqui o seu Nome"
+			<input type="text" name="nome" class="form-control" placeholder="Digite aqui o seu Nome"
 				value="<?php echo $_POST['nome'] ?? ''; ?>">
 
 			<label class="form-label pt-2">Email: *</label>
-			<input
-				type="text"
-				name="email"
-				class="form-control"
-				placeholder="Digite aqui o seu texto."
+			<input type="text" name="email" class="form-control" placeholder="Digite aqui o seu texto."
 				value="<?php echo $_POST['email'] ?? ''; ?>">
 
 			<label class="form-label pt-2">CPF:</label>
-			<input
-				type="text"
-				name="cpf"
-				class="form-control"
-				placeholder="Digite aqui o seu CPF"
-				maxlength="14"
-				onkeypress="MascaraCPF(this, event)"
-				value="<?php echo $_POST['cpf'] ?? ''; ?>">
+			<input type="text" name="cpf" class="form-control" placeholder="Digite aqui o seu CPF" maxlength="14"
+				onkeypress="MascaraCPF(this, event)" value="<?php echo $_POST['cpf'] ?? ''; ?>">
 
 			<label class="form-label pt-2">Data de nascimento: *</label>
-			<input
-				type="date"
-				name="data_nasc"
-				class="form-control mb-2"
-				placeholder="Coloque a sua data de nascimento aqui."
-				value="<?php echo $_POST['data_nasc'] ?? ''; ?>">
+			<input type="date" name="data_nasc" class="form-control mb-2"
+				placeholder="Coloque a sua data de nascimento aqui." value="<?php echo $_POST['data_nasc'] ?? ''; ?>">
 
 			<label for="genero pt-2">Qual o seu Gênero? *</label>
 			<select name="genero" class="form-select mt-2 mb-1">
 				<option value="" disabled <?php echo empty($_POST['genero']) ? 'selected' : ''; ?>>Selecione</option>
-				<option value="M" <?php if (isset($_POST['genero']) && $_POST['genero'] == 'M') echo 'selected'; ?>>Masculino</option>
-				<option value="F" <?php if (isset($_POST['genero']) && $_POST['genero'] == 'F') echo 'selected'; ?>>Feminino</option>
+				<option value="M" <?php if (isset($_POST['genero']) && $_POST['genero'] == 'M')
+					echo 'selected'; ?>>
+					Masculino</option>
+				<option value="F" <?php if (isset($_POST['genero']) && $_POST['genero'] == 'F')
+					echo 'selected'; ?>>
+					Feminino</option>
 				<option value="I" <?php echo ($_POST['genero'] ?? '') === 'I' ? 'selected' : ''; ?>>Indefinido</option>
 			</select>
 			<label class="form-label pt-2">Coloque a sua senha: *</label>
-			<input
-				type="password"
-				name="senha"
-				class="form-control"
-				placeholder="Digite aqui a sua senha."
+			<input type="password" name="senha" class="form-control" placeholder="Digite aqui a sua senha."
 				class="mb-2">
-			<button
-				type="submit"
-				name="create"
-				class="btn btn-primary mt-2">Enviar
+			<button type="submit" name="create" class="btn btn-primary mt-2">Enviar
 			</button>
 	</div>
 

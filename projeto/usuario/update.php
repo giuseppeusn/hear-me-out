@@ -102,7 +102,34 @@ if (isset($_POST['edit'])) {
 		}
 	}
 
-	if (!camposPreenchidos(['nome', 'email', 'cpf', 'data_nasc', 'senha', 'genero'])) {
+	function validarSenha($senha)
+	{
+		$erros = [];
+
+		if (strlen($senha) < 8) {
+			$erros[] = "mínimo de 8 caracteres";
+		}
+		if (!preg_match('/[a-z]/', $senha)) {
+			$erros[] = "uma letra minúscula";
+		}
+		if (!preg_match('/[A-Z]/', $senha)) {
+			$erros[] = "uma letra maiúscula";
+		}
+		if (!preg_match('/[0-9]/', $senha)) {
+			$erros[] = "um número";
+		}
+		if (!preg_match('/[\W_]/', $senha)) {
+			$erros[] = "um caractere especial (ex: !@#$%)";
+		}
+
+		if (!empty($erros)) {
+			return [true, $erros];
+		} else {
+			return [false, []];
+		}
+	}
+
+	if (!camposPreenchidos(['nome', 'email', 'cpf', 'data_nasc', 'genero'])) {
 		echo "<script src='https://cdn.jsdelivr.net/npm/sweetalert2@11'></script>";
 		echo "<script>
 		Swal.fire({
@@ -143,6 +170,19 @@ if (isset($_POST['edit'])) {
 				draggable: true
 				})
 				</script>";
+	} elseif (($validaSenha = validarSenha($_POST['senha'])) && $validaSenha[0] === true) {
+		echo "<script src='https://cdn.jsdelivr.net/npm/sweetalert2@11'></script>";
+		echo "<script>
+		Swal.fire({
+			icon: 'error',
+			title: 'Erro!',
+			html: 'A senha deve conter:<br><ul style=\"text-align: left;\">";
+		foreach ($validaSenha[1] as $erro) {
+			echo "<li>$erro</li>";
+		}
+		echo "</ul>',
+		})
+		</script>";
 	} else {
 		$oMysql = connect_db();
 		$cpf = preg_replace('/[^0-9]/', '', $_POST['cpf']); // remove mascara do cpf
@@ -151,7 +191,7 @@ if (isset($_POST['edit'])) {
 				email = '" . $_POST['email'] . "', 
 				CPF = '" . $cpf . "',
 				data_nasc = '" . $_POST['data_nasc'] . "',
-				senha = '" . $_POST['senha'] . "',
+				senha = '" . mysqli_real_escape_string($oMysql, password_hash($_POST['senha'], PASSWORD_DEFAULT)) . "',
 				genero = '" . $_POST['genero'] . "'
 			WHERE id = " . $_GET['id'];
 		$resultado = $oMysql->query($query);
@@ -189,13 +229,7 @@ if (isset($_POST['edit'])) {
 				<label for="data_nasc" class="form-label">Data de nascimento:</label>
 				<input type="date" name="data_nasc" class="form-control">
 			</div>
-
 			<div class="mb-2">
-				<label for="senha" class="form-label">Senha:</label>
-				<input type="password" name="senha" class="form-control" placeholder="Senha">
-			</div>
-
-			<div class="mb-3">
 				<label for="genero" class="">Qual o seu Gênero?</a>
 					<select name="genero" class="form-select mt-1">
 						<option value="" disabled selected>Selecione</option>
@@ -204,6 +238,12 @@ if (isset($_POST['edit'])) {
 						<option value="I">Indefinido</option>
 					</select>
 			</div>
+
+			<div class="mb-3">
+				<label for="senha" class="form-label">Senha: (vazio para não mudar)</label>
+				<input type="password" name="senha" class="form-control" placeholder="Senha">
+			</div>
+
 			<button type="submit" name="edit" class="btn btn-primary">Atualizar</button>
 		</form>
 		<script src="../validarCampos.js"></script>
