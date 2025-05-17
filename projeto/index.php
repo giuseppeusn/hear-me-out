@@ -1,13 +1,13 @@
 <?php
+  session_start();
   include("header.php");
   include("connect.php");
-
-  session_start();
+  include("footer.php");
 
   if (!isset($_SESSION['authenticated']) || $_SESSION['authenticated'] !== true) {
     header("location: /hear-me-out/projeto/login.php");
     exit();
   }
   
-  include("album/album.php")
+  include("home.php")
 ?>
