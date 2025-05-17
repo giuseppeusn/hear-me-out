@@ -10,7 +10,7 @@
 		$query = "UPDATE album
 			SET nome = '".$_POST['nome']."', 
 				capa = '".$_POST['capa']."', 
-				data_lancamento = '".$_POST['data_lancamento']."', 
+				data_lancamento = '".$_POST['data_lancamento']."'
 			WHERE id = ".$_GET['id'];
 		$resultado = $oMysql->query($query);
 		header('location: index.php');

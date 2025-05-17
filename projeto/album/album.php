@@ -56,7 +56,7 @@
 
 <div class="container mt-3">
   <h2>Meus álbuns</h2>
-  <button type="button" class="btn btn-success" onclick="abrirFormularioAlbum()">Cadastrar Álbum</button>
+  <button type="button" class="btn btn-success" onclick="abrirFormularioAlbum()">Cadastrar Álbum</button> <br><br>
 
   <div class="row">
 
