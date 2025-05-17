@@ -2,58 +2,11 @@
 <html lang="pt-BR">
 <head>
   <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+  <script src="/hear-me-out/projeto/album/insert.js"></script>
+  <script src="/hear-me-out/projeto/album/update.js"></script>
 
 </head>
 <body>
-<script>
-  function abrirFormularioAlbum() {
-    Swal.fire({
-      title: 'Cadastrar Álbum',
-      html:
-        `<input id="nome" class="swal2-input" placeholder="Nome do Álbum">` +
-        `<input id="capa" class="swal2-input" placeholder="Capa do Álbum (URL ou nome do arquivo)">` +
-        `<input id="data" type="date" class="swal2-input" placeholder="Data de Lançamento">`,
-      confirmButtonText: 'Salvar',
-      showCancelButton: true,
-      showCloseButton: true,
-      focusConfirm: false,
-      preConfirm: () => {
-        const nome = document.getElementById('nome').value;
-        const capa = document.getElementById('capa').value;
-        const data = document.getElementById('data').value;
-
-        if (!nome || !capa || !data) {
-          Swal.showValidationMessage('Preencha todos os campos!');
-          return false;
-        }
-
-        return { nome, capa, data };
-      }
-    }).then((resultado) => {
-      if (resultado.isConfirmed) {
-        fetch('insert.php', {
-          method: 'POST',
-          headers: {
-            'Content-Type': 'application/json'
-          },
-          body: JSON.stringify(resultado.value)
-        })
-        .then(response => response.text())
-        .then(data => {
-          Swal.fire('Sucesso!', data, 'success').then(() => {
-            window.location.reload();
-          });
-        })
-        .catch(error => {
-          Swal.fire('Erro!', 'Não foi possível salvar.', 'error');
-        });
-      }
-    });
-  }
-</script>
-
-
-
 <div class="container mt-3">
   <h2>Meus álbuns</h2>
   <button type="button" class="btn btn-success" onclick="abrirFormularioAlbum()">Cadastrar Álbum</button> <br><br>
@@ -79,7 +32,12 @@
 
     if ($resultado) {
         while ($linha = $resultado->fetch_object()) {
-            $btnAlterar = "<a href='index.php?page=2&id=" . $linha->album_id . "' class='btn btn-warning me-2'>Alterar</a>";
+            echo "<div id='album-{$linha->album_id}' 
+                    data-nome='" . htmlspecialchars($linha->album_nome, ENT_QUOTES) . "' 
+                    data-capa='" . htmlspecialchars($linha->capa, ENT_QUOTES) . "' 
+                    data-data='" . $linha->data_lancamento . "' 
+                    style='display: none;'></div>";
+            $btnAlterar = "<button type='button' class='btn btn-warning me-2' onclick='abrirAlterarAlbum({$linha->album_id})'>Alterar</button>";
             $btnExcluir = "<a href='index.php?page=3&id=" . $linha->album_id . "' class='btn btn-danger'>Excluir</a>";
             $btnVerAlbum = "<a href='index.php?page=4&id=" . $linha->album_id . "' class='btn btn-primary'>Ver álbum</a>";
 
