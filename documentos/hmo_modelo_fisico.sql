@@ -119,6 +119,45 @@ CREATE TABLE avaliacao_album(
     FOREIGN KEY (id_avaliacao) REFERENCES avaliacao(id),
     FOREIGN KEY (id_album) REFERENCES album(id)
 );
+
+CREATE VIEW view_musicas_com_nomes AS
+SELECT
+    musica.id,
+    musica.nome AS nome_musica,
+    album.nome AS nome_album,
+    artista.nome AS nome_artista,
+    musica.duracao,
+    musica.data_lancamento,
+    musica.capa
+FROM
+    musica
+JOIN album ON musica.id_album = album.id
+JOIN artista ON musica.id_artista = artista.id;
+
+CREATE VIEW view_albuns_com_nomes AS
+SELECT
+    artista.id,
+    album.nome AS nome_album,
+    artista.nome AS nome_artista,
+    album.duracao,
+    album.data_lancamento,
+    album.capa
+FROM
+    album
+JOIN artista ON album.id_artista = artista.id;
+
+CREATE OR REPLACE VIEW view_generos_com_imagem AS
+SELECT genero, imagem
+FROM (
+  SELECT 
+    genero,
+    imagem,
+    ROW_NUMBER() OVER (PARTITION BY genero ORDER BY RAND()) AS ordem
+  FROM artista
+  WHERE imagem IS NOT NULL AND genero IS NOT NULL
+) AS sub
+WHERE ordem = 1;
+
     
     
     

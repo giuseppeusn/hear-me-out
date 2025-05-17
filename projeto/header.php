@@ -4,16 +4,22 @@
   <title>Hear me out</title>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
+  <link rel="stylesheet" href="styles/global.css">
+  <link rel="stylesheet" href="styles/header.css">
   <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
   <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
 </head>
 <body>
-<nav class="navbar navbar-expand-sm bg-light">
+<nav class="navbar navbar-expand-sm">
+  <div class="navbar-brand">
+    <img src="./assets/svg/logo.svg" alt="Logo" class="logo">
+    <p>Hear Me Out</p>
+  </div>
   <div class="container-fluid justify-content-between">
     <ul class="navbar-nav">
-      <!-- <li class="nav-item">
+      <li class="nav-item">
         <a class="nav-link" href="/hear-me-out/projeto">Home</a>
-      </li> -->
+      </li>
       <li class="nav-item">
         <a class="nav-link" href="/hear-me-out/projeto/artista/">Artista</a>
       </li>

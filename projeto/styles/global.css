@@ -1,0 +1,13 @@
+body {
+  background-color: #000 !important;
+}
+
+.container {
+  display: flex;
+  flex-direction: column;
+  background-color: #000 !important;
+  width: 80% !important;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+}
