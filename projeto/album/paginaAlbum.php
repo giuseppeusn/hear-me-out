@@ -82,6 +82,7 @@
     ?>
     
     <table class="table table-striped">
+        <a href='/hear-me-out/projeto/musica/insert.php?page=1&id=' class='btn btn-success me-2'>Inserir nova música</a>
         <thead>
             <tr>
                 <th>#</th>
@@ -93,30 +94,35 @@
         </thead>
         <tbody>
         <?php
-        if ($resultadoMusicas->num_rows > 0) {
-            while ($musica = $resultadoMusicas->fetch_object()) {
-                $btnAlterarMusica = "<a href='/hear-me-out/projeto/musica/update.php?page=2&id={$musica->musica_id}' class='btn btn-warning me-2'>Alterar</a>";
-                $btnExcluirMusica = "<a href='/hear-me-out/projeto/musica/delete.php?page=3&id={$musica->musica_id}' class='btn btn-danger'>Excluir</a>";
+            if ($resultadoMusicas->num_rows > 0) {
+                $numero = 1;
 
-                $minutosMusica = floor($musica->musica_duracao / 60);
-                $segundosMusica = $musica->musica_duracao % 60;
+                while ($musica = $resultadoMusicas->fetch_object()) {
+                    $btnAlterarMusica = "<a href='/hear-me-out/projeto/musica/update.php?page=2&id={$musica->musica_id}' class='btn btn-warning me-2'>Alterar</a>";
+                    $btnExcluirMusica = "<a href='/hear-me-out/projeto/musica/delete.php?page=3&id={$musica->musica_id}' class='btn btn-danger'>Excluir</a>";
 
-                echo "<tr>";
-                echo "<td>{$musica->musica_id}</td>";
-                echo "<td>{$musica->musica_nome}</td>";
-                echo "<td>AINDA NAO FEITO</td>";
-                echo "<td>" . ($musica->musica_duracao >= 60 
-                                ? "{$minutosMusica} min {$segundosMusica} sec" 
-                                : "{$segundosMusica} sec") . "</td>";
-                echo "<td>{$btnAlterarMusica}{$btnExcluirMusica}</td>";
-                echo "</tr>";
+                    $minutosMusica = floor($musica->musica_duracao / 60);
+                    $segundosMusica = $musica->musica_duracao % 60;
+
+                    echo "<tr>";
+                    echo "<td>{$numero}</td>";
+                    echo "<td>{$musica->musica_nome}</td>";
+                    echo "<td>AINDA NAO FEITO</td>";
+                    echo "<td>" . ($musica->musica_duracao >= 60 
+                                    ? "{$minutosMusica} min {$segundosMusica} sec" 
+                                    : "{$segundosMusica} sec") . "</td>";
+                    echo "<td>{$btnAlterarMusica}{$btnExcluirMusica}</td>";
+                    echo "</tr>";
+
+                    $numero++;
+                }
+            } else {
+                echo "<tr><td colspan='5' class='text-center'>
+                    <a href='/hear-me-out/projeto/musica/insert.php?id={$dadosAlbum->album_id}' class='btn btn-success'>
+                        Adicionar música ao álbum
+                    </a></td></tr>";
             }
-        } else {
-            echo "<tr><td colspan='5' class='text-center'>
-                <a href='/hear-me-out/projeto/musica/insert.php?id={$dadosAlbum->album_id}' class='btn btn-success'>
-                    Adicionar música ao álbum
-                </a></td></tr>";
-        }
+
         ?>
         </tbody>
     </table>
