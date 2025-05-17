@@ -3,82 +3,71 @@
 <head>
   <link rel="stylesheet" href="styles/card.css">
   <link rel="stylesheet" href="styles/carousel.css">
+  <link rel="stylesheet" href="styles/home.css">
   <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/swiper@10/swiper-bundle.min.css" />
   <script src="https://cdn.jsdelivr.net/npm/swiper@10/swiper-bundle.min.js"></script>
 </head>
 <body>
-  <div class="container">
-    <div class="swiper mySwiper1">
-      <h2 class="text-white">Sugestões musicais para você</h2>
-      <div class="swiper-wrapper">
-        <?php
-          $connection = connect_db(); 
-          $query = "SELECT * FROM view_musicas_com_nomes ORDER BY RAND()";
-          $resultado = $connection->query($query);
-          include ("./components/card.php");
-
-          if ($resultado && $resultado->num_rows > 0) {
-            while ($data = $resultado->fetch_object()) {
-              echo '<div class="swiper-slide">';
-              echo card($data->nome_musica, $data->nome_artista, $data->capa ?? '#', '#');
-              echo '</div>';
-            }
-          } else {
-            echo "<p>Nenhum álbum encontrado.</p>";
-          }
-        ?>
+  <div class="cs-container">
+    <div class="content">
+      <div class="home-banner">
+        <div class="home-banner-content">
+          <h1>Encontre músicas, álbuns ou artistas</h1>
+          <div class="search-container">
+            <input type="text" class="search" placeholder="Pesquisar">
+            <button class="search-btn">
+              <img src="./assets/svg/magnifier.svg" alt="Pesquisa" class="search-icon">
+            </button>
+          </div>
+        </div>
+        <video autoplay muted loop class="video-banner">
+          <source src="assets/video/guittar-banner.mp4" type="video/mp4" >
+          Seu navegador não suporta o vídeo.
+        </video>
       </div>
-      <div class="swiper-button-next swiper-button-next-1"></div>
-      <div class="swiper-button-prev swiper-button-prev-1"></div>
-    </div>
-    <div class="swiper mySwiper2 mt-5">
-      <h2 class="text-white">Álbuns em alta</h2>
-      <div class="swiper-wrapper">
-        <?php
-          $query = "SELECT * FROM view_albuns_com_nomes ORDER BY RAND()";
-          $resultado = $connection->query($query);
+      <div class="swiper mySwiper1 mt-5">
+        <h2 class="text-white mb-3">Sugestões musicais para você</h2>
+        <div class="swiper-wrapper">
+          <?php
+            $connection = connect_db(); 
+            $query = "SELECT * FROM view_musicas_com_nomes ORDER BY RAND()";
+            $resultado = $connection->query($query);
+            include ("./components/card.php");
 
-          if ($resultado && $resultado->num_rows > 0) {
-            while ($data = $resultado->fetch_object()) {
-              echo '<div class="swiper-slide">';
-              echo card($data->nome_album, $data->nome_artista, $data->capa ?? '#', '#');
-              echo '</div>';
+            if ($resultado && $resultado->num_rows > 0) {
+              while ($data = $resultado->fetch_object()) {
+                echo '<div class="swiper-slide">';
+                echo card($data->nome_musica, $data->nome_artista, $data->capa ?? '#', '#');
+                echo '</div>';
+              }
+            } else {
+              echo "<p>Nenhum álbum encontrado.</p>";
             }
-          } else {
-            echo "<p>Nenhum álbum encontrado.</p>";
-          }
-        ?>
+          ?>
+        </div>
+        <div class="swiper-button-next swiper-button-next-1"></div>
+        <div class="swiper-button-prev swiper-button-prev-1"></div>
       </div>
-      <div class="swiper-button-next swiper-button-next-2"></div>
-      <div class="swiper-button-prev swiper-button-prev-2"></div>
-    </div>
-    <div class="mt-5">
-      <h2 class="text-white">Gêneros</h2>
-      <div class="">
-        <?php
+      <div class="swiper mySwiper2 mt-5">
+        <h2 class="text-white mb-3">Álbuns em alta</h2>
+        <div class="swiper-wrapper">
+          <?php
+            $query = "SELECT * FROM view_albuns_com_nomes ORDER BY RAND()";
+            $resultado = $connection->query($query);
 
-          $query = "SELECT genero, imagem
-            FROM (
-              SELECT 
-                genero,
-                imagem,
-                ROW_NUMBER() OVER (PARTITION BY genero ORDER BY RAND()) AS ordem
-              FROM artista
-              WHERE imagem IS NOT NULL AND genero IS NOT NULL
-            ) AS sub
-            WHERE ordem = 1;";
-          $resultado = $connection->query($query);
-
-          include ("./components/genderCard.php");
-
-          if ($resultado && $resultado->num_rows > 0) {
-            while ($data = $resultado->fetch_object()) {
-              echo genderCard($data->genero, $data->imagem ?? '#', '#');
+            if ($resultado && $resultado->num_rows > 0) {
+              while ($data = $resultado->fetch_object()) {
+                echo '<div class="swiper-slide">';
+                echo card($data->nome_album, $data->nome_artista, $data->capa ?? '#', '#');
+                echo '</div>';
+              }
+            } else {
+              echo "<p>Nenhum álbum encontrado.</p>";
             }
-          } else {
-            echo "<p>Nenhum gênero encontrado.</p>";
-          }
-        ?>
+          ?>
+        </div>
+        <div class="swiper-button-next swiper-button-next-2"></div>
+        <div class="swiper-button-prev swiper-button-prev-2"></div>
       </div>
     </div>
   </div>

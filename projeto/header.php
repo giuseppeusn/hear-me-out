@@ -4,8 +4,10 @@
   <title>Hear me out</title>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
+  <link rel="icon" type="image/x-icon" href="./assets/favicon.ico">
   <link rel="stylesheet" href="styles/global.css">
   <link rel="stylesheet" href="styles/header.css">
+  <link rel="stylesheet" href="styles/footer.css">
   <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
   <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
 </head>
@@ -18,7 +20,7 @@
   <div class="container-fluid justify-content-between">
     <ul class="navbar-nav">
       <li class="nav-item">
-        <a class="nav-link" href="/hear-me-out/projeto">Home</a>
+        <a class="nav-link" href="/hear-me-out/projeto">Início</a>
       </li>
       <li class="nav-item">
         <a class="nav-link" href="/hear-me-out/projeto/artista/">Artista</a>
