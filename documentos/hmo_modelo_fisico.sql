@@ -12,7 +12,8 @@ CREATE TABLE artista (
     pais VARCHAR(100) NOT NULL,
     site_oficial VARCHAR(255) NOT NULL,
     genero VARCHAR(20) NOT NULL,
-    senha VARCHAR(40) NOT NULL
+    senha VARCHAR(40) NOT NULL,
+    aprovado BOOL NOT NULL
 );
 
 CREATE TABLE usuario (
@@ -42,10 +43,8 @@ CREATE TABLE critico (
 CREATE TABLE album (
 	id INT PRIMARY KEY AUTO_INCREMENT,
     nome VARCHAR(60) NOT NULL,
-    duracao INT NOT NULL,
     data_lancamento DATE NOT NULL,
     capa VARCHAR(500) NOT NULL,
-    qtd_musicas INT NOT NULL,
     id_artista INT NOT NULL,
     
     FOREIGN KEY (id_artista) REFERENCES artista(id)
@@ -145,19 +144,4 @@ SELECT
 FROM
     album
 JOIN artista ON album.id_artista = artista.id;
-
-CREATE OR REPLACE VIEW view_generos_com_imagem AS
-SELECT genero, imagem
-FROM (
-  SELECT 
-    genero,
-    imagem,
-    ROW_NUMBER() OVER (PARTITION BY genero ORDER BY RAND()) AS ordem
-  FROM artista
-  WHERE imagem IS NOT NULL AND genero IS NOT NULL
-) AS sub
-WHERE ordem = 1;
-
-    
-    
     
