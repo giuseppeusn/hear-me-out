@@ -4,6 +4,7 @@
   <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
   <script src="/hear-me-out/projeto/album/insert.js"></script>
   <script src="/hear-me-out/projeto/album/update.js"></script>
+  <script src="/hear-me-out/projeto/album/delete.js"></script>
 
 </head>
 <body>
@@ -38,7 +39,7 @@
                     data-data='" . $linha->data_lancamento . "' 
                     style='display: none;'></div>";
             $btnAlterar = "<button type='button' class='btn btn-warning me-2' onclick='abrirAlterarAlbum({$linha->album_id})'>Alterar</button>";
-            $btnExcluir = "<a href='index.php?page=3&id=" . $linha->album_id . "' class='btn btn-danger'>Excluir</a>";
+            $btnExcluir = "<button type='button' class='btn btn-danger me-2' onclick='deleteAlbum({$linha->album_id})'>Excluir</button>";
             $btnVerAlbum = "<a href='index.php?page=4&id=" . $linha->album_id . "' class='btn btn-primary'>Ver álbum</a>";
 
 
