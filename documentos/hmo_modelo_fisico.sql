@@ -12,7 +12,7 @@ CREATE TABLE artista (
     pais VARCHAR(100) NOT NULL,
     site_oficial VARCHAR(255) NOT NULL,
     genero VARCHAR(20) NOT NULL,
-    senha VARCHAR(255) NOT NULL
+    senha VARCHAR(255) NOT NULL,
     aprovado BOOL NOT NULL
 );
 
