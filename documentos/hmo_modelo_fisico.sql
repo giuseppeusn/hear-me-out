@@ -12,7 +12,7 @@ CREATE TABLE artista (
     pais VARCHAR(100) NOT NULL,
     site_oficial VARCHAR(255) NOT NULL,
     genero VARCHAR(20) NOT NULL,
-    senha VARCHAR(40) NOT NULL,
+    senha VARCHAR(255) NOT NULL
     aprovado BOOL NOT NULL
 );
 
@@ -22,7 +22,7 @@ CREATE TABLE usuario (
     cpf VARCHAR(11) NOT NULL,
     email VARCHAR(40) NOT NULL,
     data_nasc DATE NOT NULL,
-    senha VARCHAR(40) NOT NULL,
+    senha VARCHAR(255) NOT NULL,
     genero ENUM('M','F','I'),
     permissao ENUM('normal','admin')
 );
@@ -32,9 +32,9 @@ CREATE TABLE critico (
     nome VARCHAR(60) NOT NULL,
     cpf VARCHAR(11) NOT NULL,
     email VARCHAR(40) NOT NULL,
-    biografia VARCHAR(1000 ) NOT NULL,
+    biografia VARCHAR(1000) NOT NULL,
     data_nasc DATE NOT NULL,
-    senha VARCHAR(40) NOT NULL,
+    senha VARCHAR(255) NOT NULL,
     genero ENUM('M','F','I'),
     site VARCHAR(255) NOT NULL,
     aprovado BOOL NOT NULL
