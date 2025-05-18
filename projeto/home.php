@@ -37,7 +37,7 @@
             if ($resultado && $resultado->num_rows > 0) {
               while ($data = $resultado->fetch_object()) {
                 echo '<div class="swiper-slide">';
-                echo card($data->nome_musica, $data->nome_artista, $data->capa ?? '#', '#');
+                echo card($data->nome_musica, $data->nome_artista, $data->capa ?? '#', '/hear-me-out/projeto/paginaUser/musica.php?id=' . $data->id_musica . '');
                 echo '</div>';
               }
             } else {

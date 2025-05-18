@@ -1,6 +1,7 @@
 <!DOCTYPE html>
 <html lang="pt-BR">
 <head>
+  <link rel="stylesheet" href="../styles/card.css">
   <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
   <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
   <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
@@ -9,54 +10,39 @@
 <?php
   include_once("../header.php");
   $conexao = new mysqli("localhost:3306", "root", "", "hear_me_out");
-    $album_id = isset($_GET['id']) ? intval($_GET['id']) : 0;
-    $queryAlbum = "SELECT 
-        album.id AS album_id,
-        album.nome AS album_nome,
-        album.capa AS album_capa,
-        album.data_lancamento AS album_data,
-        artista.nome AS artista_nome
-    FROM album
-    INNER JOIN artista ON album.id_artista = artista.id
-    WHERE album.id = $album_id";
-    $resultadoAlbum = $conexao->query($queryAlbum);
-    $dadosAlbum = $resultadoAlbum->fetch_object();
-      if (!$dadosAlbum) {
-      echo "Álbum não encontrado.";
-      exit; }
-
-    $queryResumo = "SELECT 
-        COUNT(id) AS musicas_total,
-        IFNULL(SUM(duracao), 0) AS duracao_total
-    FROM musica
-    WHERE id_album = 2";
-    $resultadoResumo = $conexao->query($queryResumo);
-    $resumo = $resultadoResumo->fetch_object();
-
+    $musica_id = $_GET['id'];
 
     $queryMusicas = "SELECT 
         musica.id AS musica_id,
         musica.nome AS musica_nome,
         musica.capa AS musica_capa,
         musica.duracao AS musica_duracao,
-        musica.data_lancamento AS musica_data
+        artista.nome AS artista_nome,
+        album.nome AS album_nome,
+        album.capa AS album_capa
     FROM musica
-    WHERE musica.id_album = $album_id";
+    JOIN artista ON musica.id_artista = artista.id
+    JOIN album ON musica.id_album = album.id
+    WHERE musica.id = $musica_id";
     $resultadoMusicas = $conexao->query($queryMusicas);
+    if ($resultadoMusicas && $resultadoMusicas->num_rows > 0) {
+    $musica = $resultadoMusicas->fetch_object();
+    } else {
+        echo "Nenhuma música encontrada.";
+        exit;
+    }
 
 
-    $musicas_total = $resumo->musicas_total;
-    $duracao_total = $resumo->duracao_total;
-    $minutosAlbum = floor($duracao_total / 60);
-    $segundosAlbum = $duracao_total % 60;
-
-    $btnAddAvaliacao = "<button type='button' class='btn btn-success me-2' onclick='addAvaliacao(<?= $dadosAlbum->album_id ?>)'>Inserir avaliação</button>";
+    $duracao_total = $musica->musica_duracao;
+    $minutosMusica = floor($duracao_total / 60);
+    $segundosMusica = $duracao_total % 60;
+    $btnAddAvaliacao = "<button type='button' class='btn btn-success me-2' onclick='addAvaliacao(<?= $musica->musica_id ?>)'>Inserir avaliação</button>";
 
     echo "
     <div class='container'>
       <div class='row align-items-start'>
-        <div class='col-auto' name='Capa do album'>
-          <img class='img-fluid border border-dark' src='{$dadosAlbum->album_capa}' alt='capa do álbum' 
+        <div class='col-auto' name='Capa da musica'>
+          <img class='img-fluid border border-dark' src='{$musica->musica_capa}' alt='capa da musica' 
             style='width: 400px; height: 400px; border: 8px solid black; display: block;'>
           
 
@@ -81,50 +67,30 @@
         </div>
 
 
-        <div class='col' name='Info do album'>
-          <p class='text-uppercase mb-0' style='font-size: 14px;'>álbum</p>
-          <h1 style='font-size: 55px; font-weight: bold; margin-top: -15px; margin-left: -5px;'>{$dadosAlbum->album_nome}</h1>
-          <p class='mt-3' style='font-size: 16px; font-weight:bold;'>{$dadosAlbum->artista_nome}</p>
-          <p class='mt-3' style='font-size: 16px;'>" . ($duracao_total >= 60 ? "{$minutosAlbum} min {$segundosAlbum} sec" : "{$segundosAlbum} sec") . "</p>
-          <p class='mt-3' style='font-size: 16px;'>". ($musicas_total == 1 ? "{$musicas_total} música" : "{$musicas_total} músicas") . "</p> ";
-        
-        echo "
-        <div name='Lista de musicas' class='table-responsive mt-4'>
-          <table class='table table-striped'>
-            <thead>
-              <tr>
-                <th>#</th>
-                <th>Nome</th>
-                <th>Duração</th>
-                <th>Nota</th>
-              </tr>
-            </thead>
-            <tbody>";
-        if ($resultadoMusicas->num_rows > 0) {
-
-            while ($musica = $resultadoMusicas->fetch_object()) {
-                echo "<div id='musica-{$musica->musica_id}' 
-                data-nome='" . htmlspecialchars($musica->musica_nome, ENT_QUOTES) . "' 
-                data-capa='" . htmlspecialchars($musica->musica_capa, ENT_QUOTES) . "' 
-                data-duracao='" . htmlspecialchars($musica->musica_duracao, ENT_QUOTES) . "'
-                data-data='" . $musica->musica_data . "' 
-                style='display: none;'></div>";
-                $minutosMusica = floor($musica->musica_duracao / 60);
-                $segundosMusica = $musica->musica_duracao % 60;
-                echo "<tr>";
-                echo "<td><img src='{$musica->musica_capa}' style='width: 50px; lenght:50px'></td>";
-                echo "<td><a href='/hear-me-out/projeto/paginaUser/musica.php'>{$musica->musica_id}</a></td>";
-                echo "<td>" . ($musica->musica_duracao >= 60 
-                                ? "{$minutosMusica} min {$segundosMusica} sec" 
-                                : "{$segundosMusica} sec") . "</td>";
-                echo "<td>AINDA NAO FEITO</td>";
-                
-            }
-        }
-
-    echo "
+        <div class='col' name='Info da musica'>
+          <p class='text-uppercase mb-0' style='font-size: 14px;'>música</p>
+          <h1 style='font-size: 55px; font-weight: bold; margin-top: -15px; margin-left: -5px;'>{$musica->musica_nome}</h1>
+          <p class='mt-3' style='font-size: 16px; font-weight:bold;'>{$musica->artista_nome}</p>
+          <p class='mt-3' style='font-size: 16px;'>" . ($duracao_total >= 60 ? "{$minutosMusica} min {$segundosMusica} sec" : "{$segundosMusica} sec") . "</p>
             </tbody>
           </table>
+          <p>Lista de sugestão: <p/>";
+
+    $query = "SELECT  * FROM view_albuns_com_nomes ORDER BY RAND()";
+    $resultado = $conexao->query($query);
+    include "../components/card.php";
+
+    if ($resultado && $resultado->num_rows > 0) {
+        while ($data = $resultado->fetch_object()) {
+        echo '<div class="swiper-slide">';
+        echo card($data->nome_album, $data->nome_artista, $data->capa ?? '#', '/hear-me-out/projeto/paginaUser/album.php?id=' . $data->album_id . '');
+        echo '</div>';
+        }
+    } else {
+        echo "<p>Nenhum álbum encontrado.</p>";
+    }
+
+    echo "
         </div>
       </div>
     </div> 
