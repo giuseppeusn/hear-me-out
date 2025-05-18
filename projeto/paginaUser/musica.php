@@ -113,7 +113,7 @@
                 $segundosMusica = $musica->musica_duracao % 60;
                 echo "<tr>";
                 echo "<td><img src='{$musica->musica_capa}' style='width: 50px; lenght:50px'></td>";
-                echo "<td><a href='/hear-me-out/projeto/paginaUser/musica.php'>{$musica->musica_nome}</a></td>";
+                echo "<td><a href='/hear-me-out/projeto/paginaUser/musica.php'>{$musica->musica_id}</a></td>";
                 echo "<td>" . ($musica->musica_duracao >= 60 
                                 ? "{$minutosMusica} min {$segundosMusica} sec" 
                                 : "{$segundosMusica} sec") . "</td>";
