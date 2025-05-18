@@ -9,7 +9,7 @@
 <?php
   include_once("../header.php");
   $conexao = new mysqli("localhost:3306", "root", "", "hear_me_out");
-
+    $album_id = isset($_GET['id']) ? intval($_GET['id']) : 0;
     $queryAlbum = "SELECT 
         album.id AS album_id,
         album.nome AS album_nome,
@@ -18,10 +18,12 @@
         artista.nome AS artista_nome
     FROM album
     INNER JOIN artista ON album.id_artista = artista.id
-    WHERE album.id = 2";
+    WHERE album.id = $album_id";
     $resultadoAlbum = $conexao->query($queryAlbum);
     $dadosAlbum = $resultadoAlbum->fetch_object();
-
+      if (!$dadosAlbum) {
+      echo "Álbum não encontrado.";
+      exit; }
 
     $queryResumo = "SELECT 
         COUNT(id) AS musicas_total,
@@ -39,7 +41,7 @@
         musica.duracao AS musica_duracao,
         musica.data_lancamento AS musica_data
     FROM musica
-    WHERE musica.id_album = 2";
+    WHERE musica.id_album = $album_id";
     $resultadoMusicas = $conexao->query($queryMusicas);
 
 

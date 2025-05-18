@@ -52,13 +52,13 @@
         <h2 class="text-white mb-3">Álbuns em alta</h2>
         <div class="swiper-wrapper">
           <?php
-            $query = "SELECT * FROM view_albuns_com_nomes ORDER BY RAND()";
+            $query = "SELECT  * FROM view_albuns_com_nomes ORDER BY RAND()";
             $resultado = $connection->query($query);
 
             if ($resultado && $resultado->num_rows > 0) {
               while ($data = $resultado->fetch_object()) {
                 echo '<div class="swiper-slide">';
-                echo card($data->nome_album, $data->nome_artista, $data->capa ?? '#', '#');
+                echo card($data->nome_album, $data->nome_artista, $data->capa ?? '#', '/hear-me-out/projeto/paginaUser/album.php?id=' . $data->album_id . '');
                 echo '</div>';
               }
             } else {
