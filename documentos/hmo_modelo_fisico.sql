@@ -138,7 +138,6 @@ SELECT
     artista.id,
     album.nome AS nome_album,
     artista.nome AS nome_artista,
-    album.duracao,
     album.data_lancamento,
     album.capa
 FROM
