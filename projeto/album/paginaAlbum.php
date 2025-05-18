@@ -6,7 +6,6 @@
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css">
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
     <script src="/hear-me-out/projeto/musica/insert.js"></script>
-    <script src="/hear-me-out/projeto/musica/update.js"></script>
     <script src="/hear-me-out/projeto/musica/delete.js"></script>
 </head>
 <body>
@@ -44,6 +43,7 @@
         $queryMusicas = "SELECT 
             musica.id AS musica_id,
             musica.nome AS musica_nome,
+            musica.capa AS musica_capa,
             musica.duracao AS musica_duracao,
             musica.data_lancamento AS musica_data
         FROM musica
@@ -102,11 +102,17 @@
                 $numero = 1;
 
                 while ($musica = $resultadoMusicas->fetch_object()) {
-                    $btnAlterarMusica = "<a href='/hear-me-out/projeto/musica/delete.js{$musica->musica_id}' class='btn btn-warning me-2'>Alterar</a>";
-                    $btnExcluirMusica = "<button type='button' class='btn btn-danger' onclick='deleteMusica(" . $musica->musica_id . ")'>Excluir</button>";
+                    echo "<div id='musica-{$musica->musica_id}' 
+                    data-nome='" . htmlspecialchars($musica->musica_nome, ENT_QUOTES) . "' 
+                    data-capa='" . htmlspecialchars($musica->musica_capa, ENT_QUOTES) . "' 
+                    data-duracao='" . htmlspecialchars($musica->musica_duracao, ENT_QUOTES) . "'
+                    data-data='" . $musica->musica_data . "' 
+                    style='display: none;'></div>";
+
+                    $btnAlterarMusica = "<button type='button' class='btn btn-warning me-2' onclick='abrirAlterarMusica({$musica->musica_id})'>Alterar</button>";
+                    $btnExcluirMusica = "<button type='button' class='btn btn-danger' onclick='deleteMusica({$musica->musica_id})'>Excluir</button>";
                     $minutosMusica = floor($musica->musica_duracao / 60);
                     $segundosMusica = $musica->musica_duracao % 60;
-
                     echo "<tr>";
                     echo "<td>{$numero}</td>";
                     echo "<td>{$musica->musica_nome}</td>";
@@ -130,5 +136,6 @@
     </table>
     <?php } ?>
 </div>
+<script src="/hear-me-out/projeto/musica/update.js"></script>
 </body>
 </html>
