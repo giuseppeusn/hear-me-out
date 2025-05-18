@@ -84,11 +84,42 @@
           <h1 style='font-size: 55px; font-weight: bold; margin-top: -15px; margin-left: -5px;'>{$dadosAlbum->album_nome}</h1>
           <p class='mt-3' style='font-size: 16px; font-weight:bold;'>{$dadosAlbum->artista_nome}</p>
           <p class='mt-3' style='font-size: 16px;'>" . ($duracao_total >= 60 ? "{$minutosAlbum} min {$segundosAlbum} sec" : "{$segundosAlbum} sec") . "</p>
-          <p class='mt-3' style='font-size: 16px;'>". ($musicas_total == 1 ? "{$musicas_total} música" : "{$musicas_total} músicas") . "</p>
+          <p class='mt-3' style='font-size: 16px;'>". ($musicas_total == 1 ? "{$musicas_total} música" : "{$musicas_total} músicas") . "</p> ";
+        
+        echo "
+        <div name='Lista de musicas' class='table-responsive mt-4'>
+          <table class='table table-striped'>
+            <thead>
+              <tr>
+                <th>#</th>
+                <th>Nome</th>
+                <th>Duração</th>
+                <th>Nota</th>
+              </tr>
+            </thead>
+            <tbody>";
+        if ($resultadoMusicas->num_rows > 0) {
 
-          <div name='Lista de musicas' class='table table-striped'>
+            while ($musica = $resultadoMusicas->fetch_object()) {
+                echo "<div id='musica-{$musica->musica_id}' 
+                data-nome='" . htmlspecialchars($musica->musica_nome, ENT_QUOTES) . "' 
+                data-capa='" . htmlspecialchars($musica->musica_capa, ENT_QUOTES) . "' 
+                data-duracao='" . htmlspecialchars($musica->musica_duracao, ENT_QUOTES) . "'
+                data-data='" . $musica->musica_data . "' 
+                style='display: none;'></div>";
+                $minutosMusica = floor($musica->musica_duracao / 60);
+                $segundosMusica = $musica->musica_duracao % 60;
+                echo "<tr>";
+                echo "<td><img src='{$musica->musica_capa}' style='width: 50px; lenght:50px'></td>";
+                echo "<td><a href='/hear-me-out/projeto/paginaUser/musica.php'>{$musica->musica_nome}</a></td>";
+                echo "<td>" . ($musica->musica_duracao >= 60 
+                                ? "{$minutosMusica} min {$segundosMusica} sec" 
+                                : "{$segundosMusica} sec") . "</td>";
+                echo "<td>AINDA NAO FEITO</td>";
+            }
+        }
 
-          </div>
+    echo "
         </div>
       </div>
     </div> 
