@@ -121,7 +121,7 @@ CREATE TABLE avaliacao_album(
 
 CREATE VIEW view_musicas_com_nomes AS
 SELECT
-    musica.id,
+    musica.id AS id_musica,
     musica.nome AS nome_musica,
     album.nome AS nome_album,
     artista.nome AS nome_artista,
@@ -135,6 +135,7 @@ JOIN artista ON musica.id_artista = artista.id;
 
 CREATE VIEW view_albuns_com_nomes AS
 SELECT
+	album.id AS album_id,
     artista.id,
     album.nome AS nome_album,
     artista.nome AS nome_artista,
