@@ -4,6 +4,10 @@
     <meta charset="UTF-8">
     <title>Detalhes do Álbum</title>
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css">
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+    <script src="/hear-me-out/projeto/musica/insert.js"></script>
+    <script src="/hear-me-out/projeto/musica/update.js"></script>
+    <script src="/hear-me-out/projeto/musica/delete.js"></script>
 </head>
 <body>
 
@@ -82,7 +86,7 @@
     ?>
     
     <table class="table table-striped">
-        <a href='/hear-me-out/projeto/musica/insert.php?page=1&id=' class='btn btn-success me-2'>Inserir nova música</a>
+        <button type="button" class="btn btn-success me-2" onclick="abrirInserirMusica(<?= $dadosAlbum->album_id ?>)">Inserir nova música</button>
         <thead>
             <tr>
                 <th>#</th>
@@ -98,9 +102,8 @@
                 $numero = 1;
 
                 while ($musica = $resultadoMusicas->fetch_object()) {
-                    $btnAlterarMusica = "<a href='/hear-me-out/projeto/musica/update.php?page=2&id={$musica->musica_id}' class='btn btn-warning me-2'>Alterar</a>";
-                    $btnExcluirMusica = "<a href='/hear-me-out/projeto/musica/delete.php?page=3&id={$musica->musica_id}' class='btn btn-danger'>Excluir</a>";
-
+                    $btnAlterarMusica = "<a href='/hear-me-out/projeto/musica/delete.js{$musica->musica_id}' class='btn btn-warning me-2'>Alterar</a>";
+                    $btnExcluirMusica = "<button type='button' class='btn btn-danger' onclick='deleteMusica(" . $musica->musica_id . ")'>Excluir</button>";
                     $minutosMusica = floor($musica->musica_duracao / 60);
                     $segundosMusica = $musica->musica_duracao % 60;
 
@@ -118,9 +121,8 @@
                 }
             } else {
                 echo "<tr><td colspan='5' class='text-center'>
-                    <a href='/hear-me-out/projeto/musica/insert.php?id={$dadosAlbum->album_id}' class='btn btn-success'>
-                        Adicionar música ao álbum
-                    </a></td></tr>";
+                <button type='button' class='btn btn-success' onclick='abrirInserirMusica(" . $dadosAlbum->album_id . ")'>Inserir música</button>
+                </td></tr>";
             }
 
         ?>
