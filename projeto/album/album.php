@@ -17,6 +17,10 @@
     <?php
     include_once("../connect.php");
     $conexao = connect_db(); 
+    
+    if (!isset($_SESSION['authenticated']) || !isset($_SESSION['id_artista'])) {
+      die("Você precisa estar logado como artista.");}
+    $id_artista = intval($_SESSION['id_artista']);
 
     $query = "
       SELECT 
@@ -27,7 +31,7 @@
         artista.nome AS artista_nome
       FROM album
       JOIN artista ON album.id_artista = artista.id
-    ";
+      WHERE artista.id = $id_artista";
 
     $resultado = $conexao->query($query);
 
