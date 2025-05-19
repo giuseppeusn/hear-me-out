@@ -31,6 +31,21 @@
         echo "Nenhuma música encontrada.";
         exit;
     }
+    
+        // Consulta as médias das avaliações da música
+    $queryAvaliacoesMusica = "
+      SELECT 
+        AVG(CASE WHEN id_usuario IS NOT NULL THEN nota END) AS nota_publico,
+        AVG(CASE WHEN id_critico IS NOT NULL THEN nota END) AS nota_critico
+      FROM avaliacao
+      JOIN avaliacao_musica ON avaliacao.id = avaliacao_musica.id_avaliacao
+      WHERE avaliacao_musica.id_musica = $musica_id";
+      
+    $resultadoAvaliacoesMusica = $conexao->query($queryAvaliacoesMusica);
+    $avaliacoesMusica = $resultadoAvaliacoesMusica->fetch_object();
+
+    $notaPublico = $avaliacoesMusica->nota_publico ? number_format($avaliacoesMusica->nota_publico, 1) : 'N/A';
+    $notaCritico = $avaliacoesMusica->nota_critico ? number_format($avaliacoesMusica->nota_critico, 1) : 'N/A';
 
 
     $duracao_total = $musica->musica_duracao;
@@ -51,12 +66,12 @@
             <div class='row'>
 
               <div class='col'>
-                <div class='fw-bold' style='font-size: 18px;'>Publico nota</div>
+                <div class='fw-bold' style='font-size: 18px;'>{$notaPublico}</div>
                 <div style='font-size: 14px;'>público</div>
               </div>
 
               <div class='col'>
-                <div class='fw-bold' style='font-size: 18px;'>Critico nota</div>
+                <div class='fw-bold' style='font-size: 18px;'>{$notaCritico}</div>
                 <div style='font-size: 14px;'>crítica</div>
               </div>
 

@@ -32,7 +32,7 @@
     WHERE id_album = $album_id";
     $resultadoResumo = $conexao->query($queryResumo);
     $resumo = $resultadoResumo->fetch_object();
-
+   
 
     $queryMusicas = "SELECT 
         musica.id AS musica_id,
@@ -43,6 +43,21 @@
     FROM musica
     WHERE musica.id_album = $album_id";
     $resultadoMusicas = $conexao->query($queryMusicas);
+
+        // Consulta as médias das avaliações do álbum
+    $queryAvaliacoesAlbum = "
+      SELECT 
+        AVG(CASE WHEN id_usuario IS NOT NULL THEN nota END) AS nota_publico,
+        AVG(CASE WHEN id_critico IS NOT NULL THEN nota END) AS nota_critico
+      FROM avaliacao
+      JOIN avaliacao_album ON avaliacao.id = avaliacao_album.id_avaliacao
+      WHERE avaliacao_album.id_album = $album_id";
+      
+    $resultadoAvaliacoesAlbum = $conexao->query($queryAvaliacoesAlbum);
+    $avaliacoesAlbum = $resultadoAvaliacoesAlbum->fetch_object();
+
+    $notaPublico = $avaliacoesAlbum->nota_publico ? number_format($avaliacoesAlbum->nota_publico, 1) : 'N/A';
+    $notaCritico = $avaliacoesAlbum->nota_critico ? number_format($avaliacoesAlbum->nota_critico, 1) : 'N/A';
 
 
     $musicas_total = $resumo->musicas_total;
@@ -65,12 +80,12 @@
             <div class='row'>
 
               <div class='col'>
-                <div class='fw-bold' style='font-size: 18px;'>Publico nota</div>
+                <div class='fw-bold' style='font-size: 18px;'>{$notaPublico}</div>
                 <div style='font-size: 14px;'>público</div>
               </div>
 
               <div class='col'>
-                <div class='fw-bold' style='font-size: 18px;'>Critico nota</div>
+                <div class='fw-bold' style='font-size: 18px;'>{$notaCritico}</div>
                 <div style='font-size: 14px;'>crítica</div>
               </div>
 
@@ -103,6 +118,16 @@
         if ($resultadoMusicas->num_rows > 0) {
 
             while ($musica = $resultadoMusicas->fetch_object()) {
+              $queryNotaMusica = "
+                SELECT 
+                  AVG(nota) AS media 
+                FROM avaliacao
+                JOIN avaliacao_musica ON avaliacao.id = avaliacao_musica.id_avaliacao
+                WHERE avaliacao_musica.id_musica = {$musica->musica_id}";
+
+              $resultadoNota = $conexao->query($queryNotaMusica);
+              $media = $resultadoNota->fetch_object()->media ?? null;
+              $notaMedia = $media ? number_format($media, 1) : 'N/A';
                 echo "<div id='musica-{$musica->musica_id}' 
                 data-nome='" . htmlspecialchars($musica->musica_nome, ENT_QUOTES) . "' 
                 data-capa='" . htmlspecialchars($musica->musica_capa, ENT_QUOTES) . "' 
@@ -117,9 +142,7 @@
                 echo "<td>" . ($musica->musica_duracao >= 60 
                                 ? "{$minutosMusica} min {$segundosMusica} sec" 
                                 : "{$segundosMusica} sec") . "</td>";
-                echo "<td>AINDA NAO FEITO</td>";
-                
-            }
+                echo echo "<td>{$notaMedia}</td>";
         }
 
     echo "
