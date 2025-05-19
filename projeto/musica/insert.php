@@ -1,59 +1,34 @@
-<!doctype html>
-<html lang="en">
+<?php
+session_start();
 
-<head>
-    <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1">
-    <title>Crud - músicas</title>
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet"
-        integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
-</head>
+$conn = new mysqli("localhost:3306", "root", "", "hear_me_out");
+if ($conn->connect_error) {
+    die("Erro na conexão: " . $conn->connect_error);
+}
 
-<!DOCTYPE html>
-<html lang="pt-BR">
+$data = json_decode(file_get_contents("php://input"), true);
 
-<body>
-    <div class="container-md mt-3">
-        <div class="row">
-            <div class="col">
-                <h3>Adicionar nova música:</h3>
-            </div>
-            <div class="col">
-                <a class="btn btn-danger float-end" href="index.php">Voltar</a>
-            </div>
-        </div>
-        
-        <div class="container-md mt-3 border p-3 pt-1">
-            <p style="color:gray" class="mb-2">Campo obrigatório *</p>
-            <form action="action.php" method="POST">
-                <div class="mb-3">
-                    <label for="nome_musica" class="form-label">Nome da música: *</label>
-                    <input type="text" class="form-control" id="nome_musica" name="nome_musica" placeholder="Nome da música." value="<?php echo $_POST['nome_musica'] ?? ''; ?>">
+$nome = $data['nome'];
+$duracao = intval($data['duracao']);
+$capa = $data['capa'];
+$data_lancamento = $data['data'];
+$id_album = intval($data['albumId']);
 
-                    <label for="duracao_musica" class="form-label pt-2">Duração: *</label>
-                    <input type="number" class="form-control" id="duracao_musica" name="duracao_musica" placeholder="Duração da música em segundos." value="<?php echo $_POST['duracao_musica'] ?? ''; ?>">
+$id_artista = $_SESSION['id_artista'];
+if (!$id_artista || !$id_album || !$nome || !$duracao || !$data_lancamento || !$capa) {
+    echo "Erro: Dados incompletos.";
+    exit;
+}
 
-                    <label for="data_lancamento_musica" class="form-label pt-2">Data de lançamento: *</label>
-                    <input type="date" class="form-control" id="data_lancamento_musica" name="data_lancamento_musica" value="<?php echo $_POST['data_lancamento_musica'] ?? ''; ?>">
+$stmt = $conn->prepare("INSERT INTO musica (nome, duracao, data_lancamento, capa, id_artista, id_album) VALUES (?, ?, ?, ?, ?, ?)");
+$stmt->bind_param("sissii", $nome, $duracao, $data_lancamento, $capa, $id_artista, $id_album);
 
-                    <label for="capa_musica_arquivo" class="form-label pt-2">Capa da música: *</label>
-                    <input type="text" class="form-control" id="capa_musica_arquivo" name="capa_musica_arquivo" placeholder="Link (.png/.jpg)" value="<?php echo $_POST['capa_musica_arquivo'] ?? ''; ?>">
+if ($stmt->execute()) {
+    echo "Música cadastrada com sucesso!";
+} else {
+    echo "Erro: " . $stmt->error;
+}
 
-                    <label for="artista_musica" class="form-label pt-2">Artista: *</label>
-                    <input type="text" class="form-control" id="artista_musica" name="artista_musica" placeholder="Artista." value="<?php echo $_POST['artista_musica'] ?? ''; ?>">
-
-                    <label for="album_musica" class="form-label pt-2">Álbum: *</label>
-                    <input type="text" class="form-control" id="album_musica" name="album_musica" placeholder="Álbum." value="<?php echo $_POST['album_musica'] ?? ''; ?>">
-
-                    <button type="submit" name="create" class="btn btn-primary mt-3">Enviar</button>
-                </div>
-            </form>
-        </div>
-    </div>
-
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"
-        integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz"
-        crossorigin="anonymous"></script>
-</body>
-</html>
-
+$stmt->close();
+$conn->close();
+?>
