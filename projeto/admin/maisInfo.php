@@ -11,7 +11,7 @@ $id = $_GET['id'];
 $query = "SELECT * FROM artista WHERE id = $id";
 $resultado_query = mysqli_query($conexao, $query);
 if(!mysqli_num_rows($resultado_query) > 0){
-    header("location: index.php?page=2");
+    header("location: index.php?page=1");
     exit;
 }
 $resultado_array = mysqli_fetch_assoc($resultado_query);
@@ -49,7 +49,7 @@ $resultado_array = mysqli_fetch_assoc($resultado_query);
         </div>
         <div class="row">
             <div class="col">
-                <img src="<?php echo $resultado_array['imagem']; ?>" alt="post_malone" class="img-fluid rounded" style="width: 250px; height: 250px; object-fit: cover;">
+                <img src="<?php echo $resultado_array['imagem']; ?>" alt="imagem" class="img-fluid rounded" style="width: 250px; height: 250px; object-fit: cover;">
             </div>
             <div class="col d-flex align-items-center">
                 <h1 class="text-white"><?php echo $resultado_array['nome'] ?></h1>

@@ -51,6 +51,7 @@ if (isset($_POST['email']) && isset($_POST['senha'])) {
     if (password_verify($senha, $artista_array['senha'])) {
       $_SESSION['authenticated'] = true;
       $_SESSION['id_artista'] = $artista_array['id'];
+      $_SESSION['aprovado'] = $artista_array['aprovado']; // 0 para nao aprovado e 1 para aprovado
       $_SESSION['nome'] = $artista_array['nome'];
       $mysql->close();
       header("location: /hear-me-out/projeto/artista/index.php");
@@ -65,15 +66,23 @@ if (isset($_POST['email']) && isset($_POST['senha'])) {
   if ($critico->num_rows > 0) {
     if (password_verify($senha, $critico_array['senha'])) {
       $_SESSION['authenticated'] = true;
+      $_SESSION['id_critico'] = $critico_array['id'];
+      $_SESSION['aprovado'] = $critico_array['aprovado']; // 0 para nao aprovado e 1 para aprovado
       $_SESSION['nome'] = $critico_array['nome'];
       $mysql->close();
       header("location: /hear-me-out/projeto/critico/index.php");
       exit();
     }
   }
-
   $mysql->close();
-  echo "<script>alert('Email ou senha incorretos!');</script>";
+  echo "<script src='https://cdn.jsdelivr.net/npm/sweetalert2@11'></script>";
+  echo "<script>
+  Swal.fire({
+      title: 'Email ou senha incorretos!',
+      icon: 'error',
+      draggable: true      
+      });
+  </script>";
 }
 ?>
 
