@@ -15,6 +15,11 @@ if (!isset($_SESSION['admin']) || $_SESSION['admin'] !== true) {
     <title>Gerenciar cadastros</title>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.6/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-4Q6Gf2aSP4eDXB8Miphtr37CMZZQ5oXLH2yaXMJ2w8e2ZtHTl7GptT4jmndRuHDT" crossorigin="anonymous">
     <link rel="stylesheet" href="../styles/global.css">
+    <style>
+        body {
+            background-color: #212121 !important;
+        }
+    </style>
 </head>
 <body>
     <div class="container text-center pt-3" style="color: white">
