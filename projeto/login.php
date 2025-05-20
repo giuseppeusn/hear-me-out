@@ -34,6 +34,9 @@ if (isset($_POST['email']) && isset($_POST['senha'])) {
     if (password_verify($senha, $usuario_array['senha'])) {
       $_SESSION['authenticated'] = true;
       $_SESSION['nome'] = $usuario_array['nome'];
+      if ($usuario_array['permissao'] == 'admin') {
+        $_SESSION['admin'] = true;
+      }
       $mysql->close();
       header("location: /hear-me-out/projeto/index.php");
       exit();
