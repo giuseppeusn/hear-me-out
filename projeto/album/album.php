@@ -18,7 +18,8 @@
     $conexao = connect_db(); 
     
     if (!isset($_SESSION['authenticated']) || !isset($_SESSION['id_artista'])) {
-      die("Você precisa estar logado como artista.");}
+      die("Você precisa estar logado como artista.");
+    }
     $id_artista = intval($_SESSION['id_artista']);
     echo "<h2>Meus álbuns</h2>";
     echo "<div class='container mt-3'>
