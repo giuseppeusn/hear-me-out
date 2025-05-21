@@ -7,6 +7,8 @@
     
     $connection = new mysqli($db_host, $db_user, $db_pass, $db_name);
 
-    return $connection;
-  }
+  $connection = new mysqli($db_host, $db_user, $db_pass, $db_name);
+
+  return $connection;
+}
 ?>

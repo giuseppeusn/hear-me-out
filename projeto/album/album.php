@@ -1,62 +1,74 @@
 <!DOCTYPE html>
 <html lang="pt-BR">
+<head>
+  <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+  <script src="/hear-me-out/projeto/album/insert.js"></script>
+  <script src="/hear-me-out/projeto/album/update.js"></script>
+  <script src="/hear-me-out/projeto/album/delete.js"></script>
+
+</head>
 <body>
 <div class="container mt-3">
-    <h2>Lista de álbuns</h2>
-    <a type="button" class="btn btn-success" href="index.php?page=1">Inserir novo álbum</a>
-    <table class="table table-striped">
-        <thead>
-            <tr>
-                <th>#</th>
-                <th>Nome</th>
-                <th>Artista</th>
-                <th>Capa</th>
-                <th>Data de lançamento</th>
-                <th>Número de músicas</th>
-                <th>Duração</th>
-            </tr>
-        </thead>
-        <tbody>
-        <?php
-        include_once("../connect.php");
 
-        $conexao = connect_db(); 
-        $query = "
-        SELECT 
-          album.id AS album_id,
-          album.nome AS album_nome,
-          album.duracao,
-          album.capa,
-          album.data_lancamento,
-          album.qtd_musicas,
-          artista.nome AS artista_nome
-        FROM album
-        JOIN artista ON album.id_artista = artista.id
-      ";
-        $resultado = $conexao->query($query);
-        
-        if ($resultado) {
-            while ($linha = $resultado->fetch_object()) {
-                $btn = "<a href='index.php?page=2&id=" . $linha->album_id . "' class='btn btn-warning'>Alterar</a>";
-                $btn .= "<a href='index.php?page=3&id=" . $linha->album_id . "' class='btn btn-danger'>Excluir</a>";
 
-                $duracao = $linha->duracao;  
-                $minutos = floor($duracao / 60);  
-                $segundos = $duracao % 60; 
-                echo "<tr>";
-                echo "<td>" . $btn . "</td>";
-                echo "<td>{$linha->album_nome}</td>";
-                echo "<td>{$linha->artista_nome}</td>";
-                echo "<td><img src='{$linha->capa}' width='100'></td>";
-                echo "<td>{$linha->data_lancamento}</td>";
-                echo "<td>{$linha->qtd_musicas}</td>";
-                echo "<td>{$minutos} min {$segundos} sec</td>";
-                echo "</tr>";
-            }
+  <div class="row">
+
+    <?php
+    include_once("../connect.php");
+    $conexao = connect_db(); 
+    
+    if (!isset($_SESSION['authenticated']) || !isset($_SESSION['id_artista'])) {
+      die("Você precisa estar logado como artista.");}
+    $id_artista = intval($_SESSION['id_artista']);
+    echo "<h2>Meus álbuns</h2>";
+    echo "<div class='container mt-3'>
+      <button type='button' class='btn btn-success' onclick='abrirFormularioAlbum()'>Cadastrar Álbum</button> <br><br> 
+      </div>";
+    $query = "
+      SELECT 
+        album.id AS album_id,
+        album.nome AS album_nome,
+        album.capa,
+        album.data_lancamento,
+        artista.nome AS artista_nome
+      FROM album
+      JOIN artista ON album.id_artista = artista.id
+      WHERE artista.id = $id_artista";
+
+    $resultado = $conexao->query($query);
+
+    if ($resultado) {
+        while ($linha = $resultado->fetch_object()) {
+            echo "<div id='album-{$linha->album_id}' 
+                    data-nome='" . htmlspecialchars($linha->album_nome, ENT_QUOTES) . "' 
+                    data-capa='" . htmlspecialchars($linha->capa, ENT_QUOTES) . "' 
+                    data-data='" . $linha->data_lancamento . "' 
+                    style='display: none;'></div>";
+            $btnAlterar = "<button type='button' class='btn btn-warning me-2' onclick='abrirAlterarAlbum({$linha->album_id})'>Alterar</button>";
+            $btnExcluir = "<button type='button' class='btn btn-danger me-2' onclick='deleteAlbum({$linha->album_id})'>Excluir</button>";
+            $btnVerAlbum = "<a href='index.php?page=4&id=" . $linha->album_id . "' class='btn btn-primary'>Ver álbum</a>";
+
+
+            echo "
+            <div class='col-md-4 mb-4'>
+              <div class='card' style='width:100%'>
+                <img class='card-img-top' src='{$linha->capa}' alt='Capa do álbum'>
+                <div class='card-body'>
+                  <h4 class='card-title'>{$linha->album_nome}</h4>
+                  <p class='card-text'><b>Artista:</b> {$linha->artista_nome}</p>
+                  $btnVerAlbum
+                  $btnAlterar
+                  $btnExcluir
+                  
+                </div>
+              </div>
+            </div>
+            ";
         }
-        ?>
-        </tbody>
-    </table>
+    }
+    ?>
+  </div>
 </div>
 </body>
+
 </html>

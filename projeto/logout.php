@@ -1,7 +1,7 @@
 <?php
-  session_start();
+session_start();
 
-  session_destroy();
+session_destroy();
 
-  header("location: /hear-me-out/projeto/login.php");
+header("location: /hear-me-out/projeto/login.php");
 ?>

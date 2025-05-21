@@ -1,65 +1,28 @@
 <?php
-	$oMysql = connect_db();
-	$queryReadAlbum = mysqli_query($oMysql,"SELECT * from album where id = ".$_GET['id']);
-	if ($listaReadAlbum = mysqli_fetch_assoc($queryReadAlbum)) {
-		$nome = $listaReadAlbum['nome'];
-		$capa = $listaReadAlbum['capa'];
-		$duracao = $listaReadAlbum['duracao'];
-		$data_lancamento = $listaReadAlbum['data_lancamento'];
-		$qtd_musicas = $listaReadAlbum['qtd_musicas'];
-	}
-	if(isset($_POST['nome'], $_POST['capa'], $_POST['data_lancamento'], $_POST['duracao'], $_POST['qtd_musicas'])){
-		$query = "UPDATE album
-			SET nome = '".$_POST['nome']."', 
-				capa = '".$_POST['capa']."', 
-				data_lancamento = '".$_POST['data_lancamento']."', 
-				duracao = '".$_POST['duracao']."',
-				qtd_musicas = '".$_POST['qtd_musicas']."'
-			WHERE id = ".$_GET['id'];
-		$resultado = $oMysql->query($query);
-		header('location: index.php');
-	}
+session_start();
+$id_artista = $_SESSION['id_artista'];
+$conn = new mysqli("localhost:3306", "root", "", "hear_me_out");
+
+if ($conn->connect_error) {
+    die("Erro na conexão: " . $conn->connect_error);
+}
+
+$data = json_decode(file_get_contents("php://input"), true);
+
+$id_album = intval($data['id']);
+$nome = $conn->real_escape_string($data['nome']);
+$capa = $conn->real_escape_string($data['capa']);
+$data_lancamento = $conn->real_escape_string($data['data']);
+
+$sql = "UPDATE album 
+        SET nome = '$nome', capa = '$capa', data_lancamento = '$data_lancamento' 
+        WHERE id = $id_album AND id_artista = $id_artista";
+
+if ($conn->query($sql)) {
+    echo "Álbum atualizado com sucesso!";
+} else {
+    echo "Erro ao atualizar: " . $conn->error;
+}
+
+$conn->close();
 ?>
-<!DOCTYPE html>
-<html lang="en">
-<body>
-
-<div class="container mt-3">
-  <h2>CRUD - Atualizar Álbum - ID: <?php echo $_GET['id']; ?></h2>
-  <p>Preencha os campos abaixo para atualizar o registro:</p>    
-
-		<form
-			method="POST"
-			>		
-			<div class="mb-3">
-				<label for="nome" class="form-label">Nome</label>
-				<input type="text" name="nome" class="form-control" placeholder="Digite o nome" value='<?php echo ($nome) ?>'>
-			</div>
-
-			<div class="mb-3">
-				<label for="imagem" class="form-label">capa</label>
-				<input type="text" name="capa" class="form-control" placeholder="URL da imagem" value='<?php echo ($capa) ?>'>
-			</div>
-
-			<div class="mb-3">
-				<label for="data_lancamento" class="form-label">Data de lançamento</label>
-				<input type="date" name="data_lancamento" class="form-control" value='<?php echo ($data_lancamento)?>'>
-			</div>
-
-			<div class="mb-3">
-				<label for="duracao" class="form-label">Duração (em segundos)</label>
-				<input type="number" name="duracao" class="form-control" placeholder="Digite a duração" value='<?php echo ($duracao)?>'>
-			</div>
-
-			<div class="mb-3">
-				<label for="qtd_musicas" class="form-label">Número de músicas</label>
-				<input type="number" name="qtd_musicas" class="form-control" placeholder="Digite a quantidade de músicas" value='<?php echo ($qtd_musicas)?>'>
-			</div>
-
-
-			<button type="submit" class="btn btn-primary">Atualizar</button>
-		</form>
-</div>
-
-</body>
-</html>

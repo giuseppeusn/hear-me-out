@@ -1,0 +1,135 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+  <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+</head>
+<body>
+<?php
+  include_once("../header.php");
+  $conexao = new mysqli("localhost:3306", "root", "", "hear_me_out");
+    $album_id = isset($_GET['id']) ? intval($_GET['id']) : 0;
+    $queryAlbum = "SELECT 
+        album.id AS album_id,
+        album.nome AS album_nome,
+        album.capa AS album_capa,
+        album.data_lancamento AS album_data,
+        artista.nome AS artista_nome
+    FROM album
+    INNER JOIN artista ON album.id_artista = artista.id
+    WHERE album.id = $album_id";
+    $resultadoAlbum = $conexao->query($queryAlbum);
+    $dadosAlbum = $resultadoAlbum->fetch_object();
+      if (!$dadosAlbum) {
+      echo "Álbum não encontrado.";
+      exit; }
+
+    $queryResumo = "SELECT 
+        COUNT(id) AS musicas_total,
+        IFNULL(SUM(duracao), 0) AS duracao_total
+    FROM musica
+    WHERE id_album = $album_id";
+    $resultadoResumo = $conexao->query($queryResumo);
+    $resumo = $resultadoResumo->fetch_object();
+
+
+    $queryMusicas = "SELECT 
+        musica.id AS musica_id,
+        musica.nome AS musica_nome,
+        musica.capa AS musica_capa,
+        musica.duracao AS musica_duracao,
+        musica.data_lancamento AS musica_data
+    FROM musica
+    WHERE musica.id_album = $album_id";
+    $resultadoMusicas = $conexao->query($queryMusicas);
+
+
+    $musicas_total = $resumo->musicas_total;
+    $duracao_total = $resumo->duracao_total;
+    $minutosAlbum = floor($duracao_total / 60);
+    $segundosAlbum = $duracao_total % 60;
+
+    $btnAddAvaliacao = "<button type='button' class='btn btn-success me-2' onclick='addAvaliacao(<?= $dadosAlbum->album_id ?>)'>Inserir avaliação</button>";
+
+    echo "
+    <div class='container'>
+      <div class='row align-items-start'>
+        <div class='col-auto' name='Capa do album'>
+          <img class='img-fluid border border-dark' src='{$dadosAlbum->album_capa}' alt='capa do álbum' 
+            style='width: 400px; height: 400px; border: 8px solid black; display: block;'>
+          
+
+          <div name='Caixa de avaliação 'class='border border-3 mt-3 p-2 text-center' style='border-color: black; display: inline-block; width: 100%;'>
+            <div class='fw-bold mb-2' style='font-size: 18px;'>avaliações</div>
+            <div class='row'>
+
+              <div class='col'>
+                <div class='fw-bold' style='font-size: 18px;'>Publico nota</div>
+                <div style='font-size: 14px;'>público</div>
+              </div>
+
+              <div class='col'>
+                <div class='fw-bold' style='font-size: 18px;'>Critico nota</div>
+                <div style='font-size: 14px;'>crítica</div>
+              </div>
+
+            </div>
+          </div> 
+          <br><br>
+          <div name='Botao avaliacao' style='display: flex; align-items: center; justify-content: center;'>{$btnAddAvaliacao}</div>
+        </div>
+
+
+        <div class='col' name='Info do album'>
+          <p class='text-uppercase mb-0' style='font-size: 14px;'>álbum</p>
+          <h1 style='font-size: 55px; font-weight: bold; margin-top: -15px; margin-left: -5px;'>{$dadosAlbum->album_nome}</h1>
+          <p class='mt-3' style='font-size: 16px; font-weight:bold;'>{$dadosAlbum->artista_nome}</p>
+          <p class='mt-3' style='font-size: 16px;'>" . ($duracao_total >= 60 ? "{$minutosAlbum} min {$segundosAlbum} sec" : "{$segundosAlbum} sec") . "</p>
+          <p class='mt-3' style='font-size: 16px;'>". ($musicas_total == 1 ? "{$musicas_total} música" : "{$musicas_total} músicas") . "</p> ";
+        
+        echo "
+        <div name='Lista de musicas' class='table-responsive mt-4'>
+          <table class='table table-striped'>
+            <thead>
+              <tr>
+                <th>#</th>
+                <th>Nome</th>
+                <th>Duração</th>
+                <th>Nota</th>
+              </tr>
+            </thead>
+            <tbody>";
+        if ($resultadoMusicas->num_rows > 0) {
+
+            while ($musica = $resultadoMusicas->fetch_object()) {
+                echo "<div id='musica-{$musica->musica_id}' 
+                data-nome='" . htmlspecialchars($musica->musica_nome, ENT_QUOTES) . "' 
+                data-capa='" . htmlspecialchars($musica->musica_capa, ENT_QUOTES) . "' 
+                data-duracao='" . htmlspecialchars($musica->musica_duracao, ENT_QUOTES) . "'
+                data-data='" . $musica->musica_data . "' 
+                style='display: none;'></div>";
+                $minutosMusica = floor($musica->musica_duracao / 60);
+                $segundosMusica = $musica->musica_duracao % 60;
+                echo "<tr>";
+                echo "<td><img src='{$musica->musica_capa}' style='width: 50px; lenght:50px'></td>";
+                echo "<td><a href='/hear-me-out/projeto/paginaUser/musica.php?id={$musica->musica_id}'>{$musica->musica_nome}</a></td>";
+                echo "<td>" . ($musica->musica_duracao >= 60 
+                                ? "{$minutosMusica} min {$segundosMusica} sec" 
+                                : "{$segundosMusica} sec") . "</td>";
+                echo "<td>AINDA NAO FEITO</td>";
+                
+            }
+        }
+
+    echo "
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </div> 
+    ";
+?>
+
+
+</html>
