@@ -614,7 +614,7 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
     </form>
 </div>
 
-<div class="container mt-3 custom-container rounded-5 pt-3 pb-3 px-4 custom-background form-usuario" hidden>
+<div class="container mt-3 mb-5 custom-container rounded-5 pt-3 pb-3 px-4 custom-background form-usuario" hidden>
     <div class="text-center">
         <h2>Cadastre-se</h2>
     </div>
