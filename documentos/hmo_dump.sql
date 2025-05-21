@@ -1,10 +1,10 @@
 CREATE DATABASE  IF NOT EXISTS `hear_me_out` /*!40100 DEFAULT CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci */;
 USE `hear_me_out`;
--- MySQL dump 10.13  Distrib 8.0.40, for Win64 (x86_64)
+-- MySQL dump 10.13  Distrib 8.0.38, for macos14 (arm64)
 --
 -- Host: 127.0.0.1    Database: hear_me_out
 -- ------------------------------------------------------
--- Server version	5.5.5-10.4.32-MariaDB
+-- Server version	5.5.5-10.4.28-MariaDB
 
 /*!40101 SET @OLD_CHARACTER_SET_CLIENT=@@CHARACTER_SET_CLIENT */;
 /*!40101 SET @OLD_CHARACTER_SET_RESULTS=@@CHARACTER_SET_RESULTS */;
@@ -66,7 +66,7 @@ CREATE TABLE `artista` (
   `senha` varchar(255) NOT NULL,
   `aprovado` tinyint(1) NOT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=9 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=10 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -75,7 +75,7 @@ CREATE TABLE `artista` (
 
 LOCK TABLES `artista` WRITE;
 /*!40000 ALTER TABLE `artista` DISABLE KEYS */;
-INSERT INTO `artista` VALUES (1,'Coldplay','Coldplay é uma banda britânica de rock formada em Londres em 1996.','coldplay@email.com','https://upload.wikimedia.org/wikipedia/commons/2/2e/ColdplayBBC071221_%28cropped%29.jpg','1996-01-01','Reino Unido','https://www.coldplay.com','Rock alternativo','$10$mpQClLPn75SehYpEHMv5/eGlYR/ld6vq58f52wnu7a1qzKF1OF7/W',1),(2,'Beyoncé','Beyoncé é uma cantora, compositora e atriz norte-americana.','beyonce@email.com','https://upload.wikimedia.org/wikipedia/commons/9/91/Beyonc%C3%A9_-_Tottenham_Hotspur_Stadium_-_1st_June_2023_%2811_of_118%29_%2852946364483%29_%28face_cropped%29.jpg','1997-01-01','Estados Unidos','https://www.beyonce.com','Pop','$10$mpQClLPn75SehYpEHMv5/eGlYR/ld6vq58f52wnu7a1qzKF1OF7/W',1),(3,'Taylor Swift','Taylor Swift é uma cantora e compositora norte-americana.','taylor@email.com','https://upload.wikimedia.org/wikipedia/commons/e/e8/TaylorSwiftApr09.jpg','2006-01-01','Estados Unidos','https://www.taylorswift.com','Pop','$10$mpQClLPn75SehYpEHMv5/eGlYR/ld6vq58f52wnu7a1qzKF1OF7/W',1),(4,'Post Malone','Post Malone é um cantor, rapper e compositor norte-americano conhecido por misturar estilos como hip hop, pop, rock e trap.','postmalone@email.com','https://hips.hearstapps.com/hmg-prod/images/post-malone-attends-the-road-house-world-premiere-during-news-photo-1727445361.jpg?crop=0.757xw:1.00xh;0.0986xw,0&resize=1200:*','2015-01-01','Estados Unidos','https://www.postmalone.com','Hip hop','$10$mpQClLPn75SehYpEHMv5/eGlYR/ld6vq58f52wnu7a1qzKF1OF7/W',1),(5,'Linkin Park','Linkin Park foi uma banda de rock alternativo/nu metal dos Estados Unidos, formada em 1996 e conhecida por mesclar rock, rap e música eletrônica.','linkinpark@email.com','https://upload.wikimedia.org/wikipedia/commons/d/d8/Linkin_Park_-_From_Zero_Lead_Press_Photo_-_James_Minchin_III.jpg','1996-01-01','Estados Unidos','https://www.linkinpark.com','Rock alternativo','$10$mpQClLPn75SehYpEHMv5/eGlYR/ld6vq58f52wnu7a1qzKF1OF7/W',1),(6,'Imagine Dragons','Imagine Dragons é uma banda de pop rock americana formada em Las Vegas, Nevada. Conhecida por hits como Radioactive, Believer e Demons.','imaginedragons@email.com','https://s2-gshow.glbimg.com/0wmhS5xGywLlXR9yfeXBO_2rR3o=/0x0:942x623/984x0/smart/filters:strip_icc()/i.s3.glbimg.com/v1/AUTH_e84042ef78cb4708aeebdf1c68c6cbd6/internal_photos/bs/2023/V/2/BlhJ8gQoOESx3yDzGaTg/imagine-dragons.jpg','2008-01-01','Estados Unidos','https://www.imaginedragonsmusic.com','Pop rock','$10$mpQClLPn75SehYpEHMv5/eGlYR/ld6vq58f52wnu7a1qzKF1OF7/W',1);
+INSERT INTO `artista` VALUES (1,'Coldplay','Coldplay é uma banda britânica de rock formada em Londres em 1996.','coldplay@email.com','https://upload.wikimedia.org/wikipedia/commons/2/2e/ColdplayBBC071221_%28cropped%29.jpg','1996-01-01','Reino Unido','https://www.coldplay.com','Rock alternativo','$2y$10$hBzjRskV4PS/DdJtseu55uivLmVh0rlAfkkHqGMxhHwNOBJGYmgI2',1),(2,'Beyoncé','Beyoncé é uma cantora, compositora e atriz norte-americana.','beyonce@email.com','https://upload.wikimedia.org/wikipedia/commons/9/91/Beyonc%C3%A9_-_Tottenham_Hotspur_Stadium_-_1st_June_2023_%2811_of_118%29_%2852946364483%29_%28face_cropped%29.jpg','1997-01-01','Estados Unidos','https://www.beyonce.com','Pop','$2y$10$hBzjRskV4PS/DdJtseu55uivLmVh0rlAfkkHqGMxhHwNOBJGYmgI2',1),(3,'Taylor Swift','Taylor Swift é uma cantora e compositora norte-americana.','taylor@email.com','https://upload.wikimedia.org/wikipedia/commons/e/e8/TaylorSwiftApr09.jpg','2006-01-01','Estados Unidos','https://www.taylorswift.com','Pop','$2y$10$hBzjRskV4PS/DdJtseu55uivLmVh0rlAfkkHqGMxhHwNOBJGYmgI2',1),(4,'Post Malone','Post Malone é um cantor, rapper e compositor norte-americano conhecido por misturar estilos como hip hop, pop, rock e trap.','postmalone@email.com','https://hips.hearstapps.com/hmg-prod/images/post-malone-attends-the-road-house-world-premiere-during-news-photo-1727445361.jpg?crop=0.757xw:1.00xh;0.0986xw,0&resize=1200:*','2015-01-01','Estados Unidos','https://www.postmalone.com','Hip hop','$2y$10$hBzjRskV4PS/DdJtseu55uivLmVh0rlAfkkHqGMxhHwNOBJGYmgI2',1),(5,'Linkin Park','Linkin Park foi uma banda de rock alternativo/nu metal dos Estados Unidos, formada em 1996 e conhecida por mesclar rock, rap e música eletrônica.','linkinpark@email.com','https://upload.wikimedia.org/wikipedia/commons/d/d8/Linkin_Park_-_From_Zero_Lead_Press_Photo_-_James_Minchin_III.jpg','1996-01-01','Estados Unidos','https://www.linkinpark.com','Rock alternativo','$2y$10$hBzjRskV4PS/DdJtseu55uivLmVh0rlAfkkHqGMxhHwNOBJGYmgI2',1),(6,'Imagine Dragons','Imagine Dragons é uma banda de pop rock americana formada em Las Vegas, Nevada. Conhecida por hits como Radioactive, Believer e Demons.','imaginedragons@email.com','https://s2-gshow.glbimg.com/0wmhS5xGywLlXR9yfeXBO_2rR3o=/0x0:942x623/984x0/smart/filters:strip_icc()/i.s3.glbimg.com/v1/AUTH_e84042ef78cb4708aeebdf1c68c6cbd6/internal_photos/bs/2023/V/2/BlhJ8gQoOESx3yDzGaTg/imagine-dragons.jpg','2008-01-01','Estados Unidos','https://www.imaginedragonsmusic.com','Pop rock','$2y$10$hBzjRskV4PS/DdJtseu55uivLmVh0rlAfkkHqGMxhHwNOBJGYmgI2',1),(9,'Artista','Artista','artista@email.com','https://upload.wikimedia.org/wikipedia/commons/a/a3/Image-not-found.png','2000-01-01','Brasil','https://www.google.com.br/','Rock','$2y$10$hBzjRskV4PS/DdJtseu55uivLmVh0rlAfkkHqGMxhHwNOBJGYmgI2',0);
 /*!40000 ALTER TABLE `artista` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -259,7 +259,7 @@ CREATE TABLE `critico` (
   `site` varchar(255) NOT NULL,
   `aprovado` tinyint(1) NOT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -268,6 +268,7 @@ CREATE TABLE `critico` (
 
 LOCK TABLES `critico` WRITE;
 /*!40000 ALTER TABLE `critico` DISABLE KEYS */;
+INSERT INTO `critico` VALUES (1,'Crítico','40582302072','critico@email.com','critico','1990-01-01','$2y$10$U9/zrQ7QmPWXz.obV5zYDeo9Yi5W2ocJ/Y2uo2jiUKIy.LIRy9bYu','M','https://www.google.com.br/',0);
 /*!40000 ALTER TABLE `critico` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -321,7 +322,7 @@ CREATE TABLE `usuario` (
   `genero` enum('M','F','I') DEFAULT NULL,
   `permissao` enum('normal','admin') DEFAULT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=6 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=8 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -330,6 +331,7 @@ CREATE TABLE `usuario` (
 
 LOCK TABLES `usuario` WRITE;
 /*!40000 ALTER TABLE `usuario` DISABLE KEYS */;
+INSERT INTO `usuario` VALUES (6,'Usuário teste','22623283079','usuario@email.com','1990-01-01','$2y$10$YTMEoWjfflcIoYSLdbKKWuiAPrbcHiqY18EydLj3TvdH3U4waaW2q','M','normal'),(7,'Admin','70199679061','admin@email.com','1990-01-01','$2y$10$XgH.XRdIzAYfMPdMJCVTcehR50cZA/4hfZE5YqG8EMnGmUk2mPGmK','M','admin');
 /*!40000 ALTER TABLE `usuario` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -413,4 +415,4 @@ SET character_set_client = @saved_cs_client;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2025-05-20  9:16:31
+-- Dump completed on 2025-05-21 20:19:14
