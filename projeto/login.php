@@ -34,6 +34,8 @@ if (isset($_POST['email']) && isset($_POST['senha'])) {
     if (password_verify($senha, $usuario_array['senha'])) {
       $_SESSION['authenticated'] = true;
       $_SESSION['nome'] = $usuario_array['nome'];
+      $_SESSION['id_usuario'] = $usuario_array['id'];
+
       $mysql->close();
       header("location: /hear-me-out/projeto/index.php");
       exit();
@@ -63,6 +65,7 @@ if (isset($_POST['email']) && isset($_POST['senha'])) {
     if (password_verify($senha, $critico_array['senha'])) {
       $_SESSION['authenticated'] = true;
       $_SESSION['nome'] = $critico_array['nome'];
+      $_SESSION['id_critico'] = $critico_array['id'];
       $mysql->close();
       header("location: /hear-me-out/projeto/critico/index.php");
       exit();

@@ -9,6 +9,7 @@
 <?php
   include_once("../header.php");
   $conexao = new mysqli("localhost:3306", "root", "", "hear_me_out");
+  $id_user = intval($_SESSION['id_usuario']);
     $album_id = isset($_GET['id']) ? intval($_GET['id']) : 0;
     $queryAlbum = "SELECT 
         album.id AS album_id,
@@ -44,6 +45,17 @@
     WHERE musica.id_album = $album_id";
     $resultadoMusicas = $conexao->query($queryMusicas);
 
+    $queryComentarioAlbum = "SELECT 
+        comentario.id AS comentario_id,
+        comentario.mensagem AS comentario_mensagem,
+        comentario.id_usuario AS comentario_id_user,
+        comentario_album.id_album AS comentario_id_album
+    FROM comentario
+    INNER JOIN comentario_album ON comentario.id = comentario_album.id_comentario
+    where comentario.id_usuario = $id_user;";
+    $resultadoComentario = $conexao->query($queryComentarioAlbum);
+    $dadosComentario = $resultadoComentario->fetch_object();
+
 
     $musicas_total = $resumo->musicas_total;
     $duracao_total = $resumo->duracao_total;
@@ -60,7 +72,7 @@
             style='width: 400px; height: 400px; border: 8px solid black; display: block;'>
           
 
-          <div name='Caixa de avaliação 'class='border border-3 mt-3 p-2 text-center' style='border-color: black; display: inline-block; width: 100%;'>
+          <div name='Caixa de avaliação 'class='border border-3 mt-3 p-2 text-center' style='border-color: black; display: inline-block; width: 400px;'>
             <div class='fw-bold mb-2' style='font-size: 18px;'>avaliações</div>
             <div class='row'>
 
@@ -75,12 +87,29 @@
               </div>
 
             </div>
-          </div> 
-          <br><br>
-          <div name='Botao avaliacao' style='display: flex; align-items: center; justify-content: center;'>{$btnAddAvaliacao}</div>
-        </div>
+          </div> <br>
+          <div name='Caixa de comentário'class='border border-3 mt-3 p-2' style='border-color: black; display: inline-block; width: 400px;'>
+            <div class='fw-bold mb-2' style='font-size: 18px;'>Comentários</div>
+              <form method='POST' action='insertComent.php'>
+                <div style='display: flex; align-items: flex-start; gap: 10px;'>
+                  <textarea name='comentario_mensagem' id='comentario_mensagem' maxlength='250' rows='5' cols='40' placeholder='Digite o seu comentário aqui'></textarea>
+                  <button type='submit'>Enviar</button>
+                </div>
+                <input type='hidden' name='album_id' value='<?php echo $dadosAlbum->album_id; ?>'>
+               </form>";
 
+      if (!$dadosComentario) {
+        echo "<p style='text-align: center;'>Seja o primeiro a comentar!</p>";
+      } else {
+        echo "<p>{$dadosComentario->comentario_id_user}</p>";
+        echo "<p>{$dadosComentario->comentario_mensagem}</p>";
+      }
 
+        echo "
+          </div>
+        </div>";
+        
+        echo"
         <div class='col' name='Info do album'>
           <p class='text-uppercase mb-0' style='font-size: 14px;'>álbum</p>
           <h1 style='font-size: 55px; font-weight: bold; margin-top: -15px; margin-left: -5px;'>{$dadosAlbum->album_nome}</h1>
