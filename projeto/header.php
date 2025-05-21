@@ -29,10 +29,7 @@
 
       if (isset($_SESSION['authenticated']) && $_SESSION['authenticated'] === true) {
         include __DIR__ . "/components/dropdown.php";
-        echo dropdown($_SESSION['nome']);
-        echo '<li class="nav-item">
-            <a class="nav-link" href="/hear-me-out/projeto/logout.php">Sair</a>
-          </li>';
+        echo dropdown($_SESSION['nome'], $_SESSION['permissao']);
       } else {
         echo '
         <a class="user-wrapper" href="/hear-me-out/projeto/login.php">

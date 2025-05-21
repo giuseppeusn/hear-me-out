@@ -1,17 +1,69 @@
 <?php
-  function dropdown($nome) {
-    return '
-      <li class="nav-item dropdown">
-        <a class="nav-link dropdown-toggle" href="#" id="navbarDarkDropdownMenuLink" role="button" data-bs-toggle="dropdown" aria-expanded="false">
-          <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-person" viewBox="0 0 16 16">
-            <path d="M8 8a3 3 0 1 0 0-6 3 3 0 0 0 0 6m2-3a2 2 0 1 1-4 0 2 2 0 0 1 4 0m4 8c0 1-1 1-1 1H3s-1 0-1-1 1-4 6-4 6 3 6 4m-1-.004c-.001-.246-.154-.986-.832-1.664C11.516 10.68 10.289 10 8 10s-3.516.68-4.168 1.332c-.678.678-.83 1.418-.832 1.664z"/>
-          </svg>' . $nome . '
+  function dropdown($nome, $user) {
+    $dropdown = '<li class="nav-item dropdown">
+        <a class="user-wrapper" href="#" id="navbarDarkDropdownMenuLink" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+          <p class="user-text">'. $nome . '</p>
+          <div class="user-icon-wrapper">
+            <img src="/hear-me-out/projeto/assets/svg/user.svg" alt="User Icon" class="user-icon">
+          </div>
+        </a>
         </a>
         <ul class="dropdown-menu" aria-labelledby="navbarDarkDropdownMenuLink">
-          <li><a class="dropdown-item" href="/hear-me-out/projeto/artista?page=1">Artista</a></li>
-          <li><a class="dropdown-item" href="/hear-me-out/projeto/critico?page=1">Crítico</a></li>
-          <li><a class="dropdown-item" href="/hear-me-out/projeto/usuario?page=1">Usuário</a></li>
+          <li>
+            <a class="dropdown-item" href="/hear-me-out/projeto/usuario/conta.php">
+              <img src="/hear-me-out/projeto/assets/svg/gear.svg" alt="Gear Icon" style="width: 20px;">
+              <p>Configurações</p>
+            </a>
+          </li>';
+
+    switch ($user) {
+      case 'artista':
+        $dropdown = $dropdown . ' <li>
+            <a class="dropdown-item" href="/hear-me-out/projeto/artista/albuns">
+              <img src="/hear-me-out/projeto/assets/svg/list-music.svg" alt="List music Icon" style="width: 25px;">
+              <p>Meus álbuns</p>
+            </a>
+          </li>';
+        break;
+      case 'critico':
+        $dropdown = $dropdown . '
+          <!--<li>
+            <a class="dropdown-item" href="/hear-me-out/projeto/critico/avaliacoes.php">
+              <img src="/hear-me-out/projeto/assets/svg/list-star.svg" alt="List Star Icon" style="width: 30px;">
+              <p>Minhas avaliações</p>
+            </a>
+          </li>---!>';  
+        break;
+      case 'admin':
+        $dropdown = $dropdown . ' <li>
+            <a class="dropdown-item" href="/hear-me-out/projeto/admin">
+              <img src="/hear-me-out/projeto/assets/svg/edit-adm.svg" alt="Edit Icon" style="width: 20px;">
+              <p>Gerenciar</p>
+            </a>
+          </li>';
+        break;
+      default:
+        $dropdown = $dropdown . '
+          <!--<li>
+            <a class="dropdown-item" href="/hear-me-out/projeto/usuario/avaliacoes.php">
+              <img src="/hear-me-out/projeto/assets/svg/list-star.svg" alt="List Star Icon" style="width: 30px;">
+              <p>Minhas avaliações</p>
+            </a>
+          </li>---!>';  
+        break;
+    }
+
+
+    $dropdown = $dropdown . '
+          <li>
+            <a class="dropdown-item" href="/hear-me-out/projeto/logout.php">
+              <img src="/hear-me-out/projeto/assets/svg/logout.svg" alt="Logout Icon" style="width: 20px;">
+              <p>Sair</p>
+            </a>
+          </li>
         </ul>
-      </li>'; 
+      </li>';
+
+    return $dropdown;
   }
 ?>

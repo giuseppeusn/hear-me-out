@@ -1,5 +1,7 @@
 <?php
-  function search() {
+  function search($header) {
+    $className = "";
+
     if ($header) {
       $className = "navbar-search";
     }
@@ -14,7 +16,7 @@
           required
         >
         <button type="submit" class="search-btn">
-          <img src="../assets/svg/magnifier.svg" alt="Pesquisa" class="search-icon">
+          <img src="/hear-me-out/projeto/assets/svg/magnifier.svg" alt="Pesquisa" class="search-icon">
         </button>
       </div>
     </form>';
