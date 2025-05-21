@@ -13,12 +13,12 @@
       <div class="home-banner">
         <div class="home-banner-content">
           <h1>Encontre músicas, álbuns ou artistas</h1>
-          <div class="search-container">
-            <input type="text" class="search" placeholder="Pesquisar">
-            <button class="search-btn">
-              <img src="./assets/svg/magnifier.svg" alt="Pesquisa" class="search-icon">
-            </button>
-          </div>
+          <?php
+            // include("./components/search.php");
+            include __DIR__ . "/components/search.php";
+
+            echo search(false);
+          ?>
         </div>
         <video autoplay muted loop class="video-banner">
           <source src="assets/video/guittar-banner.mp4" type="video/mp4" >

@@ -33,7 +33,8 @@ if (isset($_POST['email']) && isset($_POST['senha'])) {
   if ($usuario->num_rows > 0) {
     if (password_verify($senha, $usuario_array['senha'])) {
       $_SESSION['authenticated'] = true;
-      $_SESSION['nome'] = $usuario_array['nome'];
+      $nome = explode(' ', $usuario_array['nome'])[0];
+      $_SESSION['nome'] = $nome;
       if ($usuario_array['permissao'] == 'admin') {
         $_SESSION['admin'] = true;
       }
@@ -52,7 +53,8 @@ if (isset($_POST['email']) && isset($_POST['senha'])) {
       $_SESSION['authenticated'] = true;
       $_SESSION['id_artista'] = $artista_array['id'];
       $_SESSION['aprovado'] = $artista_array['aprovado']; // 0 para nao aprovado e 1 para aprovado
-      $_SESSION['nome'] = $artista_array['nome'];
+      $nome = explode(' ', $artista_array['nome'])[0];
+      $_SESSION['nome'] = $nome;
       $mysql->close();
       header("location: /hear-me-out/projeto/artista/index.php");
       exit();
@@ -68,7 +70,8 @@ if (isset($_POST['email']) && isset($_POST['senha'])) {
       $_SESSION['authenticated'] = true;
       $_SESSION['id_critico'] = $critico_array['id'];
       $_SESSION['aprovado'] = $critico_array['aprovado']; // 0 para nao aprovado e 1 para aprovado
-      $_SESSION['nome'] = $critico_array['nome'];
+      $nome = explode(' ', $critico_array['nome'])[0];
+      $_SESSION['nome'] = $nome;
       $mysql->close();
       header("location: /hear-me-out/projeto/critico/index.php");
       exit();
