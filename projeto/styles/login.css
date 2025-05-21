@@ -1,0 +1,45 @@
+.custom-body {
+    background-color: #212121 !important;
+    color: white !important;
+}
+
+.custom-container {
+    width: 30% !important;
+    min-width: 25% !important;
+    background-color: rgba(130, 130, 130, 0.15) !important;
+    background-image: linear-gradient(45deg, #292929, #4f4f4f, #292929) !important;
+    background-size: 400% 400% !important;
+    animation: animated-gradient 6s ease-in-out infinite !important;
+    box-shadow: 0 0 50px black !important;
+}
+
+.custom-input {
+    padding: 10px !important;
+}
+
+.custom-button {
+    font-size: 18px !important;
+    padding: 7px 20px !important;
+}
+
+.custom-padding-right {
+    padding-right: 4px !important;
+}
+
+.custom-padding-left {
+    padding-left: 0px !important;
+}
+
+@keyframes animated-gradient {
+    0% {
+        background-position: 0% 50%;
+    }
+
+    50% {
+        background-position: 100% 50%;
+    }
+
+    100% {
+        background-position: 0% 50%;
+    }
+}
