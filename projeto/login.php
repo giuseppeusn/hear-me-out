@@ -15,10 +15,8 @@ if (isset($_SESSION['sucesso_cadastro'])) {
   unset($_SESSION['sucesso_cadastro']);
 }
 
-
-
 $mysql = connect_db();
-if (isset($_POST['email']) && isset($_POST['senha'])) {
+if ((isset($_POST['email']) && isset($_POST['senha'])) && (!empty($_POST['email']) && !empty($_POST['senha']))) {
   $email = mysqli_real_escape_string($mysql, $_POST['email']);
   $senha = $_POST['senha'];
 
@@ -77,12 +75,12 @@ if (isset($_POST['email']) && isset($_POST['senha'])) {
   $mysql->close();
   echo "<script src='https://cdn.jsdelivr.net/npm/sweetalert2@11'></script>";
   echo "<script>
-  Swal.fire({
-      title: 'Email ou senha incorretos!',
-      icon: 'error',
-      draggable: true      
-      });
-  </script>";
+    Swal.fire({
+        title: 'Email ou senha incorretos!',
+        icon: 'error',
+        draggable: true      
+        });
+    </script>";
 }
 ?>
 
@@ -93,18 +91,43 @@ if (isset($_POST['email']) && isset($_POST['senha'])) {
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Login</title>
-  <link rel="stylesheet" href="styles/login.css" />
-  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
   <style>
     body {
       background-color: #212121 !important;
       color: white !important;
     }
+
+    .custom-container {
+      width: 30%;
+      min-width: 25%;
+      margin-top: 100px;
+      background-color: rgba(130, 130, 130, 0.15);
+      background-image: linear-gradient(45deg, #292929, #5f5f5f, #292929);
+      background-size: 200% 200%;
+      box-shadow: 0 0 50px black;
+    }
+
+    .custom-input {
+      padding: 10px;
+    }
+
+    .custom-button {
+      font-size: 18px;
+      padding: 7px 20px;
+    }
+
+    .custom-padding-right {
+      padding-right: 4px;
+    }
+
+    .custom-padding-left {
+      padding-left: 0px;
+    }
   </style>
 </head>
 
 <body class="custom-body">
-  <div class="container h-auto mt-5 p-4 pb-1 rounded-5 custom-container">
+  <div class="container h-auto p-4 pb-2 pt-4 rounded-5 custom-container">
     <div class="text-center">
       <svg xmlns="http://www.w3.org/2000/svg" width="100" height="100" fill="currentColor" class="bi bi-person-circle"
         viewBox="0 0 16 16">

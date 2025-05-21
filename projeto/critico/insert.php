@@ -262,8 +262,6 @@ if (isset($_POST['create'])) {
 
 			<button type="submit" name="create" class="btn btn-primary">Enviar</button>
 		</form>
-
-		<script src="../validarCampos.js"></script>
 	</div>
 
 	<script src="../validarCampos.js"></script>
