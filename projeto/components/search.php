@@ -1,12 +1,14 @@
 <?php
   function search($header) {
-    $className = "";
+    $formClass = "";
+    $btnClass = "search-btn";
 
     if ($header) {
-      $className = "navbar-search";
+      $formClass = "navbar-search";
+      $btnClass = "search-btn search-btn-header";
     }
 
-    return '<form action="pesquisa" method="GET" class="' . $className . '">
+    return '<form action="/hear-me-out/projeto/pesquisa" method="GET" class="' . $formClass . '">
       <div class="search-container">
         <input 
           type="text" 
@@ -15,7 +17,7 @@
           placeholder="Pesquisar"
           required
         >
-        <button type="submit" class="search-btn">
+        <button type="submit" class="'. $btnClass .'">
           <img src="/hear-me-out/projeto/assets/svg/magnifier.svg" alt="Pesquisa" class="search-icon">
         </button>
       </div>

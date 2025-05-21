@@ -83,7 +83,7 @@
     if ($resultado && $resultado->num_rows > 0) {
         while ($data = $resultado->fetch_object()) {
         echo '<div class="swiper-slide">';
-        echo card($data->nome_album, $data->nome_artista, $data->capa ?? '#', '/hear-me-out/projeto/paginaUser/album.php?id=' . $data->album_id . '');
+        echo cauroselCard($data->nome_album, $data->nome_artista, $data->capa ?? '#', '/hear-me-out/projeto/paginaUser/album.php?id=' . $data->album_id . '');
         echo '</div>';
         }
     } else {

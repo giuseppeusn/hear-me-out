@@ -1,0 +1,35 @@
+.search-list-wrapper {
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+  gap: 10px;
+}
+
+.search-card-wrapper {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  text-decoration: none;
+  color: white;
+  padding: 20px;
+  border-radius: 10px;
+}
+
+.search-card-wrapper:hover {
+  background-color: #2c2c2c;
+}
+
+.search-card {
+  display: flex;
+}
+
+.search-card-text {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  margin-left: 10px;
+}
+
+.search-card-img {
+  width: 100px;
+}

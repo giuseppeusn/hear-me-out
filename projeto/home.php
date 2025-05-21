@@ -32,12 +32,12 @@
             $connection = connect_db(); 
             $query = "SELECT * FROM view_musicas_com_nomes ORDER BY RAND()";
             $resultado = $connection->query($query);
-            include ("./components/card.php");
+            include ("./components/cauroselCard.php");
 
             if ($resultado && $resultado->num_rows > 0) {
               while ($data = $resultado->fetch_object()) {
                 echo '<div class="swiper-slide">';
-                echo card($data->nome_musica, $data->nome_artista, $data->capa ?? '#', '/hear-me-out/projeto/paginaUser/musica.php?id=' . $data->id_musica . '');
+                echo cauroselCard($data->nome_musica, $data->nome_artista, $data->capa ?? '#', '/hear-me-out/projeto/paginaUser/musica.php?id=' . $data->id_musica . '');
                 echo '</div>';
               }
             } else {
@@ -58,7 +58,7 @@
             if ($resultado && $resultado->num_rows > 0) {
               while ($data = $resultado->fetch_object()) {
                 echo '<div class="swiper-slide">';
-                echo card($data->nome_album, $data->nome_artista, $data->capa ?? '#', '/hear-me-out/projeto/paginaUser/album.php?id=' . $data->album_id . '');
+                echo cauroselCard($data->nome_album, $data->nome_artista, $data->capa ?? '#', '/hear-me-out/projeto/paginaUser/album.php?id=' . $data->album_id . '');
                 echo '</div>';
               }
             } else {

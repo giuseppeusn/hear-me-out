@@ -1,5 +1,5 @@
 <?php 
-  function card($name, $artist, $image, $link) {
+  function cauroselCard($name, $artist, $image, $link) {
     return '
     <a href="' . $link . '" class="custom-card card-hover">
       <img class="custom-card-img" src="' . $image . '" alt="' . $name . '">

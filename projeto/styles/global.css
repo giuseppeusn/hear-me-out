@@ -175,6 +175,10 @@ body {
   border-radius: 50%;
 }
 
+.search-btn-header {
+  right: 5px;
+}
+
 .search-btn:hover {
   background-color: #b80000;
 }
