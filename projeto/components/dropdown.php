@@ -19,7 +19,7 @@
     switch ($user) {
       case 'artista':
         $dropdown = $dropdown . ' <li>
-            <a class="dropdown-item" href="/hear-me-out/projeto/artista/albuns">
+            <a class="dropdown-item" href="/hear-me-out/projeto/album/album.php">
               <img src="/hear-me-out/projeto/assets/svg/list-music.svg" alt="List music Icon" style="width: 25px;">
               <p>Meus álbuns</p>
             </a>
