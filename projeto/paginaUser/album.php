@@ -79,12 +79,14 @@ $btnAddAvaliacao = "<button type='button' class='btn btn-success me-2' onclick='
     echo "
     <div class='container'>
       <div class='row align-items-start'>
-        <div class='col-auto' name='Capa do album'>
-          <img class='img-fluid border border-dark' src='{$dadosAlbum->album_capa}' alt='capa do álbum' 
+      <!-- Coluna da esquerda: capa e comentários -->
+        <div class='col-md-4'>
+        <!-- Capa do álbum -->
+          <img name='Capa do album' class='img-fluid border border-dark' src='{$dadosAlbum->album_capa}' alt='capa' 
             style='width: 400px; height: 400px; border: 8px solid black; display: block;'>
           
-
-          <div name='Caixa de avaliação 'class='border border-3 mt-3 p-2 text-center' style='border-color: black; display: inline-block; width: 400px;'>
+          <!-- Comentários -->
+          <div name='Caixa de avaliação 'class='border border-3 mt-3 p-2 text-center' style='border-color: black; display: inline-block; width: 400px; color: white;'>
             <div class='fw-bold mb-2' style='font-size: 18px;'>avaliações</div>
             <div class='row'>
 
@@ -100,32 +102,34 @@ $btnAddAvaliacao = "<button type='button' class='btn btn-success me-2' onclick='
 
             </div>
           </div> <br>
-          <div name='Caixa de comentário'class='border border-3 mt-3 p-2' style=' color: white; display: inline-block; width: 400px;'>
+          <div name='Caixa de comentário' class='border border-3 mt-3 p-2' style='color: white; width: 400px;'>
             <div class='fw-bold mb-2' style='font-size: 18px;'>Comentários</div>
-              <form method='POST' action='insertComent.php'>
-                <div style='display: flex; align-items: flex-start; gap: 10px;'>
-                  <textarea name='comentario_mensagem' id='comentario_mensagem' maxlength='250' rows='5' cols='40' placeholder='Digite o seu comentário aqui'></textarea>
-                  <button type='submit'>Enviar</button>
-                </div>
-                <input type='hidden' name='album_id' value='$dadosAlbum->album_id'>
-               </form>";
-$comentou = false;
-$resultadoComentario = $conexao->query($queryComentarioAlbum);
-while ($dadosComentario = $resultadoComentario->fetch_object()) {
-    echo "<p>•{$dadosComentario->comentario_nome}<br>{$dadosComentario->comentario_mensagem}</p>";
-    $comentou = true;
-}
+            <form id='comentarioForm'>
+              <div class='d-flex gap-2'style='display: flex; align-items: flex-start; gap: 10px;'>
+                <textarea class ='form-control 'name='comentario_mensagem' id='comentario_mensagem' maxlength='250' rows='5' cols='40' placeholder='Digite o seu comentário aqui'></textarea>
+                <button type='submit' class='btn btn-primary'>Enviar</button>
+              </div>
+              <input type='hidden' name='album_id' value='$dadosAlbum->album_id'>";
+              $comentou = false;
+              $resultadoComentario = $conexao->query($queryComentarioAlbum);
+              while ($dadosComentario = $resultadoComentario->fetch_object()) {
+                  echo "<p>•{$dadosComentario->comentario_nome}<br>{$dadosComentario->comentario_mensagem}</p>";
+                  $comentou = true;
+              }
 
-if (!$comentou) {
-    echo "<p style='text-align: center;'>Seja o primeiro a comentar!</p>";
-}
+              if (!$comentou) {
+                  echo "<p style='text-align: center;'>Seja o primeiro a comentar!</p>";
+              }
 
         echo "
+            </form>
+            <div id='mensagem'></div>
           </div>
-        </div>";
+        </div>
+      </div>";
         
         echo"
-        <div class='col' name='Info do album'>
+        <div class='col-md-8' name='Info do album' style='color: white;'>
           <p class='text-uppercase mb-0' style='font-size: 14px;'>álbum</p>
           <h1 style='font-size: 55px; font-weight: bold; margin-top: -15px; margin-left: -5px;'>{$dadosAlbum->album_nome}</h1>
           <p class='mt-3' style='font-size: 16px; font-weight:bold;'>{$dadosAlbum->artista_nome}</p>
@@ -174,6 +178,45 @@ if (!$comentou) {
     </div> 
     ";
 ?>
+<script>
+document.addEventListener("DOMContentLoaded", function () {
+  const form = document.getElementById("comentarioForm");
+
+  form.addEventListener("submit", function (e) {
+    e.preventDefault();
+
+    const formData = new FormData(form);
+
+    fetch("insertComent.php", {
+      method: "POST",
+      body: formData
+    })
+    .then(res => res.text())
+    .then(data => {
+      Swal.fire({
+        icon: data.includes("sucesso") ? "success" : "error",
+        title: data,
+        timer: 2500,
+        showConfirmButton: false
+        
+      });
+
+      if (data.includes("sucesso")) {
+        form.reset();
+      }
+
+      document.getElementById("mensagem").innerHTML = "";
+    })
+    .catch(err => {
+      Swal.fire({
+        icon: "error",
+        title: "Erro ao enviar comentário.",
+        text: err.toString()
+      });
+    });
+  });
+});
+</script>
 
 
 </html>
