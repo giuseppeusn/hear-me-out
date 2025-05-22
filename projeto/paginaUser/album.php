@@ -2,6 +2,7 @@
 <html lang="pt-BR">
 <head>
   <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+  <link rel="stylesheet" href="../styles/pagAlbum.css" >
   <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
   <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
 </head>
@@ -79,35 +80,31 @@ $btnAddAvaliacao = "<button type='button' class='btn btn-success me-2' onclick='
     echo "
     <div class='container'>
       <div class='row align-items-start'>
-      <!-- Coluna da esquerda: capa e comentários -->
         <div class='col-md-4'>
-        <!-- Capa do álbum -->
-          <img name='Capa do album' class='img-fluid border border-dark' src='{$dadosAlbum->album_capa}' alt='capa' 
-            style='width: 400px; height: 400px; border: 8px solid black; display: block;'>
+          <img id='capa' class='img-fluid border border-white' src='{$dadosAlbum->album_capa}' alt='capa'>
           
-          <!-- Comentários -->
-          <div name='Caixa de avaliação 'class='border border-3 mt-3 p-2 text-center' style='border-color: black; display: inline-block; width: 400px; color: white;'>
-            <div class='fw-bold mb-2' style='font-size: 18px;'>avaliações</div>
+          <div name='Caixa de avaliação 'class='border border-3 mt-3 p-2 text-center' id='avaliacao'>
+            <div class='fw-bold mb-2'>avaliações</div>
             <div class='row'>
 
               <div class='col'>
-                <div class='fw-bold' style='font-size: 18px;'>Publico nota</div>
-                <div style='font-size: 14px;'>público</div>
+                <div class='fw-bold'>Publico nota</div>
+                <p >público</p>
               </div>
 
               <div class='col'>
-                <div class='fw-bold' style='font-size: 18px;'>Critico nota</div>
-                <div style='font-size: 14px;'>crítica</div>
+                <div class='fw-bold' >Critico nota</div>
+                <p>crítica</p>
               </div>
 
             </div>
           </div> <br>
-          <div name='Caixa de comentário' class='border border-3 mt-3 p-2' style='color: white; width: 400px;'>
-            <div class='fw-bold mb-2' style='font-size: 18px;'>Comentários</div>
+          <div name='Caixa de comentário' class='border border-3 mt-3 p-2' id='comentario'>
+            <div class='fw-bold mb-2' >Comentários</div>
             <form id='comentarioForm'>
-              <div class='d-flex gap-2'style='display: flex; align-items: flex-start; gap: 10px;'>
+              <div id='comentArea' class='d-flex gap-2'>
                 <textarea class ='form-control 'name='comentario_mensagem' id='comentario_mensagem' maxlength='250' rows='5' cols='40' placeholder='Digite o seu comentário aqui'></textarea>
-                <button type='submit' class='btn btn-primary'>Enviar</button>
+                <button id='enviarComent' type='submit' class='btn btn-primary'>Enviar</button>
               </div>
               <input type='hidden' name='album_id' value='$dadosAlbum->album_id'>";
               $comentou = false;
@@ -193,16 +190,31 @@ document.addEventListener("DOMContentLoaded", function () {
     })
     .then(res => res.text())
     .then(data => {
+      if (data.includes("erro:usuario_nao_logado")) {
+        Swal.fire({
+          icon: "warning",
+          title: "Você precisa estar logado para comentar!",
+          showCancelButton: true,
+          confirmButtonText: "Fazer login",
+          cancelButtonText: "Cancelar"
+        }).then((result) => {
+          if (result.isConfirmed) {
+            window.location.href = "../login.php";
+          }
+        });
+        return;
+      }
+
       Swal.fire({
         icon: data.includes("sucesso") ? "success" : "error",
         title: data,
         timer: 2500,
         showConfirmButton: false
-        
       });
 
       if (data.includes("sucesso")) {
         form.reset();
+        window.location.reload();
       }
 
       document.getElementById("mensagem").innerHTML = "";

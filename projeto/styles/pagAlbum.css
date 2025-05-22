@@ -1,0 +1,39 @@
+#capa {
+  width: 400px;
+  height: 400px;
+  display: block;
+}
+
+#avaliacao {
+    border-color: black; 
+    display: inline-block; 
+    width: 400px;
+    color: white;
+}
+
+#comentario {
+    color: white; 
+    width: 400px;
+}
+
+#comentario p {
+    font-size: 1px;
+}
+
+#comentArea {
+    display: flex; 
+    align-items: flex-start; 
+    gap: 10px;
+}
+
+#enviarComent {
+    height: 134px;
+}
+
+p {
+    font-size: 14px;
+}
+
+div {
+    font-size: 18px;
+}

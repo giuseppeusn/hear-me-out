@@ -1,5 +1,9 @@
 <?php
 session_start();
+if (!isset($_SESSION['id'])) {
+    echo "erro:usuario_nao_logado";
+    exit;
+}
 
 if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     $id = intval($_SESSION['id']);
