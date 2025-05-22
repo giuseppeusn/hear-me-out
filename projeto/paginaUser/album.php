@@ -10,14 +10,9 @@
 <?php
 include_once("../header.php");
 $conexao = new mysqli("localhost:3306", "root", "", "hear_me_out");
-if (isset($_SESSION['authenticated']) && isset($_SESSION['id_artista'])) {
-  $id_user = intval($_SESSION['id_usuario']);
-} else if (isset($_SESSION['authenticated']) && isset($_SESSION['id_critico'])){
-  $id_crit = intval($_SESSION['id_critico']);
-} else if (isset($_SESSION['authenticated']) && isset($_SESSION['id_artista'])){
-  $id_art = intval($_SESSION['id_artista']);
-}
 
+$id_usuario_logado = $_SESSION['id'];
+$nome_usuario_logado = $_SESSION['nome'];
 
 $album_id = isset($_GET['id']) ? intval($_GET['id']) : 0;
 $queryAlbum = "SELECT 
@@ -76,6 +71,9 @@ $minutosAlbum = floor($duracao_total / 60);
 $segundosAlbum = $duracao_total % 60;
 
 $btnAddAvaliacao = "<button type='button' class='btn btn-success me-2' onclick='addAvaliacao(<?= $dadosAlbum->album_id ?>)'>Inserir avaliação</button>";
+$btnAlterarComentario = "<button type='button' class='btn btn-warning me-2' onclick='alterarComentario(<?= $dadosComentario->comentario_id ?>)'>Alterar</button>";
+$btnExcluirComentario = "<button type='button' class='btn btn-danger me-2' onclick='excluirComentario(<?= $dadosComentario->comentario_id ?>)'>Deletar</button>";
+$btnVerComentario = "<button type='button' class='btn btn-primary me-2' onclick='verComentario(<?= $dadosAlbum->album_id ?>)'>Meus comentários</button>";
 
     echo "
     <div class='container'>
@@ -106,11 +104,16 @@ $btnAddAvaliacao = "<button type='button' class='btn btn-success me-2' onclick='
                 <textarea class ='form-control 'name='comentario_mensagem' id='comentario_mensagem' maxlength='250' rows='5' cols='40' placeholder='Digite o seu comentário aqui'></textarea>
                 <button id='enviarComent' type='submit' class='btn btn-primary'>Enviar</button>
               </div>
-              <input type='hidden' name='album_id' value='$dadosAlbum->album_id'>";
+              <input type='hidden' name='album_id' value='$dadosAlbum->album_id'> <br>";
+              if ($dadosComentario->comentario_idAutor == $id_usuario_logado && $dadosComentario->comentario_nome == $nome_usuario_logado) {
+                echo $btnVerComentario;
+                echo "<br>";
+              }
+
               $comentou = false;
               $resultadoComentario = $conexao->query($queryComentarioAlbum);
               while ($dadosComentario = $resultadoComentario->fetch_object()) {
-                  echo "<p>•{$dadosComentario->comentario_nome}<br>{$dadosComentario->comentario_mensagem}</p>";
+                  echo "<br><p>•{$dadosComentario->comentario_nome}<br>{$dadosComentario->comentario_mensagem}</p>";
                   $comentou = true;
               }
 
