@@ -9,7 +9,14 @@
 <?php
 include_once("../header.php");
 $conexao = new mysqli("localhost:3306", "root", "", "hear_me_out");
-$id_user = intval($_SESSION['id_usuario']);
+if (isset($_SESSION['authenticated']) && isset($_SESSION['id_artista'])) {
+  $id_user = intval($_SESSION['id_usuario']);
+} else if (isset($_SESSION['authenticated']) && isset($_SESSION['id_critico'])){
+  $id_crit = intval($_SESSION['id_critico']);
+} else if (isset($_SESSION['authenticated']) && isset($_SESSION['id_artista'])){
+  $id_art = intval($_SESSION['id_artista']);
+}
+
 
 $album_id = isset($_GET['id']) ? intval($_GET['id']) : 0;
 $queryAlbum = "SELECT 
@@ -112,7 +119,6 @@ while ($dadosComentario = $resultadoComentario->fetch_object()) {
 if (!$comentou) {
     echo "<p style='text-align: center;'>Seja o primeiro a comentar!</p>";
 }
-
         echo "
           </div>
         </div>";
