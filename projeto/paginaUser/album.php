@@ -7,62 +7,65 @@
 </head>
 <body>
 <?php
-  include_once("../header.php");
-  $conexao = new mysqli("localhost:3306", "root", "", "hear_me_out");
-  $id_user = intval($_SESSION['id_usuario']);
-    $album_id = isset($_GET['id']) ? intval($_GET['id']) : 0;
-    $queryAlbum = "SELECT 
-        album.id AS album_id,
-        album.nome AS album_nome,
-        album.capa AS album_capa,
-        album.data_lancamento AS album_data,
-        artista.nome AS artista_nome
-    FROM album
-    INNER JOIN artista ON album.id_artista = artista.id
-    WHERE album.id = $album_id";
-    $resultadoAlbum = $conexao->query($queryAlbum);
-    $dadosAlbum = $resultadoAlbum->fetch_object();
-      if (!$dadosAlbum) {
-      echo "Álbum não encontrado.";
-      exit; }
+include_once("../header.php");
+$conexao = new mysqli("localhost:3306", "root", "", "hear_me_out");
+$id_user = intval($_SESSION['id_usuario']);
 
-    $queryResumo = "SELECT 
-        COUNT(id) AS musicas_total,
-        IFNULL(SUM(duracao), 0) AS duracao_total
-    FROM musica
-    WHERE id_album = $album_id";
-    $resultadoResumo = $conexao->query($queryResumo);
-    $resumo = $resultadoResumo->fetch_object();
+$album_id = isset($_GET['id']) ? intval($_GET['id']) : 0;
+$queryAlbum = "SELECT 
+    album.id AS album_id,
+    album.nome AS album_nome,
+    album.capa AS album_capa,
+    album.data_lancamento AS album_data,
+    artista.nome AS artista_nome
+FROM album
+INNER JOIN artista ON album.id_artista = artista.id
+WHERE album.id = $album_id";
+$resultadoAlbum = $conexao->query($queryAlbum);
+$dadosAlbum = $resultadoAlbum->fetch_object();
+  if (!$dadosAlbum) {
+  echo "Álbum não encontrado.";
+  exit; }
 
-
-    $queryMusicas = "SELECT 
-        musica.id AS musica_id,
-        musica.nome AS musica_nome,
-        musica.capa AS musica_capa,
-        musica.duracao AS musica_duracao,
-        musica.data_lancamento AS musica_data
-    FROM musica
-    WHERE musica.id_album = $album_id";
-    $resultadoMusicas = $conexao->query($queryMusicas);
-
-    $queryComentarioAlbum = "SELECT 
-        comentario.id AS comentario_id,
-        comentario.mensagem AS comentario_mensagem,
-        comentario.id_usuario AS comentario_id_user,
-        comentario_album.id_album AS comentario_id_album
-    FROM comentario
-    INNER JOIN comentario_album ON comentario.id = comentario_album.id_comentario
-    where comentario.id_usuario = $id_user;";
-    $resultadoComentario = $conexao->query($queryComentarioAlbum);
-    $dadosComentario = $resultadoComentario->fetch_object();
+$queryResumo = "SELECT 
+    COUNT(id) AS musicas_total,
+    IFNULL(SUM(duracao), 0) AS duracao_total
+FROM musica
+WHERE id_album = $album_id";
+$resultadoResumo = $conexao->query($queryResumo);
+$resumo = $resultadoResumo->fetch_object();
 
 
-    $musicas_total = $resumo->musicas_total;
-    $duracao_total = $resumo->duracao_total;
-    $minutosAlbum = floor($duracao_total / 60);
-    $segundosAlbum = $duracao_total % 60;
+$queryMusicas = "SELECT 
+    musica.id AS musica_id,
+    musica.nome AS musica_nome,
+    musica.capa AS musica_capa,
+    musica.duracao AS musica_duracao,
+    musica.data_lancamento AS musica_data
+FROM musica
+WHERE musica.id_album = $album_id";
+$resultadoMusicas = $conexao->query($queryMusicas);
 
-    $btnAddAvaliacao = "<button type='button' class='btn btn-success me-2' onclick='addAvaliacao(<?= $dadosAlbum->album_id ?>)'>Inserir avaliação</button>";
+$queryComentarioAlbum = "SELECT 
+    comentario.id AS comentario_id,
+    comentario.mensagem AS comentario_mensagem,
+    comentario.id_usuario AS comentario_id_user,
+    comentario_album.id_album AS comentario_id_album,
+    usuario.nome AS nome_usuario
+FROM comentario
+INNER JOIN comentario_album ON comentario.id = comentario_album.id_comentario
+INNER JOIN usuario ON comentario.id_usuario = usuario.id
+WHERE comentario_album.id_album = $album_id;";
+$resultadoComentario = $conexao->query($queryComentarioAlbum);
+$dadosComentario = $resultadoComentario->fetch_object();
+
+
+$musicas_total = $resumo->musicas_total;
+$duracao_total = $resumo->duracao_total;
+$minutosAlbum = floor($duracao_total / 60);
+$segundosAlbum = $duracao_total % 60;
+
+$btnAddAvaliacao = "<button type='button' class='btn btn-success me-2' onclick='addAvaliacao(<?= $dadosAlbum->album_id ?>)'>Inserir avaliação</button>";
 
     echo "
     <div class='container'>
@@ -95,15 +98,20 @@
                   <textarea name='comentario_mensagem' id='comentario_mensagem' maxlength='250' rows='5' cols='40' placeholder='Digite o seu comentário aqui'></textarea>
                   <button type='submit'>Enviar</button>
                 </div>
-                <input type='hidden' name='album_id' value='<?php echo $dadosAlbum->album_id; ?>'>
+                <input type='hidden' name='album_id' value='$dadosAlbum->album_id'>
                </form>";
+$comentou = false;
 
-      if (!$dadosComentario) {
-        echo "<p style='text-align: center;'>Seja o primeiro a comentar!</p>";
-      } else {
-        echo "<p>{$dadosComentario->comentario_id_user}</p>";
+while ($dadosComentario = $resultadoComentario->fetch_object()) {
+    if ($dadosComentario->comentario_id_album == $album_id) {
+        echo "<p>{$dadosComentario->nome_usuario}</p>";
         echo "<p>{$dadosComentario->comentario_mensagem}</p>";
-      }
+        $comentou = true;
+    }
+}
+if (!$comentou) {
+    echo "<p style='text-align: center;'>Seja o primeiro a comentar!</p>";
+}
 
         echo "
           </div>

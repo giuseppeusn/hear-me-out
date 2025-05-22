@@ -3,8 +3,6 @@ include_once("../header.php");
 if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     $id_user = intval($_SESSION['id_usuario']);
     $mensagem = $_POST['comentario_mensagem'];
-
-    
     $id_album = $_POST['album_id'];
     if ($mensagem == null || $id_album == null || $id_user == null) {
         echo "<p> Alguma coisa ta vazio fi </p>";
