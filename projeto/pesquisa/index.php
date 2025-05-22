@@ -2,7 +2,6 @@
   include("../header.php");
   include("../connect.php");
   include("../components/searchCard.php");
-  include("../components/card.php");
 ?>
 
 <!DOCTYPE html>
@@ -40,7 +39,7 @@
             echo '<h2 class="text-white mb-3 mt-3 fw-bold">Álbuns</h2>';
 
             while ($data = $resultado_album->fetch_object()) {
-              echo searchCard($data->nome_album, $data->nome_artista, $data->capa, $data->id_album, null);
+              echo searchCard($data->nome_album, $data->nome_artista, $data->capa, $data->album_id, null);
             }
 
             echo '</div>';
