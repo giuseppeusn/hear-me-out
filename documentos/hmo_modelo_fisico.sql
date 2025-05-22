@@ -65,10 +65,9 @@ CREATE TABLE musica (
 
 CREATE TABLE comentario (
 	id INT PRIMARY KEY AUTO_INCREMENT,
-    mensagem VARCHAR(250) NOT NULL,
-    id_usuario INT NOT NULL,
-    
-    FOREIGN KEY (id_usuario) REFERENCES usuario(id)
+    id_autor INT NOT NULL,
+    nome_autor VARCHAR(60) NOT NULL,
+    mensagem VARCHAR(250) NOT NULL
 );
 
 CREATE TABLE comentario_musica (
