@@ -32,6 +32,7 @@ if ((isset($_POST['email']) && isset($_POST['senha'])) && (!empty($_POST['email'
     if (password_verify($senha, $usuario_array['senha'])) {
       $_SESSION['authenticated'] = true;
       $_SESSION['nome'] = $usuario_array['nome'];
+      $_SESSION['id'] = $usuario_array['id'];
       $_SESSION['permissao'] = $usuario_array['permissao'];
       if ($usuario_array['permissao'] == 'admin') {
         $_SESSION['admin'] = true;
@@ -49,7 +50,7 @@ if ((isset($_POST['email']) && isset($_POST['senha'])) && (!empty($_POST['email'
   if ($artista->num_rows > 0) {
     if (password_verify($senha, $artista_array['senha'])) {
       $_SESSION['authenticated'] = true;
-      $_SESSION['id_artista'] = $artista_array['id'];
+      $_SESSION['id'] = $artista_array['id'];
       $_SESSION['aprovado'] = $artista_array['aprovado']; // 0 para nao aprovado e 1 para aprovado
       $_SESSION['permissao'] = 'artista';
       $_SESSION['nome'] = $artista_array['nome'];
@@ -66,7 +67,7 @@ if ((isset($_POST['email']) && isset($_POST['senha'])) && (!empty($_POST['email'
   if ($critico->num_rows > 0) {
     if (password_verify($senha, $critico_array['senha'])) {
       $_SESSION['authenticated'] = true;
-      $_SESSION['id_critico'] = $critico_array['id'];
+      $_SESSION['id'] = $critico_array['id'];
       $_SESSION['aprovado'] = $critico_array['aprovado']; // 0 para nao aprovado e 1 para aprovado
       $_SESSION['permissao'] = 'critico';
       $_SESSION['nome'] = $critico_array['nome'];

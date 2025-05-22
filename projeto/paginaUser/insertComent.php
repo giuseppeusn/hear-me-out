@@ -1,10 +1,11 @@
 <?php
 include_once("../header.php");
 if ($_SERVER['REQUEST_METHOD'] == 'POST') {
-    $id_user = intval($_SESSION['id_usuario']);
+    $id = intval($_SESSION['id']);
+    $name = $_SESSION['nome'];
     $mensagem = $_POST['comentario_mensagem'];
     $id_album = $_POST['album_id'];
-    if ($mensagem == null || $id_album == null || $id_user == null) {
+    if ($mensagem == null || $id_album == null || $id == null || $name == null) {
         echo "<p> Alguma coisa ta vazio fi </p>";
         exit;
     }
@@ -13,9 +14,9 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     if ($conn->connect_error) {
         die("Erro na conexão: " . $conn->connect_error);
     }
-    if (!empty($mensagem) && $id_album && $id_user) {
-        $comentario = "INSERT INTO comentario (mensagem,id_usuario) 
-        VALUES ('$mensagem', '$id_user')";
+    if (!empty($mensagem) && $id_album && $id && $name) {
+        $comentario = "INSERT INTO comentario (mensagem,id_autor,nome_autor) 
+        VALUES ('$mensagem', '$id', '$name')";
 
         if ($conn->query($comentario)) {
             $id_comentario = $conn->insert_id;

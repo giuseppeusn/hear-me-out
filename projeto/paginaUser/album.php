@@ -53,7 +53,7 @@ FROM musica
 WHERE musica.id_album = $album_id";
 $resultadoMusicas = $conexao->query($queryMusicas);
 
-$queryComentarioAlbum ="SELECT 
+$queryComentarioAlbum = "SELECT 
     comentario.id AS comentario_id,
     comentario.mensagem AS comentario_mensagem,
     comentario.nome_autor AS comentario_nome,
@@ -100,7 +100,7 @@ $btnAddAvaliacao = "<button type='button' class='btn btn-success me-2' onclick='
 
             </div>
           </div> <br>
-          <div name='Caixa de comentário'class='border border-3 mt-3 p-2' style='border-color: black; display: inline-block; width: 400px;'>
+          <div name='Caixa de comentário'class='border border-3 mt-3 p-2' style=' color: white; display: inline-block; width: 400px;'>
             <div class='fw-bold mb-2' style='font-size: 18px;'>Comentários</div>
               <form method='POST' action='insertComent.php'>
                 <div style='display: flex; align-items: flex-start; gap: 10px;'>
@@ -110,17 +110,16 @@ $btnAddAvaliacao = "<button type='button' class='btn btn-success me-2' onclick='
                 <input type='hidden' name='album_id' value='$dadosAlbum->album_id'>
                </form>";
 $comentou = false;
-
+$resultadoComentario = $conexao->query($queryComentarioAlbum);
 while ($dadosComentario = $resultadoComentario->fetch_object()) {
-    if ($dadosComentario->comentario_IdAlbum == $album_id) {
-        echo "<p>{$dadosComentario->comentario_nome}</p>";
-        echo "<p>{$dadosComentario->comentario_mensagem}</p>";
-        $comentou = true;
-    }
+    echo "<p>•{$dadosComentario->comentario_nome}<br>{$dadosComentario->comentario_mensagem}</p>";
+    $comentou = true;
 }
+
 if (!$comentou) {
     echo "<p style='text-align: center;'>Seja o primeiro a comentar!</p>";
 }
+
         echo "
           </div>
         </div>";
