@@ -44,8 +44,13 @@
 
             echo '</div>';
           }
+
+          if ($resultado_musica->num_rows == 0 && $resultado_album->num_rows == 0) {
+            echo '<h4 class="text-white mt-3 text-center">Nenhum resultado encontrado.</h4>';
+          }
+
         } else {
-          $term = '';
+          echo '<h4 class="text-white mt-3 text-center">Nenhum resultado encontrado.</h4>';
         }
       ?>
     </div>
