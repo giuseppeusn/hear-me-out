@@ -53,16 +53,18 @@ FROM musica
 WHERE musica.id_album = $album_id";
 $resultadoMusicas = $conexao->query($queryMusicas);
 
-$queryComentarioAlbum = "SELECT 
+$queryComentarioAlbum ="SELECT 
     comentario.id AS comentario_id,
     comentario.mensagem AS comentario_mensagem,
-    comentario.id_usuario AS comentario_id_user,
-    comentario_album.id_album AS comentario_id_album,
-    usuario.nome AS nome_usuario
+    comentario.nome_autor AS comentario_nome,
+    comentario.id_autor AS comentario_idAutor,
+    comentario_album.id_album AS comentario_IdAlbum,
+    comentario_album.id_comentario AS comentario_IdComentario
 FROM comentario
 INNER JOIN comentario_album ON comentario.id = comentario_album.id_comentario
-INNER JOIN usuario ON comentario.id_usuario = usuario.id
+INNER JOIN album ON comentario_album.id_album = album.id
 WHERE comentario_album.id_album = $album_id;";
+
 $resultadoComentario = $conexao->query($queryComentarioAlbum);
 $dadosComentario = $resultadoComentario->fetch_object();
 
@@ -110,8 +112,8 @@ $btnAddAvaliacao = "<button type='button' class='btn btn-success me-2' onclick='
 $comentou = false;
 
 while ($dadosComentario = $resultadoComentario->fetch_object()) {
-    if ($dadosComentario->comentario_id_album == $album_id) {
-        echo "<p>{$dadosComentario->nome_usuario}</p>";
+    if ($dadosComentario->comentario_IdAlbum == $album_id) {
+        echo "<p>{$dadosComentario->comentario_nome}</p>";
         echo "<p>{$dadosComentario->comentario_mensagem}</p>";
         $comentou = true;
     }
