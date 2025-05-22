@@ -3,90 +3,92 @@
     <head>
         <meta charset="UTF-8">
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <link rel="stylesheet" href="../styles/usuario.css">
+        <link rel="stylesheet" href="../styles/bootstrap.min.css">
+        <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet">
+        <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-alpha1/dist/js/bootstrap.bundle.min.js"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+
+
+
         <title>Seu perfil</title>
     </head>
 
 <?php
+session_start();
 
 include_once("../connect.php");
 
 
 
-if (!isset($_SESSION['authenticated'])|| !isset($_SESSION['id_usuario']))
-die("voce precisa precisa estar logado como usuario")
+if (!isset($_SESSION['authenticated'])|| !isset($_SESSION['id_usuario'])){
+die("voce precisa precisa estar logado como usuario");}
 
 $id_user = intval($_SESSION['id_usuario']);
 
 
-    $conexao = connect_db();
-    $usuario = $resultadoUsuario->fetch_assoc();
+$conexao = connect_db();
+$queryusuario = "SELECT * FROM usuario WHERE id = $id_user";
+$resultadoUsuario = $conexao->query($queryusuario);
+$usuario = $resultadoUsuario->fetch_assoc();
 
-    $queryusuario = "SELECT * FROM usuario WHERE id = $id_user";
-    $resultadoUsuario = $conexao->query($queryusuario);
     if ( $resultadoUsuario && $resultadoUsuario->num_rows > 0){
         echo "
-<section class='vh-100' style='background-color: #f4f5f7;'>
-  <div class='container py-5 h-100'>
-    <div class='row d-flex justify-content-center align-items-center h-100'>
-      <div class='col col-lg-6 mb-4 mb-lg-0'>
-        <div class='card mb-3' style='border-radius: .5rem;'>
-          <div class='row g-0'>
-            <div class='col-md-4 gradient-custom text-center text-white'
-              style='border-top-left-radius: .5rem; border-bottom-left-radius: .5rem;'>
-              <img src='https://mdbcdn.b-cdn.net/img/Photos/new-templates/bootstrap-chat/ava1-bg.webp'
-                alt='Avatar' class='img-fluid my-5' style='width: 80px;' />
-              <h5>Marie Horwitz</h5>
-              <p>Web Designer</p>
-              <i class='far fa-edit mb-5'></i>
+<div class='container rounded bg-white mt-5 mb-5'>
+    <div class='row'>
+        <div class='col-md-3 border-right'>
+            <div class='d-flex flex-column align-items-center text-center p-3 py-5'>
+                <img class='rounded-circle mt-5' width='150px' src='https://st3.depositphotos.com/15648834/17930/v/600/depositphotos_179308454-stock-illustration-unknown-person-silhouette-glasses-profile.jpg'>
+                <span class='font-weight-bold'>Edogaru</span>
+                <span class='text-black-50'>edogaru@mail.com.my</span>
+                <span> </span>
             </div>
-            <div class='col-md-8'>
-              <div class='card-body p-4'>
-                <h6>Information</h6>
-                <hr class='mt-0 mb-4'>
-                <div class='row pt-1'>
-                  <div class='col-6 mb-3'>
-                    <h6>Email</h6>
-                    <p class='text-muted'>info@example.com</p>
-                  </div>
-                  <div class='col-6 mb-3'>
-                    <h6>Phone</h6>
-                    <p class='text-muted'>123 456 789</p>
-                  </div>
-                </div>
-                <h6>Projects</h6>
-                <hr class='mt-0 mb-4'>
-                <div class='row pt-1'>
-                  <div class='col-6 mb-3'>
-                    <h6>Recent</h6>
-                    <p class='text-muted'>Lorem ipsum</p>
-                  </div>
-                  <div class='col-6 mb-3'>
-                    <h6>Most Viewed</h6>
-                    <p class='text-muted'>Dolor sit amet</p>
-                  </div>
-                </div>
-                <div class='d-flex justify-content-start'>
-                  <a href='#!'><i class='fab fa-facebook-f fa-lg me-3'></i></a>
-                  <a href='#!'><i class='fab fa-twitter fa-lg me-3'></i></a>
-                  <a href='#!'><i class='fab fa-instagram fa-lg'></i></a>
-                </div>
-              </div>
-            </div>
-          </div>
         </div>
-      </div>
+        <div class='col-md-5 border-right'>
+            <div class='p-3 py-5'>
+                <div class='d-flex justify-content-between align-items-center mb-3'>
+                    <h4 class='text-right'>Profile Settings</h4>
+                </div>
+                <div class='row mt-2'>
+                    <div class='col-md-6'><label class='labels'>Name</label><input type='text' class='form-control' placeholder='first name' value='{$usuario['nome']}'></div>
+
+                </div>
+                <div class='row mt-3'>
+                    <div class='col-md-12'><label class='labels'>Email:</label><input type='text' class='form-control' placeholder='enter phone number' value='{$usuario['email']}'></div>
+                    <div class='col-md-12'><label class='labels'>Address Line 1</label><input type='text' class='form-control' placeholder='enter address line 1' value=''></div>
+                    <div class='col-md-12'><label class='labels'>Address Line 2</label><input type='text' class='form-control' placeholder='enter address line 2' value=''></div>
+                    <div class='col-md-12'><label class='labels'>Postcode</label><input type='text' class='form-control' placeholder='enter address line 2' value=''></div>
+                    <div class='col-md-12'><label class='labels'>State</label><input type='text' class='form-control' placeholder='enter address line 2' value=''></div>
+                    <div class='col-md-12'><label class='labels'>Area</label><input type='text' class='form-control' placeholder='enter address line 2' value=''></div>
+                    <div class='col-md-12'><label class='labels'>Email ID</label><input type='text' class='form-control' placeholder='enter email id' value=''></div>
+                    <div class='col-md-12'><label class='labels'>Education</label><input type='text' class='form-control' placeholder='education' value=''></div>
+                </div>
+                <div class='row mt-3'>
+                    <div class='col-md-6'><label class='labels'>Country</label><input type='text' class='form-control' placeholder='country' value=''></div>
+                    <div class='col-md-6'><label class='labels'>State/Region</label><input type='text' class='form-control' value='' placeholder='state'></div>
+                </div>
+                <div class='mt-5 text-center'><button class='btn btn-primary profile-button' type='button'>Save Profile</button></div>
+            </div>
+        </div>
+        <div class='col-md-4'>
+            <div class='p-3 py-5'>
+                <div class='d-flex justify-content-between align-items-center experience'>
+                    <span>Edit Experience</span>
+                    <span class='border px-3 p-1 add-experience'><i class='fa fa-plus'></i>&nbsp;Experience</span>
+                </div><br>
+                <div class='col-md-12'><label class='labels'>Experience in Designing</label><input type='text' class='form-control' placeholder='experience' value=''></div> <br>
+                <div class='col-md-12'><label class='labels'>Additional Details</label><input type='text' class='form-control' placeholder='additional details' value=''></div>
+            </div>
+        </div>
     </div>
-  </div>
-</section>
+</div>
+</div>
+</div>
+
 
 ";} else {
     echo "Usuário não encontrado!";
-    exit;
-
-
-}else{
-    echo "id nao coisado";
+    exit;   
 }
-
 ?>
 
