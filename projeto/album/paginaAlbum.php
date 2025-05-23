@@ -85,7 +85,7 @@
         <hr>";
     ?>
     
-    <table class="table table-striped">
+    <table class="table table-dark table-striped">
         <button type="button" class="btn btn-success me-2" onclick="abrirInserirMusica(<?= $dadosAlbum->album_id ?>)">Inserir nova música</button>
         <thead>
             <tr>

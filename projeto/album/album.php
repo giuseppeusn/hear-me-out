@@ -48,8 +48,8 @@
 
 
             echo "
-            <div class='col-md-4 mb-4'>
-              <div class='card' style='width:100%'>
+            <div class='col-md-4 mb-4' >
+              <div class='card bg-dark text-white' style='width:100%'>
                 <img class='card-img-top' src='{$linha->capa}' alt='Capa do álbum'>
                 <div class='card-body'>
                   <h4 class='card-title'>{$linha->album_nome}</h4>
