@@ -1,49 +1,56 @@
-function alterarComentario(albumId) {
-  const container = document.getElementById(`album-${albumId}`);
-  const nome = container.getAttribute('data-nome');
-  const capa = container.getAttribute('data-capa');
-  const data = container.getAttribute('data-data');
+async function alterarComentario(comentarioId, mensagem, autorId, autorNome) {
+console.log("Mensagem recebida:", mensagem);
+  const usuarioId = sessionStorage.getItem('id_usuario');
+  const usuarioNome = sessionStorage.getItem('nome_usuario');
 
-  Swal.fire({
-    title: 'Alterar Álbum',
-    html:
-      `<input id="nome" class="swal2-input" placeholder="Nome do Álbum" value="${nome}">` +
-      `<input id="capa" class="swal2-input" placeholder="Capa do Álbum" value="${capa}">` +
-      `<input id="data" type="date" class="swal2-input" value="${data}">`,
-    confirmButtonText: 'Salvar',
+  if (String(usuarioId) !== String(autorId) || usuarioNome !== autorNome) {
+    await Swal.fire('Acesso negado', 'Você só pode editar seu próprio comentário.', 'error');
+    return;
+  }
+
+  const { value: novaMensagem, isConfirmed } = await Swal.fire({
+    title: 'Alterar Comentário',
+    input: 'textarea',
+    inputValue: mensagem || '',
+    inputPlaceholder: 'Comentário',
     showCancelButton: true,
     showCloseButton: true,
-    focusConfirm: false,
-    preConfirm: () => {
-      const nome = document.getElementById('nome').value.trim();
-      const capa = document.getElementById('capa').value.trim();
-      const data = document.getElementById('data').value;
+    confirmButtonText: 'Salvar',
+    preConfirm: (texto) => {
+      const textoTeste = texto ? texto.trim() : '';
+      if (!textoTeste) {
+        Swal.showValidationMessage('O comentário não pode estar vazio.');
+        return;
+      }
+      return textoTeste;
 
-      if (!nome) return Swal.showValidationMessage('O nome do álbum é obrigatório.');
-      if (!capa) return Swal.showValidationMessage('A capa é obrigatória.');
-      if (!data) return Swal.showValidationMessage('A data de lançamento é obrigatória.');
-      if (!/\.(png|jpg)$/i.test(capa)) return Swal.showValidationMessage('A imagem da capa deve ser .png ou .jpg');
+}
 
-      return { nome, capa, data, id: albumId };
-    }
-  }).then((resultado) => {
-    if (resultado.isConfirmed) {
-      fetch('update.php', {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json'
-        },
-        body: JSON.stringify(resultado.value)
-      })
-      .then(response => response.text())
-      .then(data => {
-        Swal.fire('Alterado!', data, 'success').then(() => {
-          window.location.reload();
-        });
-      })
-      .catch(error => {
-        Swal.fire('Erro!', 'Não foi possível alterar.', 'error');
-      });
-    }
   });
+  console.log("Confirmado:", isConfirmed);
+  console.log("Nova mensagem retornada:", novaMensagem);
+  if (!isConfirmed || !novaMensagem) return;
+
+  try {
+    const resposta = await fetch('updateComentario.php', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ mensagem: novaMensagem, id: comentarioId })
+    });
+
+    const dadosResposta = await resposta.json().catch(() => {
+        throw new Error("Resposta do servidor não é JSON válido.");
+    });
+
+    if (!resposta.ok) {
+        throw new Error(dadosResposta.erro || "Erro ao atualizar comentário.");
+    }
+
+    await Swal.fire('Sucesso!', dadosResposta.sucesso || "Comentário atualizado.", 'success');
+    window.location.reload();
+
+} catch (error) {
+    console.error('Erro completo:', error);
+    Swal.fire('Erro!', error.message || "Erro desconhecido.", 'error');
+}
 }

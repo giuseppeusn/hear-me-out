@@ -5,6 +5,10 @@
   <link rel="stylesheet" href="../styles/pagAlbum.css" >
   <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
   <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+  <script src="alterarComentario.js"></script>
+  <script src="excluirComentario.js"></script>
+  <script src="verComentario.js"></script>
+
 </head>
 <body>
 <?php
@@ -73,7 +77,7 @@ $segundosAlbum = $duracao_total % 60;
 $btnAddAvaliacao = "<button type='button' class='btn btn-success me-2' onclick='addAvaliacao(<?= $dadosAlbum->album_id ?>)'>Inserir avaliação</button>";
 $btnAlterarComentario = "<button type='button' class='btn btn-warning me-2' onclick='alterarComentario(<?= $dadosComentario->comentario_id ?>)'>Alterar</button>";
 $btnExcluirComentario = "<button type='button' class='btn btn-danger me-2' onclick='excluirComentario(<?= $dadosComentario->comentario_id ?>)'>Deletar</button>";
-$btnVerComentario = "<button type='button' class='btn btn-primary me-2' onclick='verComentario(<?= $dadosAlbum->album_id ?>)'>Meus comentários</button>";
+$btnVerComentario = "<a href='verComentario.php?album_id=" . $dadosAlbum->album_id . "' class='btn btn-primary me-2'>Meus comentários</a>";
 
     echo "
     <div class='container'>
@@ -105,21 +109,50 @@ $btnVerComentario = "<button type='button' class='btn btn-primary me-2' onclick=
                 <button id='enviarComent' type='submit' class='btn btn-primary'>Enviar</button>
               </div>
               <input type='hidden' name='album_id' value='$dadosAlbum->album_id'> <br>";
-              if ($dadosComentario->comentario_idAutor == $id_usuario_logado && $dadosComentario->comentario_nome == $nome_usuario_logado) {
-                echo $btnVerComentario;
-                echo "<br>";
-              }
+$comentarios = [];
+$comentariosUsuario = [];
+$comentou = false;
+$usuarioComentou = false;
 
-              $comentou = false;
-              $resultadoComentario = $conexao->query($queryComentarioAlbum);
-              while ($dadosComentario = $resultadoComentario->fetch_object()) {
-                  echo "<br><p>•{$dadosComentario->comentario_nome}<br>{$dadosComentario->comentario_mensagem}</p>";
-                  $comentou = true;
-              }
+$resultadoComentario = $conexao->query($queryComentarioAlbum);
 
-              if (!$comentou) {
-                  echo "<p style='text-align: center;'>Seja o primeiro a comentar!</p>";
-              }
+while ($dadosComentario = $resultadoComentario->fetch_object()) {
+    $comentarios[] = $dadosComentario;
+
+    if (
+        $dadosComentario->comentario_idAutor == $id_usuario_logado && $dadosComentario->comentario_nome == $nome_usuario_logado
+    ) {
+        $usuarioComentou = true;
+        $comentariosUsuario[] = [
+          'id' => $dadosComentario->comentario_id,
+          'mensagem' => $dadosComentario->comentario_mensagem,
+          'autor_id' => $dadosComentario->comentario_idAutor,
+          'autor_nome' => $dadosComentario->comentario_nome
+        ];
+    }
+
+    $comentou = true;
+}
+
+if ($usuarioComentou) {
+    $btnVerComentario = "<button type='button' class='btn btn-primary me-2' onclick='verComentario(" . $dadosAlbum->album_id . ")'>Meus comentários</button>";
+
+    echo $btnVerComentario;
+
+    echo "<script>
+      if (!window.comentariosPorAlbum) window.comentariosPorAlbum = {};
+      comentariosPorAlbum[" . $dadosAlbum->album_id . "] = " . json_encode($comentariosUsuario) . ";
+    </script>";
+}
+
+if ($comentou) {
+    foreach ($comentarios as $comentario) {
+        echo "<br><p>•{$comentario->comentario_nome}<br>{$comentario->comentario_mensagem}</p>";
+    }
+} else {
+    echo "<p style='text-align: center;'>Seja o primeiro a comentar!</p>";
+}
+
 
         echo "
             </form>
@@ -232,6 +265,12 @@ document.addEventListener("DOMContentLoaded", function () {
   });
 });
 </script>
+<?php if (isset($_SESSION['id']) && isset($_SESSION['nome'])): ?>
+<script>
+  sessionStorage.setItem('id_usuario', <?= json_encode($_SESSION['id']) ?>);
+  sessionStorage.setItem('nome_usuario', <?= json_encode($_SESSION['nome']) ?>);
+</script>
+<?php endif; ?>
 
-
+</body>
 </html>
