@@ -27,7 +27,7 @@
         }
         const capaValida = /\.(png|jpg)$/i.test(capa);
         if (!capaValida) {
-          Swal.showValidationMessage('A imagem da capa deve ser um arquivo .png ou .jpg');
+          Swal.showValidationMessage('A imagem da capa deve ser um link .png ou .jpg');
           return false;
         }
 

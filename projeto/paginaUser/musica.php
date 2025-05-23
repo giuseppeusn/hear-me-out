@@ -39,7 +39,7 @@
     $btnAddAvaliacao = "<button type='button' class='btn btn-success me-2' onclick='addAvaliacao(<?= $musica->musica_id ?>)'>Inserir avaliação</button>";
 
     echo "
-    <div class='container'>
+    <div class='container' style='color: white'>
       <div class='row align-items-start'>
         <div class='col-auto' name='Capa da musica'>
           <img class='img-fluid border border-dark' src='{$musica->musica_capa}' alt='capa da musica' 
@@ -78,7 +78,7 @@
 
     $query = "SELECT  * FROM view_albuns_com_nomes ORDER BY RAND()";
     $resultado = $conexao->query($query);
-    include "../components/card.php";
+    include "../components/cauroselCard.php";
 
     if ($resultado && $resultado->num_rows > 0) {
         while ($data = $resultado->fetch_object()) {

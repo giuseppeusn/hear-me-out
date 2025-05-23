@@ -1,6 +1,7 @@
 <!DOCTYPE html>
 <html lang="pt-BR">
-<head>
+<head>  
+
   <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
   <script src="/hear-me-out/projeto/album/insert.js"></script>
   <script src="/hear-me-out/projeto/album/update.js"></script>
@@ -11,16 +12,12 @@
 <div class="container mt-3">
 
 
-  <div class="row">
+  <div class="row" style = "color: white">
 
     <?php
     include_once("../connect.php");
     $conexao = connect_db(); 
-    
-    if (!isset($_SESSION['authenticated']) || !isset($_SESSION['id_artista'])) {
-      die("Você precisa estar logado como artista.");
-    }
-    $id_artista = intval($_SESSION['id_artista']);
+    $id_artista = intval($_SESSION['id']);
     echo "<h2>Meus álbuns</h2>";
     echo "<div class='container mt-3'>
       <button type='button' class='btn btn-success' onclick='abrirFormularioAlbum()'>Cadastrar Álbum</button> <br><br> 
@@ -51,8 +48,8 @@
 
 
             echo "
-            <div class='col-md-4 mb-4'>
-              <div class='card' style='width:100%'>
+            <div class='col-md-4 mb-4' >
+              <div class='card bg-dark text-white' style='width:100%'>
                 <img class='card-img-top' src='{$linha->capa}' alt='Capa do álbum'>
                 <div class='card-body'>
                   <h4 class='card-title'>{$linha->album_nome}</h4>
