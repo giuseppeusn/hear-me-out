@@ -75,8 +75,6 @@ $minutosAlbum = floor($duracao_total / 60);
 $segundosAlbum = $duracao_total % 60;
 
 $btnAddAvaliacao = "<button type='button' class='btn btn-success me-2' onclick='addAvaliacao(<?= $dadosAlbum->album_id ?>)'>Inserir avaliação</button>";
-$btnAlterarComentario = "<button type='button' class='btn btn-warning me-2' onclick='alterarComentario(<?= $dadosComentario->comentario_id ?>)'>Alterar</button>";
-$btnExcluirComentario = "<button type='button' class='btn btn-danger me-2' onclick='excluirComentario(<?= $dadosComentario->comentario_id ?>)'>Deletar</button>";
 $btnVerComentario = "<a href='verComentario.php?album_id=" . $dadosAlbum->album_id . "' class='btn btn-primary me-2'>Meus comentários</a>";
 
     echo "

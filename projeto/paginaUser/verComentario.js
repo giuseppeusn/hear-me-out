@@ -11,7 +11,7 @@ function verComentario(albumId) {
       <div style="margin-bottom: 12px;">
         <p><strong>${i + 1}.</strong> ${c.mensagem}</p>
         <button class='btn btn-warning' onclick="alterarComentario(${c.id}, \`${c.mensagem}\`, ${c.autor_id}, \`${c.autor_nome}\`)">Alterar</button>
-        <button class='btn btn-danger' onclick='excluirComentario(${c.id})'>Deletar</button>
+        <button type='button' class='btn btn-danger me-2' onclick='excluirComentario(${c.id})'>Deletar</button>
       </div>
     `;
   }).join('');
