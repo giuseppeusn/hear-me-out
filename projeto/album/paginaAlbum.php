@@ -10,7 +10,7 @@
 </head>
 <body>
 
-<div class="container mt-3">
+<div class="container mt-3" style="color: white">
     <?php
     include_once("../connect.php");
     $conexao = connect_db();
@@ -127,7 +127,7 @@
                 }
             } else {
                 echo "<tr><td colspan='5' class='text-center'>
-                <button type='button' class='btn btn-success' onclick='abrirInserirMusica(" . $dadosAlbum->album_id . ")'>Inserir música</button>
+                <p> Adicione uma música!</p>
                 </td></tr>";
             }
 

@@ -1,6 +1,6 @@
 <?php
 session_start();
-$id_artista = $_SESSION['id_artista'];
+$id_artista = $_SESSION['id'];
 $conn = new mysqli("localhost:3306", "root", "", "hear_me_out");
 
 if ($conn->connect_error) {
