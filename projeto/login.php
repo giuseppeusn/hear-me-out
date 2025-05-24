@@ -14,6 +14,20 @@ if (isset($_SESSION['sucesso_cadastro'])) {
 			</script>";
   unset($_SESSION['sucesso_cadastro']);
 }
+if (isset($_SESSION['sucesso_cadastro2'])) {
+  echo "<script src='https://cdn.jsdelivr.net/npm/sweetalert2@11'></script>";
+  echo "<script>
+		Swal.fire({
+			title: 'Cadastrado com sucesso!',
+      text: 'Seu cadastro passará por uma revisão para ser aprovado.',
+			icon: 'success',
+			draggable: true,
+      timer: 4000,
+			});
+			</script>";
+  unset($_SESSION['sucesso_cadastro2']);
+}
+
 
 $mysql = connect_db();
 if ((isset($_POST['email']) && isset($_POST['senha'])) && (!empty($_POST['email']) && !empty($_POST['senha']))) {

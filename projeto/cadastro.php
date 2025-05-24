@@ -394,7 +394,7 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
             $query = "INSERT INTO critico (nome,biografia,cpf,email,data_nasc,site,genero,senha,aprovado) 
 					VALUES ('" . $_POST['nome'] . "', '" . $_POST['biografia'] . "', '" . $cpf . "','" . $_POST['email'] . "', '" . $_POST['data_nasc'] . "', '" . $_POST['site'] . "', '" . $_POST['genero'] . "', '" . mysqli_real_escape_string($oMysql, password_hash($_POST['senha'], PASSWORD_DEFAULT)) . "', false)";
             $resultado = $oMysql->query($query);
-            $_SESSION['sucesso_cadastro'] = true;
+            $_SESSION['sucesso_cadastro2'] = true;
             header('location: login.php');
         }
     }
@@ -553,7 +553,7 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
             $query = "INSERT INTO artista (nome,email,biografia,imagem,data_formacao,pais,site_oficial,genero,senha) 
 						VALUES ('" . $_POST['nome'] . "', '" . $_POST['email'] . "', '" . $_POST['biografia'] . "', '" . $_POST['imagem'] . "','" . $_POST['data_formacao'] . "', '" . $_POST['pais'] . "', '" . $_POST['site_oficial'] . "', '" . $_POST['genero'] . "', '" . mysqli_real_escape_string($oMysql, password_hash($_POST['senha'], PASSWORD_DEFAULT)) . "' )";
             $resultado = $oMysql->query($query);
-            $_SESSION['sucesso_cadastro'] = true;
+            $_SESSION['sucesso_cadastro2'] = true;
             header('location: login.php');
         }
     }
@@ -614,7 +614,7 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
     </form>
 </div>
 
-<div class="container mt-3 mb-5 custom-container rounded-5 pt-3 pb-3 px-4 custom-background form-usuario" hidden>
+<div class="container mt-3 custom-container rounded-5 pt-3 pb-3 px-4 custom-background form-usuario" hidden>
     <div class="text-center">
         <h2>Cadastre-se</h2>
     </div>
@@ -631,7 +631,7 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
         <input type="text" name="email" class="form-control" placeholder="Digite aqui o seu email."
             value="<?php echo $_POST['email'] ?? ''; ?>">
 
-        <label class="form-label pt-2">CPF:</label>
+        <label class="form-label pt-2">CPF: *</label>
         <input type="text" name="cpf" class="form-control" placeholder="Digite aqui o seu CPF." maxlength="14"
             onkeypress="MascaraCPF(this, event)" value="<?php echo $_POST['cpf'] ?? ''; ?>">
 
@@ -655,6 +655,10 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
         <div class="text-center">
             <button type="submit" name="create_usuario" class="btn btn-success mt-4 custom-btn-size">Cadastrar</button>
         </div>
+        <div class="mt-2 text-center">
+            <a class="link-primary link-offset-2 link-underline-opacity-25 link-underline-opacity-100-hover"
+                href="login.php">Já possuo uma conta.</a>
+        </div>
 
     </form>
 </div>
@@ -676,7 +680,7 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
         <input type="text" id="cpf" name="cpf" class="form-control" onkeypress="MascaraCPF(this, event)" maxlength="14" placeholder="Digite seu CPF."
             value="<?php echo $_POST['cpf'] ?? ''; ?>">
 
-        <label for="email" class="form-label pt-2">Email:</label>
+        <label for="email" class="form-label pt-2">Email: *</label>
         <input type="email" id="email" name="email" class="form-control" placeholder="Digite seu email."
             value="<?php echo $_POST['email'] ?? ''; ?>">
 
@@ -688,12 +692,12 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
         <textarea id="biografia" name="biografia" class="form-control" placeholder="Digite a biografia." rows="3"><?php echo $_POST['biografia'] ?? ''; ?></textarea>
 
 
-        <label for="site" class="form-label pt-2">Site: *</label>
-        <input type="url" id="site" name="site" class="form-control" placeholder="Digite o link do seu site."
+        <label for="site" class="form-label pt-2">Portifólio (site, linkedin, redes sociais): *</label>
+        <input type="url" id="site" name="site" class="form-control" placeholder="Digite o link."
             value="<?php echo $_POST['site'] ?? ''; ?>">
 
         <label for="genero" class="form-label pt-2">Gênero: *</label>
-        <select name="genero" id="genero" class="form-select mt-2 mb-1">
+        <select name="genero" id="genero" class="form-select mb-1">
             <option value="" disabled <?php echo empty($_POST['genero']) ? 'selected' : ''; ?>>Selecione</option>
             <option value="M" <?php echo ($_POST['genero'] ?? '') === 'M' ? 'selected' : ''; ?>>Masculino</option>
             <option value="F" <?php echo ($_POST['genero'] ?? '') === 'F' ? 'selected' : ''; ?>>Feminino</option>
@@ -707,6 +711,12 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
         <div class="text-center">
             <button type="submit" name="create_critico" class="btn btn-success mt-4 custom-btn-size">Cadastrar</button>
         </div>
+
+        <div class="mt-2 text-center">
+            <a class="link-primary link-offset-2 link-underline-opacity-25 link-underline-opacity-100-hover"
+                href="login.php">Já possuo uma conta.</a>
+        </div>
+
     </form>
 </div>
 
@@ -747,13 +757,8 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
         <input type="url" id="site_oficial" name="site_oficial" class="form-control"
             placeholder="Digite o site oficial." value="<?php echo $_POST['site_oficial'] ?? ''; ?>">
 
-        <label for="genero" class="form-label pt-2">Gênero: *</label>
-        <select id="genero" name="genero" class="form-select mt-2 mb-1">
-            <option value="" disabled <?php echo empty($_POST['genero']) ? 'selected' : ''; ?>>Selecione</option>
-            <option value="M" <?php echo ($_POST['genero'] ?? '') === 'M' ? 'selected' : ''; ?>>Masculino</option>
-            <option value="F" <?php echo ($_POST['genero'] ?? '') === 'F' ? 'selected' : ''; ?>>Feminino</option>
-            <option value="I" <?php echo ($_POST['genero'] ?? '') === 'I' ? 'selected' : ''; ?>>Indefinido</option>
-        </select>
+        <label for="genero" class="form-label pt-2">Gênero músical: *</label>
+        <input type="text" placeholder="Digite o gênero músical." id="genero" name="genero" class="mb-1 form-control" value="<?php echo $_POST['genero'] ?? '';?>">
 
         <label for="senha" class="form-label pt-2">Senha: *</label>
         <input type="password" id="senha" name="senha" class="form-control" placeholder="Digite sua senha."
@@ -761,6 +766,10 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
 
         <div class="text-center">
             <button type="submit" name="create_artista" class="btn btn-success mt-4 custom-btn-size">Cadastrar</button>
+        </div>
+        <div class="mt-2 text-center">
+            <a class="link-primary link-offset-2 link-underline-opacity-25 link-underline-opacity-100-hover"
+                href="login.php">Já possuo uma conta.</a>
         </div>
     </form>
 </div>
