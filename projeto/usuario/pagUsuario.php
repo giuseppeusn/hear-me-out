@@ -15,26 +15,45 @@ session_start();
 
 include_once("../connect.php");
 
-if (!isset($_SESSION['authenticated']) || !isset($_SESSION['id_usuario'])) {
-    die("Você precisa estar logado como usuário.");
+if (!isset($_SESSION['authenticated'])) {
+    die("Você precisa estar logado.");
 }
 
-$id_user = intval($_SESSION['id_usuario']);
-
 $conexao = connect_db();
-$queryusuario = "SELECT * FROM usuario WHERE id = $id_user";
-$resultadoUsuario = $conexao->query($queryusuario);
-$usuario = $resultadoUsuario->fetch_assoc();
+$userData = null;
+$isCritico = false;
 
-if ($resultadoUsuario && $resultadoUsuario->num_rows > 0) {
-    echo "
+if (isset($_SESSION['id_usuario'])) {
+    $id = intval($_SESSION['id_usuario']);
+    $query = "SELECT * FROM usuario WHERE id = $id";
+    $resultado = $conexao->query($query);
+    if ($resultado && $resultado->num_rows > 0) {
+        $userData = $resultado->fetch_assoc();
+    }
+} 
+elseif (isset($_SESSION['id_critico'])) {
+    $id = intval($_SESSION['id_critico']);
+    $query = "SELECT * FROM critico WHERE id = $id";
+    $resultado = $conexao->query($query);
+    if ($resultado && $resultado->num_rows > 0) {
+        $userData = $resultado->fetch_assoc();
+        $isCritico = true;
+    }
+}
+
+if (!$userData) {
+    echo "Usuário não encontrado!";
+    exit;
+}
+
+echo "
 <div class='container rounded bg-white mt-5 mb-5'>
     <div class='row'>
         <div class='col-md-3 border-right'>
             <div class='d-flex flex-column align-items-center text-center p-3 py-5'>
                 <img class='rounded-circle mt-5' width='150px' src='https://st3.depositphotos.com/15648834/17930/v/600/depositphotos_179308454-stock-illustration-unknown-person-silhouette-glasses-profile.jpg'>
-                <span class='font-weight-bold'>{$usuario['nome']}</span>
-                <span class='text-black-50'>{$usuario['email']}</span>
+                <span class='font-weight-bold'>{$userData['nome']}</span>
+                <span class='text-black-50'>{$userData['email']}</span>
                 <span> </span>
             </div>
         </div>
@@ -45,13 +64,25 @@ if ($resultadoUsuario && $resultadoUsuario->num_rows > 0) {
                 </div>
                 <div class='row mt-2'>
                 <form id='formPerfil'>
-                    <input type='hidden' name='id_usuario' value='{$usuario['id']}'> <div class='col-md-6'><label class='labels'>Nome</label><input type='text' class='form-control' placeholder='first name' value='{$usuario['nome']}' name='nome' disabled></div>
+                    <input type='hidden' name='id_usuario' value='{$userData['id']}'>
+                    <div class='col-md-6'><label class='labels'>Nome</label><input type='text' class='form-control' placeholder='first name' value='{$userData['nome']}' name='nome' disabled></div>
                 </div>
                 <div class='row mt-3'>
-                    <div class='col-md-12'><label class='labels'>Email:</label><input type='email' class='form-control' placeholder='email' value='{$usuario['email']}' name='email' disabled></div>
-                    <div class='col-md-12'><label class='labels'>Data de Nascimento: </label><input type='date' class='form-control' placeholder='data de nascimento' value='{$usuario['data_nasc']}' name='data_nasc' disabled></div>
-                    <div class='col-md-12'><label class='labels'>Genero:</label><input type='text' class='form-control' placeholder='genero' value='{$usuario['genero']}' name='genero' disabled></div>
-                    <div class='col-md-12'><label class='labels'>CPF:</label><input type='text' class='form-control' placeholder='cpf' value='{$usuario['cpf']}' name='cpf' disabled></div> </form>
+                    <div class='col-md-12'><label class='labels'>Email:</label><input type='email' class='form-control' placeholder='email' value='{$userData['email']}' name='email' disabled></div>";
+
+if (!$isCritico) {
+    echo "<div class='col-md-12'><label class='labels'>Data de Nascimento: </label><input type='date' class='form-control' placeholder='data de nascimento' value='{$userData['data_nasc']}' name='data_nasc' disabled></div>
+          <div class='col-md-12'><label class='labels'>Genero:</label><input type='text' class='form-control' placeholder='genero' value='{$userData['genero']}' name='genero' disabled></div>
+          <div class='col-md-12'><label class='labels'>CPF:</label><input type='text' class='form-control' placeholder='cpf' value='{$userData['cpf']}' name='cpf' disabled></div>";
+} else {
+    echo "<div class='col-md-12'><label class='labels'>Biografia:</label><textarea class='form-control' placeholder='biografia' name='biografia' disabled>{$userData['biografia']}</textarea></div>
+          <div class='col-md-12'><label class='labels'>Data de Nascimento: </label><input type='date' class='form-control' placeholder='data de nascimento' value='{$userData['data_nasc']}' name='data_nasc' disabled></div>
+          <div class='col-md-12'><label class='labels'>Genero:</label><input type='text' class='form-control' placeholder='genero' value='{$userData['genero']}' name='genero' disabled></div>
+          <div class='col-md-12'><label class='labels'>CPF:</label><input type='text' class='form-control' placeholder='cpf' value='{$userData['cpf']}' name='cpf' disabled></div>
+          <div class='col-md-12'><label class='labels'>Site:</label><input type='text' class='form-control' placeholder='site' value='{$userData['site']}' name='site' disabled></div>";
+}
+
+echo "</form>
                 </div>
 
                 <div class='mt-5 text-center'>
@@ -60,41 +91,38 @@ if ($resultadoUsuario && $resultadoUsuario->num_rows > 0) {
                       <div class='mt-3 text-center'>
                           <button id='btnExcluir' class='btn btn-danger'>Excluir Conta</button>
                         </div>
-
-            </div>
-        </div>
-        <div class='col-md-4'>
-            <div class='p-3 py-5'>
-                <div class='d-flex justify-content-between align-items-center experience'>
-                    <span class='border px-3 p-1 add-experience'><i class='fa fa-plus'></i>&nbsp;Experience</span>
-                </div><br>
-
             </div>
         </div>
     </div>
 </div>
 ";
-} else {
-    echo "Usuário não encontrado!";
-    exit;
-}
 ?>
 
 <script>
-function abrirAlterarPerfil(usuario) {
+function abrirAlterarPerfil(userData, isCritico) {
+    let html = `
+        <input id="swal-nome" class="swal2-input" placeholder="Nome" value="${userData.nome}">
+        <input id="swal-email" class="swal2-input" placeholder="Email" type="email" value="${userData.email}">`;
+    
+    if (isCritico) {
+        html += `
+        <textarea id="swal-biografia" class="swal2-input" placeholder="Biografia">${userData.biografia}</textarea>
+        <input id="swal-site" class="swal2-input" placeholder="Site" value="${userData.site}">`;
+    }
+    
+    html += `
+        <input id="swal-data" class="swal2-input" type="date" value="${userData.data_nasc}">
+        <select id="swal-genero" class="swal2-input">
+            <option value="M" ${userData.genero === 'M' ? 'selected' : ''}>Masculino</option>
+            <option value="F" ${userData.genero === 'F' ? 'selected' : ''}>Feminino</option>
+            <option value="I" ${userData.genero === 'I' ? 'selected' : ''}>Prefiro não informar</option>
+        </select>
+        <input id="swal-cpf" class="swal2-input" placeholder="CPF" value="${userData.cpf}" readonly>
+        <input id="swal-senha" class="swal2-input" type="password" placeholder="Nova Senha (opcional)">`;
+
     Swal.fire({
         title: 'Editar Perfil',
-        html:
-            `<input id="swal-nome" class="swal2-input" placeholder="Nome" value="${usuario.nome}">` +
-            `<input id="swal-email" class="swal2-input" placeholder="Email" type="email" value="${usuario.email}">` +
-            `<input id="swal-data" class="swal2-input" type="date" value="${usuario.data_nasc}">` +
-            `<select id="swal-genero" class="swal2-input">
-                <option value="M" ${usuario.genero === 'M' ? 'selected' : ''}>Masculino</option>
-                <option value="F" ${usuario.genero === 'F' ? 'selected' : ''}>Feminino</option>
-                <option value="I" ${usuario.genero === 'I' ? 'selected' : ''}>Prefiro não informar</option>
-            </select>` +
-            `<input id="swal-cpf" class="swal2-input" placeholder="CPF" value="${usuario.cpf}" readonly>` +
-            `<input id="swal-senha" class="swal2-input" type="password" placeholder="Nova Senha (opcional)">`,
+        html: html,
         confirmButtonText: 'Salvar',
         showCancelButton: true,
         focusConfirm: false,
@@ -105,13 +133,9 @@ function abrirAlterarPerfil(usuario) {
             const genero = document.getElementById('swal-genero').value;
             const cpf = document.getElementById('swal-cpf').value.trim();
             const senha = document.getElementById('swal-senha').value;
-
-            if (!nome || !email || !data_nasc || !genero || !cpf) {
-                return Swal.showValidationMessage('Todos os campos são obrigatórios, exceto a senha.');
-            }
-
-            return {
-                id_usuario: usuario.id,
+            
+            let data = {
+                id_usuario: userData.id,
                 nome,
                 email,
                 data_nasc,
@@ -119,10 +143,27 @@ function abrirAlterarPerfil(usuario) {
                 cpf,
                 senha
             };
+            
+            if (isCritico) {
+                data.biografia = document.getElementById('swal-biografia').value.trim();
+                data.site = document.getElementById('swal-site').value.trim();
+            }
+
+            if (!nome || !email || !data_nasc || !genero || !cpf) {
+                return Swal.showValidationMessage('Todos os campos são obrigatórios, exceto a senha.');
+            }
+            
+            if (isCritico && (!data.biografia || !data.site)) {
+                return Swal.showValidationMessage('Biografia e site são obrigatórios para críticos.');
+            }
+
+            return data;
         }
     }).then((resultado) => {
         if (resultado.isConfirmed) {
-            fetch('update.php', {
+            const endpoint = isCritico ? 'update_critico.php' : 'update.php';
+            
+            fetch(endpoint, {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json'
@@ -144,17 +185,22 @@ function abrirAlterarPerfil(usuario) {
 }
 
 document.addEventListener('DOMContentLoaded', () => {
-    const usuario = {
-        id: <?= $usuario['id'] ?>,
-        nome: "<?= addslashes($usuario['nome']) ?>",
-        email: "<?= $usuario['email'] ?>",
-        data_nasc: "<?= $usuario['data_nasc'] ?>",
-        genero: "<?= $usuario['genero'] ?>",
-        cpf: "<?= $usuario['cpf'] ?>"
+    const isCritico = <?= $isCritico ? 'true' : 'false' ?>;
+    const userData = {
+        id: <?= $userData['id'] ?>,
+        nome: "<?= addslashes($userData['nome']) ?>",
+        email: "<?= $userData['email'] ?>",
+        data_nasc: "<?= $userData['data_nasc'] ?>",
+        genero: "<?= $userData['genero'] ?>",
+        cpf: "<?= $userData['cpf'] ?>",
+        <?php if ($isCritico): ?>
+        biografia: `<?= addslashes($userData['biografia']) ?>`,
+        site: "<?= $userData['site'] ?>"
+        <?php endif; ?>
     };
 
     document.getElementById("btnEditar").addEventListener("click", () => {
-        abrirAlterarPerfil(usuario);
+        abrirAlterarPerfil(userData, isCritico);
     });
 
     document.getElementById("btnExcluir").addEventListener("click", () => {
@@ -174,7 +220,10 @@ document.addEventListener('DOMContentLoaded', () => {
                     headers: {
                         'Content-Type': 'application/json'
                     },
-                    body: JSON.stringify({ id_usuario: usuario.id })
+                    body: JSON.stringify({ 
+                        id_usuario: userData.id,
+                        is_critico: isCritico 
+                    })
                 })
                 .then(res => res.text())
                 .then(msg => {
@@ -190,11 +239,9 @@ document.addEventListener('DOMContentLoaded', () => {
         });
     });
 
-    // Oculta botão antigo se necessário
     document.getElementById("btnSalvar").style.display = "none";
 });
 </script>
 
-
-
-</body> </html>
+</body>
+</html>

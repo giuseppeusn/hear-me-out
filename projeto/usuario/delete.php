@@ -4,7 +4,24 @@ include_once("../connect.php");
 
 $data = json_decode(file_get_contents("php://input"), true);
 
-if (!isset($_SESSION['id_usuario']) || $_SESSION['id_usuario'] != $data['id_usuario']) {
+if (!isset($_SESSION['id_usuario']) && !isset($_SESSION['id_critico'])) {
+    http_response_code(403);
+    echo "Acesso negado.";
+    exit;
+}
+
+
+$validRequest = false;
+$table = "";
+if (isset($_SESSION['id_usuario']) && $_SESSION['id_usuario'] == $data['id_usuario']) {
+    $validRequest = true;
+    $table = "usuario";
+} elseif (isset($_SESSION['id_critico']) && $_SESSION['id_critico'] == $data['id_usuario']) {
+    $validRequest = true;
+    $table = "critico";
+}
+
+if (!$validRequest) {
     http_response_code(403);
     echo "Acesso negado.";
     exit;
@@ -13,7 +30,7 @@ if (!isset($_SESSION['id_usuario']) || $_SESSION['id_usuario'] != $data['id_usua
 $conexao = connect_db();
 $id = intval($data['id_usuario']);
 
-$stmt = $conexao->prepare("DELETE FROM usuario WHERE id = ?");
+$stmt = $conexao->prepare("DELETE FROM $table WHERE id = ?");
 $stmt->bind_param("i", $id);
 
 if ($stmt->execute()) {
@@ -26,3 +43,4 @@ if ($stmt->execute()) {
 
 $stmt->close();
 $conexao->close();
+?>

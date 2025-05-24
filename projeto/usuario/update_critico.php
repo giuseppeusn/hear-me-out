@@ -23,7 +23,7 @@ function validarData($data) {
 }
 
 
-$campos = ['id_usuario', 'nome', 'email', 'data_nasc', 'genero'];
+$campos = ['id_usuario', 'nome', 'email', 'data_nasc', 'genero', 'biografia', 'site'];
 foreach ($campos as $campo) {
     if (empty(trim($data[$campo]))) {
         http_response_code(400);
@@ -45,14 +45,18 @@ $email = mysqli_real_escape_string($oMysql, $data['email']);
 $cpf = preg_replace('/[^0-9]/', '', $data['cpf']);
 $data_nasc = mysqli_real_escape_string($oMysql, $data['data_nasc']);
 $genero = mysqli_real_escape_string($oMysql, $data['genero']);
+$biografia = mysqli_real_escape_string($oMysql, $data['biografia']);
+$site = mysqli_real_escape_string($oMysql, $data['site']);
 
 
-$update = "UPDATE usuario SET 
+$update = "UPDATE critico SET 
     nome = '$nome', 
     email = '$email', 
     cpf = '$cpf', 
     data_nasc = '$data_nasc', 
-    genero = '$genero'";
+    genero = '$genero',
+    biografia = '$biografia',
+    site = '$site'";
 
 
 if (!empty($data['senha'])) {
