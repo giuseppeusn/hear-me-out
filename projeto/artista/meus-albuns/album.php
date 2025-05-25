@@ -3,9 +3,9 @@
 <head>  
 
   <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
-  <script src="/hear-me-out/projeto/album/insert.js"></script>
-  <script src="/hear-me-out/projeto/album/update.js"></script>
-  <script src="/hear-me-out/projeto/album/delete.js"></script>
+  <script src="/hear-me-out/projeto/artista/meus-albuns/insert.js"></script>
+  <script src="/hear-me-out/projeto/artista/meus-albuns/update.js"></script>
+  <script src="/hear-me-out/projeto/artista/meus-albuns/delete.js"></script>
 
 </head>
 <body>
