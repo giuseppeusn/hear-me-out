@@ -1,5 +1,10 @@
 <?php
 session_start();
+// ADICIONAR ESTAS LINHAS PARA TRATAMENTO DE ERROS
+ini_set('display_errors', 0);
+ini_set('log_errors', 1);
+ini_set('error_log', __DIR__ . '/../php-error.log'); 
+
 include_once("../connect.php");
 
 header('Content-Type: application/json');
@@ -8,65 +13,68 @@ $data = json_decode(file_get_contents("php://input"), true);
 
 if (!$data) {
     http_response_code(400);
-    echo "Dados inválidos!";
+    echo json_encode(["success" => false, "message" => "Dados inválidos!"]);
     exit;
 }
 
-function validarData($data) {
-    try {
-        $d = new DateTime($data);
-        $agora = new DateTime();
-        return ($d->format('Y') >= 1900 && $d <= $agora);
-    } catch (Exception $e) {
-        return false;
-    }
-}
-
-$campos = ['id', 'nome', 'email', 'data_nasc', 'genero', 'biografia', 'site'];
-foreach ($campos as $campo) {
-    if (empty(trim($data[$campo]))) {
-        http_response_code(400);
-        echo "O campo '$campo' é obrigatório.";
-        exit;
-    }
-}
-
-if (!validarData($data['data_nasc'])) {
-    http_response_code(400);
-    echo "Data de nascimento inválida.";
-    exit;
-}
-
-$oMysql = connect_db();
 $id = intval($data['id']);
-$nome = mysqli_real_escape_string($oMysql, $data['nome']);
-$email = mysqli_real_escape_string($oMysql, $data['email']);
-$cpf = preg_replace('/[^0-9]/', '', $data['cpf']);
-$data_nasc = mysqli_real_escape_string($oMysql, $data['data_nasc']);
-$genero = mysqli_real_escape_string($oMysql, $data['genero']);
-$biografia = mysqli_real_escape_string($oMysql, $data['biografia']);
-$site = mysqli_real_escape_string($oMysql, $data['site']);
+$nome = $data['nome'];
+$email = $data['email'];
+$data_nasc = $data['data_nasc'];
+$genero = $data['genero'];
+$cpf = $data['cpf']; // CPF não deve ser alterável, mas se está no formulário, receba.
+$biografia = $data['biografia'];
+$site = $data['site'];
 
-$update = "UPDATE critico SET 
-    nome = '$nome', 
-    email = '$email', 
-    cpf = '$cpf', 
-    data_nasc = '$data_nasc', 
-    genero = '$genero',
-    biografia = '$biografia',
-    site = '$site'";
-
-if (!empty($data['senha'])) {
-    $senhaHash = password_hash($data['senha'], PASSWORD_DEFAULT);
-    $update .= ", senha = '$senhaHash'";
+// Validações adicionais
+if (!filter_var($email, FILTER_VALIDATE_EMAIL)) {
+    http_response_code(400);
+    echo json_encode(["success" => false, "message" => "Formato de e-mail inválido."]);
+    exit;
 }
 
-$update .= " WHERE id = $id";
+// Conecta ao banco de dados
+$conexao = connect_db();
 
-if ($oMysql->query($update)) {
-    echo "Perfil atualizado com sucesso!";
+if (!$conexao) {
+    http_response_code(500);
+    echo json_encode(["success" => false, "message" => "Erro ao conectar ao banco de dados."]);
+    exit;
+}
+
+// Verifica se o email já existe para outro crítico (excluindo o próprio)
+$stmt = $conexao->prepare("SELECT id FROM critico WHERE email = ? AND id != ?");
+$stmt->bind_param("si", $email, $id);
+$stmt->execute();
+$resultado = $stmt->get_result();
+
+if ($resultado->num_rows > 0) {
+    $stmt->close();
+    http_response_code(400);
+    echo json_encode(["success" => false, "message" => "Este e-mail já está sendo usado por outro crítico."]);
+    exit;
+}
+$stmt->close();
+
+// Prepara a consulta SQL para atualizar o crítico
+$query = "UPDATE critico SET nome = ?, email = ?, data_nasc = ?, genero = ?, biografia = ?, site = ? WHERE id = ?";
+$stmt = $conexao->prepare($query);
+
+if ($stmt === false) {
+    http_response_code(500);
+    echo json_encode(["success" => false, "message" => "Erro ao preparar a consulta: " . $conexao->error]);
+    exit;
+}
+
+$stmt->bind_param("ssssssi", $nome, $email, $data_nasc, $genero, $biografia, $site, $id);
+
+if ($stmt->execute()) {
+    echo json_encode(["success" => true, "message" => "Perfil atualizado com sucesso!"]);
 } else {
     http_response_code(500);
-    echo "Erro ao atualizar: " . $oMysql->error;
+    echo json_encode(["success" => false, "message" => "Erro ao atualizar o perfil: " . $stmt->error]);
 }
+
+$stmt->close();
+$conexao->close();
 ?>
