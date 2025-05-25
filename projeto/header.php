@@ -18,7 +18,7 @@
     <?php
       $route = $_SERVER['REQUEST_URI'];
 
-      if ($route != "/hear-me-out/projeto/" && $route != "/hear-me-out/projeto/login.php") {
+      if ($route != "/hear-me-out/projeto/" && $route != "/hear-me-out/projeto/login.php" && $route != "/hear-me-out/projeto/cadastro.php") {
         include __DIR__ . "/components/search.php";
         echo search(true);
       }

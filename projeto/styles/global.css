@@ -3,6 +3,17 @@ body {
   position: relative;
 }
 
+.swal2-container .swal2-modal {
+  background: #2e2e2e !important;
+  color: white !important;
+}
+
+.swal2-cancel {
+  background-color: #212121 !important;
+  color: white !important;
+  font-weight: 700 !important;
+}
+
 .navbar-brand {
   display: flex;
   align-items: center;
@@ -175,6 +186,10 @@ body {
   border-radius: 50%;
 }
 
+.search-btn-header {
+  right: 5px;
+}
+
 .search-btn:hover {
   background-color: #b80000;
 }
@@ -198,6 +213,42 @@ body {
   color: white;
   outline: none;
   font-size: 20px;
+}
+
+.cover-card-wrapper {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  text-decoration: none;
+  color: white;
+  padding: 20px;
+  border-radius: 10px;
+}
+
+.cover-card-wrapper.cover-list:hover {
+  background-color: #212121;
+}
+
+.cover-card-wrapper.cover-search:hover {
+  background-color: #2e2e2e !important;
+}
+
+.cover-card {
+  display: flex;
+}
+
+.cover-card-text {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  margin-left: 10px;
+}
+
+.cover-card-img {
+  width: 100px;
+  height: 100px;
+  object-fit: cover;
+  border-radius: 5px;
 }
 
 @media screen and (max-width: 768px) {
