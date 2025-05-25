@@ -56,29 +56,6 @@ if (!$userData) {
     <link rel="stylesheet" href="../CSS/pagUsuario.css"> <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 </head>
 <body>
-    <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
-        <div class="container-fluid">
-            <a class="navbar-brand" href="#">Hear Me Out</a>
-            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
-                <span class="navbar-toggler-icon"></span>
-            </button>
-            <div class="collapse navbar-collapse" id="navbarNav">
-                <ul class="navbar-nav me-auto mb-2 mb-lg-0">
-                    <li class="nav-item">
-                        <a class="nav-link" href="#">Home</a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link" href="#">Explorar</a>
-                    </li>
-                </ul>
-                <div class="d-flex">
-                    <a class="btn btn-outline-light me-2" href="#">Minha Biblioteca</a>
-                    <a class="btn btn-outline-light" href="logout.php">Sair</a>
-                </div>
-            </div>
-        </div>
-    </nav>
-
     <div class="container rounded bg-white mt-5 mb-5">
         <div class="row">
             <div class="col-md-3 border-right">
