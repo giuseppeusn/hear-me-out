@@ -1,39 +1,83 @@
 <?php
 session_start();
-include_once("../connect.php");
+header('Content-Type: application/json'); 
+
+
+function sendJsonResponse($success, $message, $statusCode = 200) {
+    http_response_code($statusCode);
+    echo json_encode(['success' => $success, 'message' => $message]);
+    exit(); 
+}
+
+function sendErrorResponse($message, $statusCode = 400) {
+    http_response_code($statusCode);
+    echo json_encode(['success' => false, 'error' => $message]);
+    exit();
+}
+
+include_once("../connect.php"); 
 
 $data = json_decode(file_get_contents("php://input"), true);
 
 if (!isset($_SESSION['id'])) {
-    http_response_code(403);
-    echo "Acesso negado.";
-    exit;
+    sendErrorResponse("Acesso negado. Usuário não autenticado.", 403);
 }
 
 if (!isset($data['id']) || $_SESSION['id'] != $data['id']) {
-    http_response_code(403);
-    echo "Acesso negado.";
-    exit;
+    sendErrorResponse("Acesso negado. ID inválido ou não autorizado.", 403);
 }
 
 $conexao = connect_db();
 $id = intval($data['id']);
+$tipoUsuario = $data['tipo'] ?? ''; 
 
-
-$checkUser = $conexao->query("SELECT id FROM usuario WHERE id = $id");
-$table = ($checkUser->num_rows > 0) ? "usuario" : "critico";
-
-$stmt = $conexao->prepare("DELETE FROM $table WHERE id = ?");
-$stmt->bind_param("i", $id);
-
-if ($stmt->execute()) {
-    session_destroy();
-    echo "Sua conta foi excluída com sucesso.";
-} else {
-    http_response_code(500);
-    echo "Erro ao excluir a conta.";
+if (empty($tipoUsuario)) {
+    sendErrorResponse("Tipo de usuário não fornecido.", 400);
 }
 
-$stmt->close();
+$tabela = '';
+switch ($tipoUsuario) {
+    case 'usuario':
+        $tabela = 'usuario';
+        break;
+    case 'critico':
+        $tabela = 'critico';
+        break;
+    case 'artista':
+        $tabela = 'artista';
+        break;
+    default:
+        sendErrorResponse("Tipo de usuário inválido.", 400);
+}
+
+
+$conexao->begin_transaction();
+
+try {
+
+    $query = "DELETE FROM $tabela WHERE id = ?";
+    $stmt = $conexao->prepare($query);
+    if (!$stmt) {
+        throw new Exception("Erro ao preparar a query de exclusão: " . $conexao->error);
+    }
+    $stmt->bind_param("i", $id);
+
+    if ($stmt->execute()) {
+        if ($stmt->affected_rows > 0) {
+            $conexao->commit(); 
+            session_destroy(); 
+            sendJsonResponse(true, "Sua conta foi excluída com sucesso.");
+        } else {
+            $conexao->rollback(); 
+            sendErrorResponse("Nenhuma conta encontrada com o ID fornecido ou tipo de usuário.", 404);
+        }
+    } else {
+        throw new Exception("Erro ao executar a exclusão: " . $stmt->error);
+    }
+} catch (Exception $e) {
+    $conexao->rollback(); 
+    sendErrorResponse("Erro ao excluir a conta: " . $e->getMessage(), 500);
+}
+
 $conexao->close();
 ?>

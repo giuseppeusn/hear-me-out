@@ -22,22 +22,25 @@ function sendErrorResponse($message, $statusCode = 400) {
 $data = json_decode(file_get_contents("php://input"), true);
 
 if (!isset($data['id'])) {
-    sendErrorResponse("ID do usuário não fornecido.", 400);
+    sendErrorResponse("ID do artista não fornecido.", 400);
 }
 
 $id = intval($data['id']);
 
 
 if (!isset($_SESSION['id']) || $_SESSION['id'] != $id) {
-    sendErrorResponse("Não autorizado a atualizar este perfil.", 403);
+    sendErrorResponse("Não autorizado a atualizar este perfil de artista.", 403);
 }
+
 
 $nome = isset($data['nome']) ? trim($data['nome']) : '';
 $email = isset($data['email']) ? trim($data['email']) : '';
-$data_nasc = isset($data['data_nasc']) ? $data['data_nasc'] : '';
-$genero = isset($data['genero']) ? $data['genero'] : '';
+$biografia = isset($data['biografia']) ? trim($data['biografia']) : '';
+$data_formacao = isset($data['data_formacao']) ? $data['data_formacao'] : '';
+$pais = isset($data['pais']) ? trim($data['pais']) : '';
+$site_oficial = isset($data['site_oficial']) ? trim($data['site_oficial']) : '';
+$genero = isset($data['genero']) ? trim($data['genero']) : ''; // Gênero Musical
 $senha = isset($data['senha']) ? trim($data['senha']) : '';
-$cpf = isset($data['cpf']) ? preg_replace('/[^0-9]/', '', $data['cpf']) : ''; 
 
 $updateFields = [];
 $bindParams = '';
@@ -53,17 +56,31 @@ if (!empty($email)) {
     $bindParams .= "s";
     $bindValues[] = $email;
 }
-if (!empty($data_nasc)) {
-    $updateFields[] = "data_nasc = ?";
+if (isset($data['biografia'])) { 
+    $updateFields[] = "biografia = ?";
     $bindParams .= "s";
-    $bindValues[] = $data_nasc;
+    $bindValues[] = $biografia;
+}
+if (!empty($data_formacao)) {
+    $updateFields[] = "data_formacao = ?";
+    $bindParams .= "s";
+    $bindValues[] = $data_formacao;
+}
+if (!empty($pais)) {
+    $updateFields[] = "pais = ?";
+    $bindParams .= "s";
+    $bindValues[] = $pais;
+}
+if (isset($data['site_oficial'])) { 
+    $updateFields[] = "site_oficial = ?";
+    $bindParams .= "s";
+    $bindValues[] = $site_oficial;
 }
 if (!empty($genero)) {
     $updateFields[] = "genero = ?";
     $bindParams .= "s";
     $bindValues[] = $genero;
 }
-
 if (!empty($senha)) {
     $hashed_password = password_hash($senha, PASSWORD_DEFAULT);
     $updateFields[] = "senha = ?";
@@ -75,7 +92,7 @@ if (empty($updateFields)) {
     sendJsonResponse(true, "Nenhuma alteração foi fornecida.");
 }
 
-$query = "UPDATE usuario SET " . implode(", ", $updateFields) . " WHERE id = ?";
+$query = "UPDATE artista SET " . implode(", ", $updateFields) . " WHERE id = ?";
 $bindParams .= "i";
 $bindValues[] = $id;
 
@@ -87,13 +104,13 @@ if (!$stmt) {
 
 
 $types = $bindParams;
-$params = array_merge([$types], $bindValues); 
+$params = array_merge([$types], $bindValues);
 call_user_func_array([$stmt, 'bind_param'], refValues($params));
 
 
 if ($stmt->execute()) {
     if ($stmt->affected_rows > 0) {
-        sendJsonResponse(true, "Perfil de usuário atualizado com sucesso!");
+        sendJsonResponse(true, "Perfil de artista atualizado com sucesso!");
     } else {
         sendJsonResponse(true, "Nenhuma alteração foi feita no perfil (ou já estava atualizado).");
     }
@@ -104,9 +121,8 @@ if ($stmt->execute()) {
 $stmt->close();
 $conexao->close();
 
-
 function refValues($arr){
-    if (strnatcmp(phpversion(),'5.3') >= 0) 
+    if (strnatcmp(phpversion(),'5.3') >= 0)
     {
         $refs = array();
         foreach($arr as $key => $value)
