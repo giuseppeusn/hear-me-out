@@ -36,7 +36,7 @@
             <label for="mensagem">Mensagem</label>
             <textarea class="form-control" id="mensagem" name="mensagem" maxlength="500" required></textarea>
           </div>
-          <input type="hidden" name="musica_id" value="<?= $musicas->musica_id ?>">
+          <input type="hidden" name="musica_id" value="<?= $musica->musica_id ?>">
           <input type="hidden" name="avaliador_id" value="<?= isset($_SESSION['id']) ? $_SESSION['id'] : null ?>">
           <input type="hidden" name="avaliador_tipo" value="<?= $tipoAvaliador ?>">
         </form>
@@ -95,7 +95,7 @@
       cancelButtonText: 'Cancelar'
     }).then((resultado) => {
       if (resultado.isConfirmed) {
-        fetch(`../album/reviews/delete.php?id=${id}`, {
+        fetch(`../musica/reviews/delete.php?id=${id}`, {
           method: 'DELETE'
         })
         .then(response => response.text())
@@ -128,7 +128,7 @@
     const form = document.getElementById('avaliacaoForm');
     const formData = new FormData(form);
 
-    fetch('../album/reviews/update.php', {
+    fetch('../musica/reviews/update.php', {
       method: 'POST',
       body: formData
     })
@@ -159,7 +159,7 @@
     const form = document.getElementById('avaliacaoForm');
     const formData = new FormData(form);
 
-    fetch('../album/reviews/insert.php', {
+    fetch('../musica/reviews/insert.php', {
       method: 'POST',
       body: formData
     })

@@ -34,7 +34,7 @@
       if ($stmt2->execute()) {
           echo "Avaliação inserida com sucesso!";
       } else {
-          echo "Erro ao vincular a avaliação a música: " . $stmt2->error;
+          echo "Erro ao vincular a avaliação na música: " . $stmt2->error;
       }
 
       $stmt2->close();
