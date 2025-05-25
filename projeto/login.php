@@ -110,19 +110,12 @@ if ((isset($_POST['email']) && isset($_POST['senha'])) && (!empty($_POST['email'
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Login</title>
   <style>
-    body {
-      background-color: #212121 !important;
-      color: white !important;
-    }
-
     .custom-container {
       width: 30%;
       min-width: 25%;
       margin-top: 100px;
-      background-color: rgba(130, 130, 130, 0.15);
-      background-image: linear-gradient(45deg, #292929, #5f5f5f, #292929);
-      background-size: 200% 200%;
-      box-shadow: 0 0 50px black;
+      background-color: #2e2e2e;
+      color: white;
     }
 
     .custom-input {

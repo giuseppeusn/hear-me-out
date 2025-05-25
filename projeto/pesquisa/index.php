@@ -28,7 +28,7 @@
             echo '<h2 class="text-white mb-3 mt-3 fw-bold">Músicas</h2>';
 
             while ($data = $resultado_musica->fetch_object()) {
-              echo searchCard($data->nome_musica, $data->nome_artista, $data->capa, $data->id_musica, $data->duracao);
+              echo searchCard($data->nome_musica, $data->nome_artista, $data->capa, '/hear-me-out/projeto/musica?id=' . $data->id_musica . '', $data->duracao);
             }
 
             echo '</div>';
@@ -39,18 +39,22 @@
             echo '<h2 class="text-white mb-3 mt-3 fw-bold">Álbuns</h2>';
 
             while ($data = $resultado_album->fetch_object()) {
-              echo searchCard($data->nome_album, $data->nome_artista, $data->capa, $data->album_id, null);
+              echo searchCard($data->nome_album, $data->nome_artista, $data->capa, '/hear-me-out/projeto/album?id=' . $data->album_id . '', null);
             }
 
             echo '</div>';
           }
 
           if ($resultado_musica->num_rows == 0 && $resultado_album->num_rows == 0) {
-            echo '<h4 class="text-white mt-3 text-center">Nenhum resultado encontrado.</h4>';
+            echo '<div style="display:flex">
+              <h4 class="text-white mt-3 text-center">Nenhum resultado encontrado.</h4>
+            </div>';
           }
 
         } else {
-          echo '<h4 class="text-white mt-3 text-center">Nenhum resultado encontrado.</h4>';
+          echo '<div style="display:flex">
+            <h4 class="text-white mt-3 text-center">Nenhum resultado encontrado.</h4>
+          </div>';
         }
       ?>
     </div>

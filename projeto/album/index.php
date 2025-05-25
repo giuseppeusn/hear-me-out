@@ -1,29 +1,68 @@
 <?php
-  include("../header.php");
-  include_once("../connect.php");
 
   if (session_status() === PHP_SESSION_DISABLED) {
     session_start();
   }
 
-  if (!isset($_SESSION['authenticated']) || $_SESSION['authenticated'] !== true) {
-    header("location: /hear-me-out/projeto/login.php");
-    exit();
+  include_once("../header.php");
+  include_once("../footer.php");
+  include_once("../connect.php");
+  include_once("functions.php");
+
+  $connection = connect_db();
+
+  $album_id = isset($_GET['id']) ? intval($_GET['id']) : 0;
+  $album = obterAlbum($connection, $album_id);
+
+  if (!$album) {
+      echo '<div class="cs-container" style="height: 100vh; self-align: center;">
+        <h4 class="text-white mt-3 text-center">Álbum não encontrado.<h4>
+      </div>';
+      exit;
   }
 
-  if(isset($_GET["page"])) {
-    if($_GET["page"] == 1) {
-      include("insert.php");
-    } else if($_GET["page"] == 2) {
-      include("update.php");
-    } else if($_GET["page"] == 3) {
-      include("delete.php");
-    } else if($_GET["page"] == 4) {
-      include("paginaAlbum.php"); 
-    } else {
-      include("album.php");
-    }
-  } else {
-    include("album.php");
+  $resumo = obterResumoAlbum($connection, $album_id);
+  $musicas = obterMusicas($connection, $album_id);
+  $comentarios = obterComentarios($connection, $album_id);
+
+  $tipoAvaliador = null;
+  $user_id = null;
+
+  if (isset($_SESSION['permissao']) && isset($_SESSION['id'])) {
+    $tipoAvaliador = $_SESSION['permissao'] != 'critico' && $_SESSION['permissao'] != 'usuario' ? 'usuario' : $_SESSION['permissao'];
+    $user_id = $_SESSION['id'];
   }
+
+  $avaliacoes = obterAvaliacoesAlbum($connection, $album_id, $user_id, $tipoAvaliador);	
 ?>
+
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <link rel="stylesheet" href="../styles/rate-page.css">
+  <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+</head>
+<body>
+
+<div class='cs-container'>
+  <div class='content'>
+    <div class='row justify-content-center'>
+      <div class='cs-col'>
+        <img id='capa' class='rating-cover' src='<?= $album->album_capa ?>' alt='capa'>
+        <?php include "../components/rate-page/rating.php"; ?>
+        <?php include "../components/rate-page/comments.php"; ?>
+      </div>
+      <div class='col-md-6'>
+        <?php
+          include "../components/rate-page/info.php";
+          echo infoCard('Álbum', $album->album_nome, $album->artista_nome, $album->album_data, $resumo);
+        ?>
+        <?php include "../components/rate-page/musicList.php"; ?>
+      </div>
+    </div>
+  </div>
+</div>
+<?php include "comments/script.php"; ?>
+<?php include "reviews/script.php"; ?>
+</body>
+</html>

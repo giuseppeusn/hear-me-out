@@ -3,6 +3,17 @@ body {
   position: relative;
 }
 
+.swal2-container .swal2-modal {
+  background: #2e2e2e !important;
+  color: white !important;
+}
+
+.swal2-cancel {
+  background-color: #212121 !important;
+  color: white !important;
+  font-weight: 700 !important;
+}
+
 .navbar-brand {
   display: flex;
   align-items: center;

@@ -567,11 +567,6 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <style>
-        body {
-            background-color: #212121 !important;
-            color: white !important;
-        }
-
         .borda {
             border-width: 2px !important;
         }
@@ -586,10 +581,8 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
         }
 
         .custom-background {
-            background-color: rgba(130, 130, 130, 0.15);
-            background-image: linear-gradient(45deg, #292929, #5f5f5f, #292929);
-            background-size: 200% 200%;
-            box-shadow: 0 0 50px black;
+            background-color: #2e2e2e;
+            color: white
         }
 
         .select-user-button {

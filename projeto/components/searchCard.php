@@ -1,5 +1,5 @@
 <?php
-function searchCard($nome, $artista, $capa, $id, $duracao) {
+function searchCard($nome, $artista, $capa, $link, $duracao) {
   $duracaoHtml = '';
 
   if ($duracao) {
@@ -14,7 +14,7 @@ function searchCard($nome, $artista, $capa, $id, $duracao) {
   }
 
   return '
-    <a href="/hear-me-out/projeto/paginaUser/musica.php?id=' . htmlspecialchars($id) . '" class="search-card-wrapper">
+    <a href="'. htmlspecialchars($link) . '" class="search-card-wrapper">
       <div class="search-card">
         <img class="search-card-img" src="' . htmlspecialchars($capa) . '" alt="Capa da música">
         <div class="search-card-text">
