@@ -10,7 +10,6 @@
   include_once("functions.php");
 
   $connection = connect_db();
-
   $musica_id = isset($_GET['id']) ? intval($_GET['id']) : 0;
   $musica = obterMusica($connection, $musica_id);
 
@@ -20,9 +19,8 @@
       </div>';
       exit;
   }
-
-  $resumo = obterResumoMusica($connection, $musica_id);
-  $musicas = obterMusicas($connection, $musica_id);
+  $album = obterAlbum($connection);
+  $musicas = obterMusica($connection, $musica_id);
   $comentarios = obterComentarios($connection, $musica_id);
 
   $tipoAvaliador = null;
@@ -33,7 +31,7 @@
     $user_id = $_SESSION['id'];
   }
 
-  $avaliacoes = obterAvaliacoesAMusica($connection, $musica_id, $user_id, $tipoAvaliador);	
+  $avaliacoes = obterAvaliacoesMusica($connection, $musica_id, $user_id, $tipoAvaliador);	
 ?>
 
 <!DOCTYPE html>
@@ -58,8 +56,8 @@
           include "../components/rating-page/info.php";
           include "../components/rating-page/renderList.php"; 
 
-          echo infoCard('Álbum', $musicas->musica_nome, $musica->artista_nome, $musica->musica_data, null, $resumo);
-          echo renderList(true, $album);
+          echo infoCard('Música', $musicas->musica_nome, $musicas->artista_nome, $musicas->musica_data, $musicas->musica_duracao, null );
+          echo renderList(false, $album);
         ?>
       </div>
     </div>

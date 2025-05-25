@@ -1,35 +1,27 @@
 <?php
-function obterAlbum($conexao, $album_id) {
-    $sql = "SELECT album.id AS album_id, album.nome AS album_nome, album.capa AS album_capa, album.data_lancamento AS album_data, artista.nome AS artista_nome, album.id_artista AS album_idArtista
-            FROM album
-            INNER JOIN artista ON album.id_artista = artista.id
-            WHERE album.id = $album_id";
-    return $conexao->query($sql)->fetch_object();
-}
 function obterMusica($conexao, $musica_id) {
-    $sql = "SELECT musica.id AS musica_id, musica.nome AS musica_nome, musica.capa AS musica_capa, musica.data_lancamento AS musica_data, artista.nome AS artista_nome, musica.id_artista AS musica_idArtista
+    $sql = "SELECT musica.id AS musica_id, musica.nome AS musica_nome, musica.capa AS musica_capa, musica.data_lancamento AS musica_data, musica.duracao AS musica_duracao, artista.nome AS artista_nome, musica.id_artista AS musica_idArtista, musica.id_album AS musica_idAlbum
             FROM musica
             INNER JOIN artista ON musica.id_artista = artista.id
-            WHERE musica.id = $album_id";
-    return $conexao->query($sql)->fetch_object();
-}
-function obterResumoAlbum($conexao, $album_id) {
-    $sql = "SELECT COUNT(id) AS musicas_total, IFNULL(SUM(duracao), 0) AS duracao_total
-            FROM musica WHERE id_album = $album_id";
+            WHERE musica.id = $musica_id";
+
     return $conexao->query($sql)->fetch_object();
 }
 
-function obterMusicas($conexao, $album_id) {
-    $sql = "SELECT id AS musica_id, nome AS musica_nome, capa AS musica_capa, duracao AS musica_duracao, data_lancamento AS musica_data
-            FROM musica WHERE id_album = $album_id";
+function obterAlbum($conexao) {
+    $sql = "SELECT id AS album_id, nome AS album_nome, capa AS album_capa, data_lancamento AS album_data
+            FROM album
+            ORDER BY RAND()
+            LIMIT 10";
     return $conexao->query($sql);
 }
+
 
 function obterComentarios($conexao, $musica_id) {
     $sql = "SELECT comentario.id AS comentario_id, comentario.mensagem AS comentario_mensagem, comentario.nome_autor AS comentario_nome, comentario.id_autor AS comentario_idAutor
             FROM comentario
             INNER JOIN comentario_musica ON comentario.id = comentario_musica.id_comentario
-            WHERE comentario_musica.id_album = $musica_id";
+            WHERE comentario_musica.id_musica = $musica_id";
     return $conexao->query($sql);
 }
 

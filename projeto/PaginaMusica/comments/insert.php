@@ -11,7 +11,7 @@ if (!isset($_SESSION['id'])) {
 $id = intval($_SESSION['id']);
 $name = $_SESSION['nome'] ?? 'Anônimo';
 $mensagem = trim($_POST['comentario_mensagem'] ?? '');
-$id_album = intval($_POST['musica_id'] ?? 0);
+$id_musica = intval($_POST['musica_id'] ?? 0);
 
 $connection = connect_db();
 
@@ -20,7 +20,7 @@ if ($connection->connect_error) {
     exit;
 }
 
-if (!empty($mensagem) && $id_album > 0) {
+if (!empty($mensagem) && $id_musica > 0) {
     $stmt = $connection->prepare("INSERT INTO comentario (mensagem, id_autor, nome_autor) VALUES (?, ?, ?)");
     $stmt->bind_param("sis", $mensagem, $id, $name);
 
