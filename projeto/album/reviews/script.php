@@ -6,8 +6,7 @@
       title: 'Avaliações dos usuários',
       html: avaliacoes,
       showConfirmButton: false,
-      showCancelButton: true,
-      cancelButtonText: 'Fechar',
+      showCloseButton: true,
     });
   }
 
@@ -18,8 +17,7 @@
       title: 'Avaliações dos críticos',
       html: avaliacoes,
       showConfirmButton: false,
-      showCancelButton: true,
-      cancelButtonText: 'Fechar',
+      showCloseButton: true,
     })
   }
 
@@ -42,19 +40,32 @@
         </form>
       `,
       confirmButtonText: 'Adicionar',
-      showCancelButton: true,
-      cancelButtonText: 'Fechar',
+      showCloseButton: true,
     }).then((resultado) => {
       if (resultado.isConfirmed) {
         insertReview();
+      }
+    });
+
+    const inputNota = document.getElementById('nota');
+
+    inputNota.addEventListener('input', function () {
+      const valor = parseFloat(this.value);
+      if (isNaN(valor)) {
+        this.value = '';
+        return;
+      }
+      if (valor > 5) {
+        this.value = 5;
+      }
+      if (valor < 0) {
+        this.value = 0;
       }
     });
   }
 
   function openUpdateFormReview() {
     const avaliacoes = <?= json_encode($avaliacoes); ?>;
-
-    console.log('avaliacoes:', avaliacoes);
 
     Swal.fire({
       title: 'Alterar avaliação',
@@ -70,17 +81,34 @@
           </div>
           <input type="hidden" name="avaliacao_id" value="${avaliacoes.minhaAvaliacao.id_avaliacao}">
           <input type="hidden" name="album_id" value="<?= $album->album_id ?>">
-          <button type="button" class="review-delete" onclick="deleteReview(${avaliacoes.minhaAvaliacao.id_avaliacao})">
-            Excluir avaliação
-          </button>
+          <div class="review-actions">
+            <button type="button" class="review-update" onclick="updateReview()">
+              Atualizar avaliação
+            </button>
+            <button type="button" class="review-delete" onclick="deleteReview(${avaliacoes.minhaAvaliacao.id_avaliacao})">
+              Excluir avaliação
+            </button>
+          </div>
         </form>
       `,
-      confirmButtonText: 'Atualizar',
-      showCancelButton: true,
-      cancelButtonText: 'Fechar',
-    }).then((resultado) => {
-      if (resultado.isConfirmed) {
-        updateReview();
+      showConfirmButton: false,
+      showCancelButton: false,
+      showCloseButton: true,
+    })
+
+    const inputNota = document.getElementById('nota');
+
+    inputNota.addEventListener('input', function () {
+      const valor = parseFloat(this.value);
+      if (isNaN(valor)) {
+        this.value = '';
+        return;
+      }
+      if (valor > 5) {
+        this.value = 5;
+      }
+      if (valor < 0) {
+        this.value = 0;
       }
     });
   }

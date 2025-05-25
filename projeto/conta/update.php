@@ -1,12 +1,7 @@
 <?php
+if (session_status() === PHP_SESSION_NONE) {
 session_start();
-// ADICIONAR ESTAS LINHAS PARA TRATAMENTO DE ERROS
-ini_set('display_errors', 0); // Desabilita a exibição de erros no navegador
-ini_set('log_errors', 1);    // Habilita o log de erros para um arquivo
-// Define o arquivo de log. Certifique-se de que este caminho está correto
-// e que o servidor web tem permissão de escrita nesta pasta/arquivo.
-// O __DIR__ é a pasta atual (projeto/), então ../php-error.log vai para a raiz do seu projeto.
-ini_set('error_log', __DIR__ . '/../php-error.log'); 
+}
 
 include_once("../connect.php");
 
@@ -25,16 +20,13 @@ $nome = $data['nome'];
 $email = $data['email'];
 $data_nasc = $data['data_nasc'];
 $genero = $data['genero'];
-$cpf = $data['cpf']; // CPF não deve ser alterável, mas se está no formulário, receba.
 
-// Validações adicionais (mantenha ou adicione conforme sua necessidade)
 if (!filter_var($email, FILTER_VALIDATE_EMAIL)) {
     http_response_code(400);
     echo json_encode(["success" => false, "message" => "Formato de e-mail inválido."]);
     exit;
 }
 
-// Conecta ao banco de dados
 $conexao = connect_db();
 
 if (!$conexao) {
@@ -43,7 +35,6 @@ if (!$conexao) {
     exit;
 }
 
-// Verifica se o email já existe para outro usuário (excluindo o próprio)
 $stmt = $conexao->prepare("SELECT id FROM usuario WHERE email = ? AND id != ?");
 $stmt->bind_param("si", $email, $id);
 $stmt->execute();
@@ -57,7 +48,6 @@ if ($resultado->num_rows > 0) {
 }
 $stmt->close();
 
-// Prepara a consulta SQL para atualizar o usuário
 $query = "UPDATE usuario SET nome = ?, email = ?, data_nasc = ?, genero = ? WHERE id = ?";
 $stmt = $conexao->prepare($query);
 

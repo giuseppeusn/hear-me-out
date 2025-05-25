@@ -1,6 +1,7 @@
 <?php
 include("../header.php");
 include_once("../connect.php");
+include("../footer.php");
 
 if (session_status() === PHP_SESSION_NONE) {
   session_start();

@@ -355,16 +355,33 @@
   margin-left: 8px;
 }
 
+.review-actions {
+  display: flex;
+  justify-content: space-between;
+  margin-top: 20px;
+}
+
+.review-update,
 .review-delete {
-  background-color: red;
   color: white;
   border: none;
   padding: 10px 20px;
   border-radius: 15px;
   font-weight: bold;
   cursor: pointer;
-  width: 100%;
-  margin-top: 10px;
+  width: 45%;
+}
+
+.review-update {
+  background-color: #c59100;
+}
+
+.review-update:hover {
+  background-color: #b38000;
+}
+
+.review-delete {
+  background-color: red;
 }
 
 .review-delete:hover {

@@ -1,8 +1,7 @@
 <?php
-session_start();
-ini_set('display_errors', 0);
-ini_set('log_errors', 1);
-ini_set('error_log', __DIR__ . '/../php-error.log'); 
+if (session_status() === PHP_SESSION_NONE) {
+    session_start();
+}
 
 include_once("../connect.php");
 
@@ -21,7 +20,6 @@ $nome = $data['nome'];
 $email = $data['email'];
 $data_nasc = $data['data_nasc'];
 $genero = $data['genero'];
-$cpf = $data['cpf'];
 $biografia = $data['biografia'];
 $site = $data['site'];
 
