@@ -33,11 +33,14 @@ if (isset($_POST['email']) && isset($_POST['senha'])) {
   if ($usuario->num_rows > 0) {
     if (password_verify($senha, $usuario_array['senha'])) {
       $_SESSION['authenticated'] = true;
-      $_SESSION['nome'] = $usuario_array['nome'];
-      $_SESSION['id_usuario'] = $usuario_array['id'];
+      $nome = explode(' ', $usuario_array['nome'])[0];
+      $_SESSION['nome'] = $nome;
       $_SESSION['permissao'] = $usuario_array['permissao'];
+      if ($usuario_array['permissao'] == 'admin') {
+        $_SESSION['admin'] = true;
+      }
       $mysql->close();
-      header("location: /hear-me-out/projeto/index.php");
+      header("location: /hear-me-out/projeto");
       exit();
     }
   }
@@ -50,10 +53,12 @@ if (isset($_POST['email']) && isset($_POST['senha'])) {
     if (password_verify($senha, $artista_array['senha'])) {
       $_SESSION['authenticated'] = true;
       $_SESSION['id_artista'] = $artista_array['id'];
-      $_SESSION['nome'] = $artista_array['nome'];
-      $_SESSION['artista'] = 'artista';
+      $_SESSION['aprovado'] = $artista_array['aprovado']; // 0 para nao aprovado e 1 para aprovado
+      $_SESSION['permissao'] = 'artista';
+      $nome = explode(' ', $artista_array['nome'])[0];
+      $_SESSION['nome'] = $nome;
       $mysql->close();
-      header("location: /hear-me-out/projeto/artista/index.php");
+      header("location: /hear-me-out/projeto");
       exit();
     }
   }
@@ -65,17 +70,25 @@ if (isset($_POST['email']) && isset($_POST['senha'])) {
   if ($critico->num_rows > 0) {
     if (password_verify($senha, $critico_array['senha'])) {
       $_SESSION['authenticated'] = true;
-      $_SESSION['nome'] = $critico_array['nome'];
       $_SESSION['id_critico'] = $critico_array['id'];
-      $_SESSION['critico'] = 'critico';
+      $_SESSION['aprovado'] = $critico_array['aprovado']; // 0 para nao aprovado e 1 para aprovado
+      $_SESSION['permissao'] = 'critico';
+      $nome = explode(' ', $critico_array['nome'])[0];
+      $_SESSION['nome'] = $nome;
       $mysql->close();
-      header("location: /hear-me-out/projeto/critico/index.php");
+      header("location: /hear-me-out/projeto");
       exit();
     }
   }
-
   $mysql->close();
-  echo "<script>alert('Email ou senha incorretos!');</script>";
+  echo "<script src='https://cdn.jsdelivr.net/npm/sweetalert2@11'></script>";
+  echo "<script>
+  Swal.fire({
+      title: 'Email ou senha incorretos!',
+      icon: 'error',
+      draggable: true      
+      });
+  </script>";
 }
 ?>
 
@@ -99,6 +112,7 @@ if (isset($_POST['email']) && isset($_POST['senha'])) {
       <button type="submit" class="btn btn-primary">Entrar</button>
     </form>
   </div>
+ 
 </body>
 
 </html>
