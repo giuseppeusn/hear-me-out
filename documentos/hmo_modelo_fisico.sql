@@ -143,4 +143,30 @@ SELECT
 FROM
     album
 JOIN artista ON album.id_artista = artista.id;
+
+CREATE OR REPLACE VIEW view_avaliacoes_album AS
+SELECT 
+    aa.id_album,
+    a.id AS id_avaliacao,
+    a.mensagem,
+    a.nota,
+    
+    COALESCE(a.id_usuario, a.id_critico) AS id_avaliador,
+
+    CASE 
+        WHEN a.id_usuario IS NOT NULL THEN 'usuario'
+        WHEN a.id_critico IS NOT NULL THEN 'critico'
+        ELSE 'desconhecido'
+    END AS tipo_avaliador,
+    
+    COALESCE(u.nome, c.nome) AS nome_avaliador
+    
+FROM 
+    avaliacao_album aa
+JOIN 
+    avaliacao a ON aa.id_avaliacao = a.id
+LEFT JOIN 
+    usuario u ON a.id_usuario = u.id
+LEFT JOIN 
+    critico c ON a.id_critico = c.id;
     
