@@ -3,10 +3,10 @@
 <head>
     <meta charset="UTF-8">
     <title>Detalhes do Álbum</title>
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css">
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
-    <script src="/hear-me-out/projeto/musica/insert.js"></script>
-    <script src="/hear-me-out/projeto/musica/delete.js"></script>
+    <script src="/hear-me-out/projeto/artista/meus-albuns/musicas/insert.js"></script>
+    <script src="/hear-me-out/projeto/artista/meus-albuns/musicas/update.js"></script>
+    <script src="/hear-me-out/projeto/artista/meus-albuns/musicas/delete.js"></script>
 </head>
 <body>
 
@@ -85,7 +85,7 @@
     ?>
     
     <table class="table table-dark table-striped">
-        <button type="button" class="btn btn-success me-2" onclick="abrirInserirMusica(<?= $dadosAlbum->album_id ?>)">Inserir nova música</button>
+    <button type="button" class="btn btn-success me-2" onclick="abrirInserirMusica(<?= $dadosAlbum->album_id ?>)">Inserir nova música</button>
         <thead>
             <tr>
                 <th>#</th>
@@ -135,6 +135,6 @@
     </table>
     <?php } ?>
 </div>
-<script src="/hear-me-out/projeto/musica/update.js"></script>
+
 </body>
 </html>

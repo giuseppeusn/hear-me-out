@@ -14,7 +14,7 @@ $capa = $data['capa'];
 $data_lancamento = $data['data'];
 $id_album = intval($data['albumId']);
 
-$id_artista = $_SESSION['id_artista'];
+$id_artista = $_SESSION['id'];
 if (!$id_artista || !$id_album || !$nome || !$duracao || !$data_lancamento || !$capa) {
     echo "Erro: Dados incompletos.";
     exit;
