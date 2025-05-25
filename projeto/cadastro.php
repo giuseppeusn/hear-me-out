@@ -801,7 +801,7 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
 </script>
 
 </script>
-<script src="validarCampos.js"></script>
+<script src="js/validarCampos.js"></script>
 
 <body>
 </body>

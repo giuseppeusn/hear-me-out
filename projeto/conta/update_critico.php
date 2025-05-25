@@ -1,6 +1,5 @@
 <?php
 session_start();
-// ADICIONAR ESTAS LINHAS PARA TRATAMENTO DE ERROS
 ini_set('display_errors', 0);
 ini_set('log_errors', 1);
 ini_set('error_log', __DIR__ . '/../php-error.log'); 
@@ -22,18 +21,16 @@ $nome = $data['nome'];
 $email = $data['email'];
 $data_nasc = $data['data_nasc'];
 $genero = $data['genero'];
-$cpf = $data['cpf']; // CPF não deve ser alterável, mas se está no formulário, receba.
+$cpf = $data['cpf'];
 $biografia = $data['biografia'];
 $site = $data['site'];
 
-// Validações adicionais
 if (!filter_var($email, FILTER_VALIDATE_EMAIL)) {
     http_response_code(400);
     echo json_encode(["success" => false, "message" => "Formato de e-mail inválido."]);
     exit;
 }
 
-// Conecta ao banco de dados
 $conexao = connect_db();
 
 if (!$conexao) {
@@ -42,7 +39,6 @@ if (!$conexao) {
     exit;
 }
 
-// Verifica se o email já existe para outro crítico (excluindo o próprio)
 $stmt = $conexao->prepare("SELECT id FROM critico WHERE email = ? AND id != ?");
 $stmt->bind_param("si", $email, $id);
 $stmt->execute();
@@ -56,7 +52,6 @@ if ($resultado->num_rows > 0) {
 }
 $stmt->close();
 
-// Prepara a consulta SQL para atualizar o crítico
 $query = "UPDATE critico SET nome = ?, email = ?, data_nasc = ?, genero = ?, biografia = ?, site = ? WHERE id = ?";
 $stmt = $conexao->prepare($query);
 

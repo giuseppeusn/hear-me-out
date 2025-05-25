@@ -9,10 +9,7 @@ function obterMusica($conexao, $musica_id) {
 }
 
 function obterAlbum($conexao) {
-    $sql = "SELECT id AS album_id, nome AS album_nome, capa AS album_capa, data_lancamento AS album_data
-            FROM album
-            ORDER BY RAND()
-            LIMIT 10";
+    $sql = "SELECT  * FROM view_albuns_com_nomes ORDER BY RAND() LIMIT 10";
     return $conexao->query($sql);
 }
 

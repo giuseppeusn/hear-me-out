@@ -32,8 +32,8 @@ if (isset($_GET["page"])) {
   } else if ($_GET["page"] == 3) {
     include("delete.php");
   } else {
-    include("pagUsuario.php");
+    include("conta.php");
   }
 } else {
-  include("pagUsuario.php");
+  include("conta.php");
 }
