@@ -1,16 +1,15 @@
 <?php
 session_start();
-// O connect.php está na pasta PAI (superior) do diretório onde este arquivo está.
-include_once("../connect.php"); // Corrigido o caminho para o connect.php
+include_once("../connect.php");
 
 if (!isset($_SESSION['id'])) {
-    header('Location: login.php'); // Redireciona para login.php se não houver sessão
+    header('Location: login.php');
     exit;
 }
 
 $id = $_SESSION['id'];
 $userData = null;
-$userType = ''; // Variável para armazenar o tipo de usuário
+$userType = '';
 
 $conexao = connect_db();
 
@@ -18,7 +17,6 @@ if (!$conexao) {
     die("Erro ao conectar ao banco de dados!");
 }
 
-// Tenta buscar como usuário
 $query = "SELECT * FROM usuario WHERE id = $id";
 $resultado = $conexao->query($query);
 
@@ -26,7 +24,6 @@ if ($resultado && $resultado->num_rows > 0) {
     $userData = $resultado->fetch_assoc();
     $userType = 'usuario';
 } else {
-    // Tenta buscar como crítico
     $query = "SELECT * FROM critico WHERE id = $id";
     $resultado = $conexao->query($query);
     
@@ -34,7 +31,6 @@ if ($resultado && $resultado->num_rows > 0) {
         $userData = $resultado->fetch_assoc();
         $userType = 'critico';
     } else {
-        // Tenta buscar como artista
         $query = "SELECT * FROM artista WHERE id = $id";
         $resultado = $conexao->query($query);
 
@@ -108,85 +104,77 @@ if (!$userData) {
                                 <div class="col-md-12"><label class="labels">Data de Nascimento: </label><input type="date" class="form-control" placeholder="data de nascimento" value="<?= $userData['data_nasc'] ?>" name="data_nasc" disabled></div>
                                 <div class="col-md-12"><label class="labels">Gênero</label>
                                     <select class="form-control" name="genero" disabled>
-                                        <option value="M" <?= ($userData['genero'] == 'M') ? 'selected' : '' ?>>Masculino</option>
-                                        <option value="F" <?= ($userData['genero'] == 'F') ? 'selected' : '' ?>>Feminino</option>
-                                        <option value="I" <?= ($userData['genero'] == 'I') ? 'selected' : '' ?>>Prefiro não informar</option>
+                                        <option value="Masculino" <?= $userData['genero'] == 'Masculino' ? 'selected' : '' ?>>Masculino</option>
+                                        <option value="Feminino" <?= $userData['genero'] == 'Feminino' ? 'selected' : '' ?>>Feminino</option>
+                                        <option value="Outro" <?= $userData['genero'] == 'Outro' ? 'selected' : '' ?>>Outro</option>
                                     </select>
                                 </div>
                                 <div class="col-md-12"><label class="labels">CPF</label><input type="text" class="form-control" placeholder="CPF" value="<?= htmlspecialchars($userData['cpf']) ?>" name="cpf" disabled></div>
                             <?php elseif ($userType === 'critico'): ?>
-                                <div class="col-md-12"><label class="labels">Data de Nascimento: </label><input type="date" class="form-control" placeholder="data de nascimento" value="<?= $userData['data_nasc'] ?>" name="data_nasc" disabled></div>
+                                <div class="col-md-12"><label class="labels">Data de Nascimento: </label><input type="date" class="form-control" placeholder="data de nascimento" value="<?= htmlspecialchars($userData['data_nasc']) ?>" name="data_nasc" disabled></div>
                                 <div class="col-md-12"><label class="labels">Gênero</label>
                                     <select class="form-control" name="genero" disabled>
-                                        <option value="M" <?= ($userData['genero'] == 'M') ? 'selected' : '' ?>>Masculino</option>
-                                        <option value="F" <?= ($userData['genero'] == 'F') ? 'selected' : '' ?>>Feminino</option>
-                                        <option value="I" <?= ($userData['genero'] == 'I') ? 'selected' : '' ?>>Prefiro não informar</option>
+                                        <option value="Masculino" <?= $userData['genero'] == 'Masculino' ? 'selected' : '' ?>>Masculino</option>
+                                        <option value="Feminino" <?= $userData['genero'] == 'Feminino' ? 'selected' : '' ?>>Feminino</option>
+                                        <option value="Outro" <?= $userData['genero'] == 'Outro' ? 'selected' : '' ?>>Outro</option>
                                     </select>
                                 </div>
                                 <div class="col-md-12"><label class="labels">CPF</label><input type="text" class="form-control" placeholder="CPF" value="<?= htmlspecialchars($userData['cpf']) ?>" name="cpf" disabled></div>
-                                <div class="col-md-12"><label class="labels">Biografia</label><textarea class="form-control" placeholder="Sua biografia" name="biografia" disabled><?= htmlspecialchars($userData['biografia']) ?></textarea></div>
-                                <div class="col-md-12"><label class="labels">Site</label><input type="url" class="form-control" placeholder="Seu site oficial" value="<?= htmlspecialchars($userData['site']) ?>" name="site" disabled></div>
+                                <div class="col-md-12"><label class="labels">Biografia</label><textarea class="form-control" name="biografia" disabled><?= htmlspecialchars($userData['biografia']) ?></textarea></div>
+                                <div class="col-md-12"><label class="labels">Site</label><input type="text" class="form-control" placeholder="Seu Site" value="<?= htmlspecialchars($userData['site']) ?>" name="site" disabled></div>
                             <?php elseif ($userType === 'artista'): ?>
-                                <div class="col-md-12"><label class="labels">Biografia</label><textarea class="form-control" placeholder="Sua biografia" name="biografia" disabled><?= htmlspecialchars($userData['biografia']) ?></textarea></div>
-                                <div class="col-md-12"><label class="labels">Data de Formação</label><input type="date" class="form-control" placeholder="data de formação" value="<?= $userData['data_formacao'] ?>" name="data_formacao" disabled></div>
-                                <div class="col-md-12"><label class="labels">País</label><input type="text" class="form-control" placeholder="país" value="<?= htmlspecialchars($userData['pais']) ?>" name="pais" disabled></div>
-                                <div class="col-md-12"><label class="labels">Site Oficial</label><input type="url" class="form-control" placeholder="site oficial" value="<?= htmlspecialchars($userData['site_oficial']) ?>" name="site_oficial" disabled></div>
-                                <div class="col-md-12"><label class="labels">Gênero Musical</label><input type="text" class="form-control" placeholder="Gênero musical" value="<?= htmlspecialchars($userData['genero']) ?>" name="genero" disabled></div>
-                                <div class="col-md-12"><label class="labels">URL da Imagem</label><input type="url" class="form-control" placeholder="URL da imagem" value="<?= htmlspecialchars($userData['imagem']) ?>" name="imagem" disabled></div>
+                                <div class="col-md-12"><label class="labels">Data de Formação: </label><input type="date" class="form-control" value="<?= htmlspecialchars($userData['data_formacao']) ?>" name="data_formacao" disabled></div>
+                                <div class="col-md-12"><label class="labels">País</label><input type="text" class="form-control" value="<?= htmlspecialchars($userData['pais']) ?>" name="pais" disabled></div>
+                                <div class="col-md-12"><label class="labels">Gênero Musical</label><input type="text" class="form-control" value="<?= htmlspecialchars($userData['genero']) ?>" name="genero" disabled></div>
+                                <div class="col-md-12"><label class="labels">Biografia</label><textarea class="form-control" name="biografia" disabled><?= htmlspecialchars($userData['biografia']) ?></textarea></div>
+                                <div class="col-md-12"><label class="labels">URL da Imagem</label><input type="text" class="form-control" value="<?= htmlspecialchars($userData['imagem']) ?>" name="imagem" disabled></div>
+                                <div class="col-md-12"><label class="labels">Site Oficial</label><input type="text" class="form-control" value="<?= htmlspecialchars($userData['site_oficial']) ?>" name="site_oficial" disabled></div>
                             <?php endif; ?>
                         </div>
                         <div class="mt-5 text-center">
-                            <button class="btn btn-primary profile-button" type="button" id="btnAlterarPerfil">Alterar Perfil</button>
+                            <button class="btn btn-primary profile-button" type="button" id="btnEditarPerfil">Editar Perfil</button>
+                            <button class="btn btn-danger profile-button" type="button" id="btnExcluirConta">Excluir Conta</button>
                             <button class="btn btn-success profile-button" type="submit" id="btnSalvarPerfil" style="display:none;">Salvar Perfil</button>
                         </div>
                     </form>
                 </div>
             </div>
-            </div>
+        </div>
     </div>
-
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz" crossorigin="anonymous"></script>
     <script>
-        document.getElementById('btnAlterarPerfil').addEventListener('click', function() {
+        document.getElementById('btnEditarPerfil').addEventListener('click', function() {
             var form = document.getElementById('formPerfil');
-            var inputs = form.querySelectorAll('.form-control');
-            var userType = "<?= $userType ?>"; // Pega o tipo de usuário do PHP
-
+            var inputs = form.querySelectorAll('input, select, textarea');
             inputs.forEach(function(input) {
-                input.disabled = false;
-            });
-
-            // Habilita/desabilita campos específicos para cada tipo de usuário
-            if (userType === 'usuario' || userType === 'critico') {
-                // CPF não pode ser alterado para usuários e críticos
-                var cpfInput = form.querySelector('input[name="cpf"]');
-                if (cpfInput) {
-                    cpfInput.disabled = true;
+                if (input.name !== 'id' && input.name !== 'cpf') {
+                    input.disabled = false;
                 }
-            } else if (userType === 'artista') {
-                // Nenhum campo específico para artista desabilitado, todos podem ser alterados
-            }
-
-            document.getElementById('btnAlterarPerfil').style.display = 'none';
-            document.getElementById('btnSalvarPerfil').style.display = 'block';
+            });
+            document.getElementById('btnEditarPerfil').style.display = 'none';
+            document.getElementById('btnSalvarPerfil').style.display = 'inline-block';
+            document.getElementById('btnExcluirConta').style.display = 'none'; 
         });
 
-        document.getElementById('formPerfil').addEventListener('submit', function(e) {
-            e.preventDefault();
-            var form = e.target;
+        document.getElementById('formPerfil').addEventListener('submit', function(event) {
+            event.preventDefault();
+
+            var form = event.target;
             var formData = new FormData(form);
             var jsonData = {};
-            formData.forEach((value, key) => {
+            formData.forEach(function(value, key){
                 jsonData[key] = value;
             });
 
-            var userType = "<?= $userType ?>";
+            var userType = '<?= $userType ?>';
             var url = '';
+
             if (userType === 'usuario') {
-                url = 'update.php'; // Caminho corrigido (mesma pasta)
+                url = 'update.php';
             } else if (userType === 'critico') {
-                url = 'update_critico.php'; // Caminho corrigido (mesma pasta)
+                url = 'update_critico.php';
             } else if (userType === 'artista') {
-                url = 'update_artista.php'; // Caminho corrigido (mesma pasta)
+                url = 'update_artista.php';
             }
 
             fetch(url, {
@@ -196,33 +184,83 @@ if (!$userData) {
                 },
                 body: JSON.stringify(jsonData)
             })
-            .then(response => {
-                // Verifica se a resposta não é OK (status 200) ou se o Content-Type não é JSON
-                const contentType = response.headers.get("content-type");
-                if (!response.ok || !contentType || !contentType.includes("application/json")) {
-                    // Tenta ler o texto da resposta para depuração
-                    return response.text().then(text => {
-                        console.error('Resposta não JSON ou erro HTTP:', text);
-                        throw new Error('Resposta do servidor inválida. Verifique o console para mais detalhes.');
-                    });
-                }
-                return response.json();
-            })
+            .then(response => response.json())
             .then(data => {
                 if (data.success) {
-                    Swal.fire('Sucesso!', data.message, 'success').then(() => {
-                        location.reload();
+                    Swal.fire(
+                        'Sucesso!',
+                        data.message,
+                        'success'
+                    ).then(() => {
+                        window.location.reload();
                     });
                 } else {
-                    Swal.fire('Erro!', data.message, 'error');
+                    Swal.fire(
+                        'Erro!',
+                        data.message || 'Ocorreu um erro ao atualizar o perfil.',
+                        'error'
+                    );
                 }
             })
             .catch(error => {
-                console.error('Erro na requisição ou parsing:', error);
-                Swal.fire('Erro!', 'Ocorreu um erro ao tentar atualizar o perfil. ' + error.message, 'error');
+                console.error('Erro:', error);
+                Swal.fire(
+                    'Erro!',
+                    'Ocorreu um erro de rede ou no servidor.',
+                    'error'
+                );
+            });
+        });
+
+        document.getElementById('btnExcluirConta').addEventListener('click', function() {
+            Swal.fire({
+                title: 'Tem certeza?',
+                text: "Você não poderá reverter isso!",
+                icon: 'warning',
+                showCancelButton: true,
+                confirmButtonColor: '#d33',
+                cancelButtonColor: '#3085d6',
+                confirmButtonText: 'Sim, excluir!',
+                cancelButtonText: 'Cancelar'
+            }).then((result) => {
+                if (result.isConfirmed) {
+                    var userId = <?= htmlspecialchars($userData['id']) ?>;
+                    fetch('delete.php', {
+                        method: 'POST',
+                        headers: {
+                            'Content-Type': 'application/json'
+                        },
+                        body: JSON.stringify({ id: userId })
+                    })
+                    .then(response => response.json())
+                    .then(data => {
+                        if (data.success) {
+                            Swal.fire(
+                                'Excluído!',
+                                'Sua conta foi excluída com sucesso.',
+                                'success'
+                            ).then(() => {
+                                window.location.href = '../index.php';
+                            });
+                        } else {
+                            Swal.fire(
+                                'Erro!',
+                                data.message || 'Ocorreu um erro ao excluir sua conta.',
+                                'error'
+                            );
+                        }
+                    })
+                    .catch(error => {
+                        console.error('Erro:', error);
+                        Swal.fire(
+                            'Erro!',
+                            'Ocorreu um erro de rede ou no servidor.',
+                            'error'
+                        );
+                    });
+                }
             });
         });
     </script>
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz" crossorigin="anonymous"></script>
 </body>
 </html>
