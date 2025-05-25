@@ -10,7 +10,7 @@
         </a>
         <ul class="dropdown-menu" aria-labelledby="navbarDarkDropdownMenuLink">
           <li>
-            <a class="dropdown-item" href="/hear-me-out/projeto/usuario/conta.php">
+            <a class="dropdown-item" href="/hear-me-out/projeto/conta">
               <img src="/hear-me-out/projeto/assets/svg/gear.svg" alt="Gear Icon" style="width: 20px;">
               <p>Configurações</p>
             </a>
