@@ -37,7 +37,7 @@
             <textarea class="form-control" id="mensagem" name="mensagem" maxlength="500" required></textarea>
           </div>
           <input type="hidden" name="album_id" value="<?= $album->album_id ?>">
-          <input type="hidden" name="avaliador_id" value="<?= $_SESSION['id'] ?>">
+          <input type="hidden" name="avaliador_id" value="<?= isset($_SESSION['id']) ? $_SESSION['id'] : null ?>">
           <input type="hidden" name="avaliador_tipo" value="<?= $tipoAvaliador ?>">
         </form>
       `,
