@@ -215,6 +215,42 @@ body {
   font-size: 20px;
 }
 
+.cover-card-wrapper {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  text-decoration: none;
+  color: white;
+  padding: 20px;
+  border-radius: 10px;
+}
+
+.cover-card-wrapper.cover-list:hover {
+  background-color: #212121;
+}
+
+.cover-card-wrapper.cover-search:hover {
+  background-color: #2e2e2e !important;
+}
+
+.cover-card {
+  display: flex;
+}
+
+.cover-card-text {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  margin-left: 10px;
+}
+
+.cover-card-img {
+  width: 100px;
+  height: 100px;
+  object-fit: cover;
+  border-radius: 5px;
+}
+
 @media screen and (max-width: 768px) {
   .content {
     width: 95% !important;

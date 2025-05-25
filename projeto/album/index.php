@@ -40,6 +40,7 @@
 <html lang="pt-BR">
 <head>
   <link rel="stylesheet" href="../styles/rate-page.css">
+  <link rel="stylesheet" href="../styles/search.css">
   <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 </head>
 <body>
@@ -49,15 +50,17 @@
     <div class='row justify-content-center'>
       <div class='cs-col'>
         <img id='capa' class='rating-cover' src='<?= $album->album_capa ?>' alt='capa'>
-        <?php include "../components/rate-page/rating.php"; ?>
-        <?php include "../components/rate-page/comments.php"; ?>
+        <?php include "../components/rating-page/rating.php"; ?>
+        <?php include "../components/rating-page/comments.php"; ?>
       </div>
       <div class='col-md-6'>
         <?php
-          include "../components/rate-page/info.php";
-          echo infoCard('Álbum', $album->album_nome, $album->artista_nome, $album->album_data, $resumo);
+          include "../components/rating-page/info.php";
+          include "../components/rating-page/renderList.php"; 
+
+          echo infoCard('Álbum', $album->album_nome, $album->artista_nome, $album->album_data, null, $resumo);
+          echo renderList(true, $musicas);
         ?>
-        <?php include "../components/rate-page/musicList.php"; ?>
       </div>
     </div>
   </div>

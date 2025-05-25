@@ -1,5 +1,5 @@
 <?php
-function infoCard($titulo, $nome, $artista, $data, $resumo) {
+function infoCard($titulo, $nome, $artista, $data, $duracao, $resumo) {
   $lancamento = new DateTime($data);
 
   return '
@@ -11,9 +11,14 @@ function infoCard($titulo, $nome, $artista, $data, $resumo) {
     </div>
     <div class="info-texts mt-5">
       <span>' . $lancamento->format('Y') . '</span>
-      <span class="mt-3">• ' . $resumo->musicas_total . ' ' . 
-        ($resumo->musicas_total == 1 ? "música" : "músicas") . ', ' . formatarDuracao($resumo->duracao_total) . '
-      </span>
+      ' . (
+        $resumo 
+        ? '<span class="mt-3">• ' . htmlspecialchars($resumo->musicas_total) . ' ' . 
+            ($resumo->musicas_total == 1 ? 'música' : 'músicas') . ', ' . 
+            formatarDuracao($resumo->duracao_total) . 
+          '</span>'
+        : '<span class="mt-3">• ' . formatarDuracao($duracao) . '</span>'
+      ) . '
     </div>
   </div>';
 }

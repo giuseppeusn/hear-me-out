@@ -2,7 +2,7 @@
   <h4 class="section-title text-center">Avaliações</h4>
   <div class="rate-wrapper">
     <?php
-      include_once "stars.php";
+      include_once "renderStars.php";
       include_once "renderReviews.php";
 
       $notaUsuario = number_format($avaliacoes['medias']['usuario'], 1) ?? 0;
