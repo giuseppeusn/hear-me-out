@@ -36,7 +36,7 @@
             <label for="mensagem">Mensagem</label>
             <textarea class="form-control" id="mensagem" name="mensagem" maxlength="500" required></textarea>
           </div>
-          <input type="hidden" name="album_id" value="<?= $album->album_id ?>">
+          <input type="hidden" name="musica_id" value="<?= $musicas->musica_id ?>">
           <input type="hidden" name="avaliador_id" value="<?= isset($_SESSION['id']) ? $_SESSION['id'] : null ?>">
           <input type="hidden" name="avaliador_tipo" value="<?= $tipoAvaliador ?>">
         </form>
@@ -69,7 +69,7 @@
             <textarea class="form-control" id="mensagem" name="mensagem" maxlength="500" required>${avaliacoes.minhaAvaliacao.mensagem}</textarea>
           </div>
           <input type="hidden" name="avaliacao_id" value="${avaliacoes.minhaAvaliacao.id_avaliacao}">
-          <input type="hidden" name="album_id" value="<?= $album->album_id ?>">
+          <input type="hidden" name="musica_id" value="<?= $musicas->musica_id ?>">
           <button type="button" class="review-delete" onclick="deleteReview(${avaliacoes.minhaAvaliacao.id_avaliacao})">
             Excluir avaliação
           </button>

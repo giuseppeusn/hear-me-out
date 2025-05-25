@@ -6,8 +6,8 @@ $data = json_decode(file_get_contents("php://input"), true);
 
 if (isset($data['id'])) {
     $id_comentario = intval($data['id']);
-    $queryComentarioAlbum = "DELETE FROM comentario_musica WHERE id_comentario = $id_comentario";
-    $oMysql->query($queryComentarioAlbum);
+    $queryComentarioMusica = "DELETE FROM comentario_musica WHERE id_comentario = $id_comentario";
+    $oMysql->query($queryComentarioMusica);
 
     $queryComentario = "DELETE FROM comentario WHERE id = $id_comentario";
     $oMysql->query($queryComentario);

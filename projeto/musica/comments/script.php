@@ -69,7 +69,7 @@ function excluirComentario(musicaId) {
         headers: {
           "Content-Type": "application/json",
         },
-        body: JSON.stringify({ id: albumId }),
+        body: JSON.stringify({ id: musicaId }),
       })
         .then((response) => response.text())
         .then((data) => {

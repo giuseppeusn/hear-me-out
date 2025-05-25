@@ -49,7 +49,7 @@
       <div class='cs-col'>
         <img id='capa' class='rating-cover' src='<?= $musicas->musica_capa ?>' alt='capa'>
         <?php include "../components/rating-page/rating.php"; ?>
-        <?php include "../components/rating-page/comments.php"; ?>
+        <?php include "../components/rating-page/commentsMusica.php"; ?>
       </div>
       <div class='col-md-6'>
         <?php

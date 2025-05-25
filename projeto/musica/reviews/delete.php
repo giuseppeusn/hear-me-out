@@ -10,7 +10,7 @@
   $connection = connect_db();
 
 
-  $stmt = $connection->prepare("DELETE FROM avaliacao_album WHERE id_avaliacao = ?");
+  $stmt = $connection->prepare("DELETE FROM avaliacao_musica WHERE id_avaliacao = ?");
   $stmt->bind_param("i", $id);
 
   if (!$stmt->execute()) {

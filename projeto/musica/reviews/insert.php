@@ -3,11 +3,11 @@
 
   $nota = isset($_POST['nota']) ? floatval($_POST['nota']) : null;
   $mensagem = isset($_POST['mensagem']) ? trim($_POST['mensagem']) : null;
-  $album_id = isset($_POST['album_id']) ? intval($_POST['album_id']) : null;
+  $musica_id = isset($_POST['musica_id']) ? intval($_POST['musica_id']) : null;
   $avaliador_id = isset($_POST['avaliador_id']) ? intval($_POST['avaliador_id']) : null;
   $avaliador_tipo = isset($_POST['avaliador_tipo']) ? $_POST['avaliador_tipo'] : null;
 
-  if ($nota === null || $mensagem === null || $album_id === null || $avaliador_id === null || $avaliador_tipo === null) {
+  if ($nota === null || $mensagem === null || $musica_id === null || $avaliador_id === null || $avaliador_tipo === null) {
       die('Dados inválidos.');
   }
 
@@ -28,13 +28,13 @@
   if ($stmt->execute()) {
       $idAvaliacao = $stmt->insert_id;
 
-      $stmt2 = $connection->prepare("INSERT INTO avaliacao_album (id_avaliacao, id_album) VALUES (?, ?)");
-      $stmt2->bind_param("ii", $idAvaliacao, $album_id);
+      $stmt2 = $connection->prepare("INSERT INTO avaliacao_musica (id_avaliacao, id_musica) VALUES (?, ?)");
+      $stmt2->bind_param("ii", $idAvaliacao, $musica_id);
 
       if ($stmt2->execute()) {
           echo "Avaliação inserida com sucesso!";
       } else {
-          echo "Erro ao vincular a avaliação ao álbum: " . $stmt2->error;
+          echo "Erro ao vincular a avaliação a música: " . $stmt2->error;
       }
 
       $stmt2->close();
