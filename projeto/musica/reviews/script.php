@@ -6,7 +6,8 @@
       title: 'Avaliações dos usuários',
       html: avaliacoes,
       showConfirmButton: false,
-      showCloseButton: true,
+      showCancelButton: true,
+      cancelButtonText: 'Fechar',
     });
   }
 
@@ -17,7 +18,8 @@
       title: 'Avaliações dos críticos',
       html: avaliacoes,
       showConfirmButton: false,
-      showCloseButton: true,
+      showCancelButton: true,
+      cancelButtonText: 'Fechar',
     })
   }
 
@@ -34,38 +36,25 @@
             <label for="mensagem">Mensagem</label>
             <textarea class="form-control" id="mensagem" name="mensagem" maxlength="500" required></textarea>
           </div>
-          <input type="hidden" name="album_id" value="<?= $album->album_id ?>">
+          <input type="hidden" name="musica_id" value="<?= $musica->musica_id ?>">
           <input type="hidden" name="avaliador_id" value="<?= isset($_SESSION['id']) ? $_SESSION['id'] : null ?>">
           <input type="hidden" name="avaliador_tipo" value="<?= $tipoAvaliador ?>">
         </form>
       `,
       confirmButtonText: 'Adicionar',
-      showCloseButton: true,
+      showCancelButton: true,
+      cancelButtonText: 'Fechar',
     }).then((resultado) => {
       if (resultado.isConfirmed) {
         insertReview();
-      }
-    });
-
-    const inputNota = document.getElementById('nota');
-
-    inputNota.addEventListener('input', function () {
-      const valor = parseFloat(this.value);
-      if (isNaN(valor)) {
-        this.value = '';
-        return;
-      }
-      if (valor > 5) {
-        this.value = 5;
-      }
-      if (valor < 0) {
-        this.value = 0;
       }
     });
   }
 
   function openUpdateFormReview() {
     const avaliacoes = <?= json_encode($avaliacoes); ?>;
+
+    console.log('avaliacoes:', avaliacoes);
 
     Swal.fire({
       title: 'Alterar avaliação',
@@ -80,35 +69,18 @@
             <textarea class="form-control" id="mensagem" name="mensagem" maxlength="500" required>${avaliacoes.minhaAvaliacao.mensagem}</textarea>
           </div>
           <input type="hidden" name="avaliacao_id" value="${avaliacoes.minhaAvaliacao.id_avaliacao}">
-          <input type="hidden" name="album_id" value="<?= $album->album_id ?>">
-          <div class="review-actions">
-            <button type="button" class="review-update" onclick="updateReview()">
-              Atualizar avaliação
-            </button>
-            <button type="button" class="review-delete" onclick="deleteReview(${avaliacoes.minhaAvaliacao.id_avaliacao})">
-              Excluir avaliação
-            </button>
-          </div>
+          <input type="hidden" name="musica_id" value="<?= $musicas->musica_id ?>">
+          <button type="button" class="review-delete" onclick="deleteReview(${avaliacoes.minhaAvaliacao.id_avaliacao})">
+            Excluir avaliação
+          </button>
         </form>
       `,
-      showConfirmButton: false,
-      showCancelButton: false,
-      showCloseButton: true,
-    })
-
-    const inputNota = document.getElementById('nota');
-
-    inputNota.addEventListener('input', function () {
-      const valor = parseFloat(this.value);
-      if (isNaN(valor)) {
-        this.value = '';
-        return;
-      }
-      if (valor > 5) {
-        this.value = 5;
-      }
-      if (valor < 0) {
-        this.value = 0;
+      confirmButtonText: 'Atualizar',
+      showCancelButton: true,
+      cancelButtonText: 'Fechar',
+    }).then((resultado) => {
+      if (resultado.isConfirmed) {
+        updateReview();
       }
     });
   }
@@ -123,7 +95,7 @@
       cancelButtonText: 'Cancelar'
     }).then((resultado) => {
       if (resultado.isConfirmed) {
-        fetch(`../album/reviews/delete.php?id=${id}`, {
+        fetch(`../musica/reviews/delete.php?id=${id}`, {
           method: 'DELETE'
         })
         .then(response => response.text())
@@ -156,7 +128,7 @@
     const form = document.getElementById('avaliacaoForm');
     const formData = new FormData(form);
 
-    fetch('../album/reviews/update.php', {
+    fetch('../musica/reviews/update.php', {
       method: 'POST',
       body: formData
     })
@@ -187,7 +159,7 @@
     const form = document.getElementById('avaliacaoForm');
     const formData = new FormData(form);
 
-    fetch('../album/reviews/insert.php', {
+    fetch('../musica/reviews/insert.php', {
       method: 'POST',
       body: formData
     })

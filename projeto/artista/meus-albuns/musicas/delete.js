@@ -12,7 +12,7 @@ function deleteMusica(musicaId) {
     focusConfirm: false
   }).then((resultado) => {
     if (resultado.isConfirmed) {
-      fetch('/hear-me-out/projeto/musica/delete.php', {
+      fetch('/hear-me-out/projeto/artista/meus-albuns/musicas/delete.php', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json'

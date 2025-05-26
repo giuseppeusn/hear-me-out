@@ -7,7 +7,13 @@
         <img src='../assets/svg/send.svg' alt='Enviar'>
       </button>
     </div>
-    <input type='hidden' name='album_id' value='<?= $album->album_id ?>'>
+    <?php
+      if (isset($album_id)) {
+        echo "<input type='hidden' name='album_id' value='{$album_id}'>";
+      } else {
+        echo "<input type='hidden' name='musica_id' value='{$musica_id}'>";
+      }
+    ?>
   </form>
 
   <?php if ($comentarios->num_rows > 0): ?>

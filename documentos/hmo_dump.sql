@@ -33,7 +33,7 @@ CREATE TABLE `album` (
   PRIMARY KEY (`id`),
   KEY `id_artista` (`id_artista`),
   CONSTRAINT `album_ibfk_1` FOREIGN KEY (`id_artista`) REFERENCES `artista` (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=24 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=25 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -66,7 +66,7 @@ CREATE TABLE `artista` (
   `senha` varchar(255) NOT NULL,
   `aprovado` tinyint(1) NOT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=10 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=11 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -75,7 +75,7 @@ CREATE TABLE `artista` (
 
 LOCK TABLES `artista` WRITE;
 /*!40000 ALTER TABLE `artista` DISABLE KEYS */;
-INSERT INTO `artista` VALUES (1,'Coldplay','Coldplay é uma banda britânica de rock formada em Londres em 1996.','coldplay@email.com','https://upload.wikimedia.org/wikipedia/commons/2/2e/ColdplayBBC071221_%28cropped%29.jpg','1996-01-01','Reino Unido','https://www.coldplay.com','Rock alternativo','$2y$10$hBzjRskV4PS/DdJtseu55uivLmVh0rlAfkkHqGMxhHwNOBJGYmgI2',1),(2,'Beyoncé','Beyoncé é uma cantora, compositora e atriz norte-americana.','beyonce@email.com','https://upload.wikimedia.org/wikipedia/commons/9/91/Beyonc%C3%A9_-_Tottenham_Hotspur_Stadium_-_1st_June_2023_%2811_of_118%29_%2852946364483%29_%28face_cropped%29.jpg','1997-01-01','Estados Unidos','https://www.beyonce.com','Pop','$2y$10$hBzjRskV4PS/DdJtseu55uivLmVh0rlAfkkHqGMxhHwNOBJGYmgI2',1),(3,'Taylor Swift','Taylor Swift é uma cantora e compositora norte-americana.','taylor@email.com','https://upload.wikimedia.org/wikipedia/commons/e/e8/TaylorSwiftApr09.jpg','2006-01-01','Estados Unidos','https://www.taylorswift.com','Pop','$2y$10$hBzjRskV4PS/DdJtseu55uivLmVh0rlAfkkHqGMxhHwNOBJGYmgI2',1),(4,'Post Malone','Post Malone é um cantor, rapper e compositor norte-americano conhecido por misturar estilos como hip hop, pop, rock e trap.','postmalone@email.com','https://hips.hearstapps.com/hmg-prod/images/post-malone-attends-the-road-house-world-premiere-during-news-photo-1727445361.jpg?crop=0.757xw:1.00xh;0.0986xw,0&resize=1200:*','2015-01-01','Estados Unidos','https://www.postmalone.com','Hip hop','$2y$10$hBzjRskV4PS/DdJtseu55uivLmVh0rlAfkkHqGMxhHwNOBJGYmgI2',1),(5,'Linkin Park','Linkin Park foi uma banda de rock alternativo/nu metal dos Estados Unidos, formada em 1996 e conhecida por mesclar rock, rap e música eletrônica.','linkinpark@email.com','https://upload.wikimedia.org/wikipedia/commons/d/d8/Linkin_Park_-_From_Zero_Lead_Press_Photo_-_James_Minchin_III.jpg','1996-01-01','Estados Unidos','https://www.linkinpark.com','Rock alternativo','$2y$10$hBzjRskV4PS/DdJtseu55uivLmVh0rlAfkkHqGMxhHwNOBJGYmgI2',1),(6,'Imagine Dragons','Imagine Dragons é uma banda de pop rock americana formada em Las Vegas, Nevada. Conhecida por hits como Radioactive, Believer e Demons.','imaginedragons@email.com','https://s2-gshow.glbimg.com/0wmhS5xGywLlXR9yfeXBO_2rR3o=/0x0:942x623/984x0/smart/filters:strip_icc()/i.s3.glbimg.com/v1/AUTH_e84042ef78cb4708aeebdf1c68c6cbd6/internal_photos/bs/2023/V/2/BlhJ8gQoOESx3yDzGaTg/imagine-dragons.jpg','2008-01-01','Estados Unidos','https://www.imaginedragonsmusic.com','Pop rock','$2y$10$hBzjRskV4PS/DdJtseu55uivLmVh0rlAfkkHqGMxhHwNOBJGYmgI2',1),(9,'Artista','Artista','artista@email.com','https://upload.wikimedia.org/wikipedia/commons/a/a3/Image-not-found.png','2000-01-01','Brasil','https://www.google.com.br/','Rock','$2y$10$hBzjRskV4PS/DdJtseu55uivLmVh0rlAfkkHqGMxhHwNOBJGYmgI2',0);
+INSERT INTO `artista` VALUES (1,'Coldplay','Coldplay é uma banda britânica de rock formada em Londres em 1996.','coldplay@email.com','https://upload.wikimedia.org/wikipedia/commons/2/2e/ColdplayBBC071221_%28cropped%29.jpg','1996-01-01','Reino Unido','https://www.coldplay.com','Rock alternativo','$2y$10$hBzjRskV4PS/DdJtseu55uivLmVh0rlAfkkHqGMxhHwNOBJGYmgI2',1),(2,'Beyoncé','Beyoncé é uma cantora, compositora e atriz norte-americana.','beyonce@email.com','https://upload.wikimedia.org/wikipedia/commons/9/91/Beyonc%C3%A9_-_Tottenham_Hotspur_Stadium_-_1st_June_2023_%2811_of_118%29_%2852946364483%29_%28face_cropped%29.jpg','1997-01-01','Estados Unidos','https://www.beyonce.com','Pop','$2y$10$hBzjRskV4PS/DdJtseu55uivLmVh0rlAfkkHqGMxhHwNOBJGYmgI2',1),(3,'Taylor Swift','Taylor Swift é uma cantora e compositora norte-americana.','taylor@email.com','https://upload.wikimedia.org/wikipedia/commons/e/e8/TaylorSwiftApr09.jpg','2006-01-01','Estados Unidos','https://www.taylorswift.com','Pop','$2y$10$hBzjRskV4PS/DdJtseu55uivLmVh0rlAfkkHqGMxhHwNOBJGYmgI2',1),(4,'Post Malone','Post Malone é um cantor, rapper e compositor norte-americano conhecido por misturar estilos como hip hop, pop, rock e trap.','postmalone@email.com','https://hips.hearstapps.com/hmg-prod/images/post-malone-attends-the-road-house-world-premiere-during-news-photo-1727445361.jpg?crop=0.757xw:1.00xh;0.0986xw,0&resize=1200:*','2015-01-01','Estados Unidos','https://www.postmalone.com','Hip hop','$2y$10$hBzjRskV4PS/DdJtseu55uivLmVh0rlAfkkHqGMxhHwNOBJGYmgI2',1),(5,'Linkin Park','Linkin Park foi uma banda de rock alternativo/nu metal dos Estados Unidos, formada em 1996 e conhecida por mesclar rock, rap e música eletrônica.','linkinpark@email.com','https://upload.wikimedia.org/wikipedia/commons/d/d8/Linkin_Park_-_From_Zero_Lead_Press_Photo_-_James_Minchin_III.jpg','1996-01-01','Estados Unidos','https://www.linkinpark.com','Rock alternativo','$2y$10$hBzjRskV4PS/DdJtseu55uivLmVh0rlAfkkHqGMxhHwNOBJGYmgI2',1),(6,'Imagine Dragons','Imagine Dragons é uma banda de pop rock americana formada em Las Vegas, Nevada. Conhecida por hits como Radioactive, Believer e Demons.','imaginedragons@email.com','https://s2-gshow.glbimg.com/0wmhS5xGywLlXR9yfeXBO_2rR3o=/0x0:942x623/984x0/smart/filters:strip_icc()/i.s3.glbimg.com/v1/AUTH_e84042ef78cb4708aeebdf1c68c6cbd6/internal_photos/bs/2023/V/2/BlhJ8gQoOESx3yDzGaTg/imagine-dragons.jpg','2008-01-01','Estados Unidos','https://www.imaginedragonsmusic.com','Pop rock','$2y$10$hBzjRskV4PS/DdJtseu55uivLmVh0rlAfkkHqGMxhHwNOBJGYmgI2',1),(9,'Artista','Artista','artista@email.com','https://upload.wikimedia.org/wikipedia/commons/a/a3/Image-not-found.png','2000-01-01','Brasil','https://www.google.com.br/','Rock','$2y$10$hBzjRskV4PS/DdJtseu55uivLmVh0rlAfkkHqGMxhHwNOBJGYmgI2',1);
 /*!40000 ALTER TABLE `artista` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -98,7 +98,7 @@ CREATE TABLE `avaliacao` (
   CONSTRAINT `avaliacao_ibfk_1` FOREIGN KEY (`id_usuario`) REFERENCES `usuario` (`id`),
   CONSTRAINT `avaliacao_ibfk_2` FOREIGN KEY (`id_critico`) REFERENCES `critico` (`id`),
   CONSTRAINT `CONSTRAINT_1` CHECK (`id_usuario` is not null and `id_critico` is null or `id_usuario` is null and `id_critico` is not null)
-) ENGINE=InnoDB AUTO_INCREMENT=6 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=12 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -107,7 +107,7 @@ CREATE TABLE `avaliacao` (
 
 LOCK TABLES `avaliacao` WRITE;
 /*!40000 ALTER TABLE `avaliacao` DISABLE KEYS */;
-INSERT INTO `avaliacao` VALUES (1,'Excelente álbum',5,6,NULL),(2,'Bom álbum, porém nem tão bom',3.7,NULL,1),(5,'Avaliação teste',4,7,NULL);
+INSERT INTO `avaliacao` VALUES (2,'Bom álbum, porém nem tão bom',3.7,NULL,1),(5,'Avaliação teste',4,7,NULL),(8,'Excelente álbum',5,6,NULL);
 /*!40000 ALTER TABLE `avaliacao` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -134,7 +134,7 @@ CREATE TABLE `avaliacao_album` (
 
 LOCK TABLES `avaliacao_album` WRITE;
 /*!40000 ALTER TABLE `avaliacao_album` DISABLE KEYS */;
-INSERT INTO `avaliacao_album` VALUES (1,9),(2,9),(5,9);
+INSERT INTO `avaliacao_album` VALUES (2,9),(5,9),(8,9);
 /*!40000 ALTER TABLE `avaliacao_album` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -177,7 +177,7 @@ CREATE TABLE `comentario` (
   `nome_autor` varchar(60) NOT NULL,
   `mensagem` varchar(250) NOT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=15 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=18 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -262,7 +262,7 @@ CREATE TABLE `critico` (
   `site` varchar(255) NOT NULL,
   `aprovado` tinyint(1) NOT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -271,7 +271,7 @@ CREATE TABLE `critico` (
 
 LOCK TABLES `critico` WRITE;
 /*!40000 ALTER TABLE `critico` DISABLE KEYS */;
-INSERT INTO `critico` VALUES (1,'Crítico','40582302072','critico@email.com','critico','1990-01-01','$2y$10$U9/zrQ7QmPWXz.obV5zYDeo9Yi5W2ocJ/Y2uo2jiUKIy.LIRy9bYu','M','https://www.google.com.br/',0);
+INSERT INTO `critico` VALUES (1,'Crítico','40582302072','critico@email.com','critico                        ','1990-01-01','$2y$10$U9/zrQ7QmPWXz.obV5zYDeo9Yi5W2ocJ/Y2uo2jiUKIy.LIRy9bYu','','https://www.google.com.br/',1);
 /*!40000 ALTER TABLE `critico` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -295,7 +295,7 @@ CREATE TABLE `musica` (
   KEY `id_album` (`id_album`),
   CONSTRAINT `musica_ibfk_1` FOREIGN KEY (`id_artista`) REFERENCES `artista` (`id`),
   CONSTRAINT `musica_ibfk_2` FOREIGN KEY (`id_album`) REFERENCES `album` (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=83 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=84 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -325,7 +325,7 @@ CREATE TABLE `usuario` (
   `genero` enum('M','F','I') DEFAULT NULL,
   `permissao` enum('normal','admin') DEFAULT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=8 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=9 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -365,6 +365,24 @@ SET @saved_cs_client     = @@character_set_client;
 /*!50503 SET character_set_client = utf8mb4 */;
 /*!50001 CREATE VIEW `view_avaliacoes_album` AS SELECT 
  1 AS `id_album`,
+ 1 AS `id_avaliacao`,
+ 1 AS `mensagem`,
+ 1 AS `nota`,
+ 1 AS `id_avaliador`,
+ 1 AS `tipo_avaliador`,
+ 1 AS `nome_avaliador`*/;
+SET character_set_client = @saved_cs_client;
+
+--
+-- Temporary view structure for view `view_avaliacoes_musica`
+--
+
+DROP TABLE IF EXISTS `view_avaliacoes_musica`;
+/*!50001 DROP VIEW IF EXISTS `view_avaliacoes_musica`*/;
+SET @saved_cs_client     = @@character_set_client;
+/*!50503 SET character_set_client = utf8mb4 */;
+/*!50001 CREATE VIEW `view_avaliacoes_musica` AS SELECT 
+ 1 AS `id_musica`,
  1 AS `id_avaliacao`,
  1 AS `mensagem`,
  1 AS `nota`,
@@ -428,6 +446,24 @@ SET character_set_client = @saved_cs_client;
 /*!50001 SET collation_connection      = @saved_col_connection */;
 
 --
+-- Final view structure for view `view_avaliacoes_musica`
+--
+
+/*!50001 DROP VIEW IF EXISTS `view_avaliacoes_musica`*/;
+/*!50001 SET @saved_cs_client          = @@character_set_client */;
+/*!50001 SET @saved_cs_results         = @@character_set_results */;
+/*!50001 SET @saved_col_connection     = @@collation_connection */;
+/*!50001 SET character_set_client      = utf8mb4 */;
+/*!50001 SET character_set_results     = utf8mb4 */;
+/*!50001 SET collation_connection      = utf8mb4_general_ci */;
+/*!50001 CREATE ALGORITHM=UNDEFINED */
+/*!50013 DEFINER=`root`@`localhost` SQL SECURITY DEFINER */
+/*!50001 VIEW `view_avaliacoes_musica` AS select `aa`.`id_musica` AS `id_musica`,`a`.`id` AS `id_avaliacao`,`a`.`mensagem` AS `mensagem`,`a`.`nota` AS `nota`,coalesce(`a`.`id_usuario`,`a`.`id_critico`) AS `id_avaliador`,case when `a`.`id_usuario` is not null then 'usuario' when `a`.`id_critico` is not null then 'critico' else 'desconhecido' end AS `tipo_avaliador`,coalesce(`u`.`nome`,`c`.`nome`) AS `nome_avaliador` from (((`avaliacao_musica` `aa` join `avaliacao` `a` on(`aa`.`id_avaliacao` = `a`.`id`)) left join `usuario` `u` on(`a`.`id_usuario` = `u`.`id`)) left join `critico` `c` on(`a`.`id_critico` = `c`.`id`)) */;
+/*!50001 SET character_set_client      = @saved_cs_client */;
+/*!50001 SET character_set_results     = @saved_cs_results */;
+/*!50001 SET collation_connection      = @saved_col_connection */;
+
+--
 -- Final view structure for view `view_musicas_com_nomes`
 --
 
@@ -454,4 +490,4 @@ SET character_set_client = @saved_cs_client;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2025-05-25  0:30:29
+-- Dump completed on 2025-05-25 22:35:00

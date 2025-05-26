@@ -3,6 +3,15 @@ body {
   position: relative;
 }
 
+input:-webkit-autofill {
+  -webkit-box-shadow: 0 0 0px 1000px #212121 inset !important;
+  -webkit-text-fill-color: white !important;
+}
+
+input:-webkit-autofill::placeholder {
+  -webkit-text-fill-color: white !important;
+}
+
 .swal2-container .swal2-modal {
   background: #2e2e2e !important;
   color: white !important;

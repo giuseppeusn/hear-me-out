@@ -1,7 +1,5 @@
 <?php
-include_once("../connect.php");
-
-$oMysql = connect_db();
+$oMysql = new mysqli("localhost:3306", "root", "", "hear_me_out");
 $data = json_decode(file_get_contents("php://input"), true);
 
 if (isset($data['id'])) {

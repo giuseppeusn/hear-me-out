@@ -1,11 +1,17 @@
-function abrirInserirMusica(albumId) {
+function abrirAlterarMusica(musicaId) {
+  const container = document.getElementById(`musica-${musicaId}`);
+  const nome = container.getAttribute('data-nome');
+  const capa = container.getAttribute('data-capa');
+  const duracao = container.getAttribute('data-duracao');
+  const data = container.getAttribute('data-data');
+
   Swal.fire({
-    title: 'Inserir música',
+    title: 'Alterar música',
     html:
-      `<input id="nome" class="swal2-input" placeholder="Nome da música">` +
-      `<input id="duracao" class="swal2-input" type="number" placeholder="Duração da música (em segundos)">` +
-      `<input id="capa" class="swal2-input" placeholder="Capa do Álbum (URL ou nome do arquivo)">` +
-      `<input id="data" type="date" class="swal2-input" placeholder="Data de Lançamento">`,
+      `<input id="nome" class="swal2-input" placeholder="Nome do Álbum" value="${nome}">` +
+      `<input id="capa" class="swal2-input" placeholder="Capa do Álbum" value="${capa}">` +
+      `<input id="duracao" class="swal2-input" type="number" placeholder="Duração da música" value="${duracao}">` +
+      `<input id="data" type="date" class="swal2-input" value="${data}">`,
     confirmButtonText: 'Salvar',
     showCancelButton: true,
     showCloseButton: true,
@@ -13,8 +19,8 @@ function abrirInserirMusica(albumId) {
 
     preConfirm: () => {
       const nome = document.getElementById('nome').value.trim();
-      const duracao = parseInt(document.getElementById('duracao').value.trim(), 10);
       const capa = document.getElementById('capa').value.trim();
+      const duracao = parseInt(document.getElementById('duracao').value.trim(), 10);
       const data = document.getElementById('data').value;
 
       if (!nome) {
@@ -31,12 +37,11 @@ function abrirInserirMusica(albumId) {
         Swal.showValidationMessage('A capa é obrigatória.');
         return false;
       }
-            
+
       if (!data) {
         Swal.showValidationMessage('A data de lançamento é obrigatória.');
         return false;
       }
-
 
       const capaValida = /\.(png|jpg)$/i.test(capa);
       if (!capaValida) {
@@ -46,25 +51,24 @@ function abrirInserirMusica(albumId) {
 
       return { nome, duracao, capa, data };
     }
+
   }).then((resultado) => {
     if (resultado.isConfirmed) {
-      const { nome, duracao, capa, data } = resultado.value;
-
-      fetch('/hear-me-out/projeto/musica/insert.php', {
+      fetch('/hear-me-out/projeto/artista/meus-albuns/musicas/update.php', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json'
         },
-        body: JSON.stringify({ nome, duracao, capa, data, albumId })
+        body: JSON.stringify({ ...resultado.value, id: musicaId })
       })
       .then(response => response.text())
       .then(data => {
-        Swal.fire('Sucesso!', data, 'success').then(() => {
+        Swal.fire('Alterado!', data, 'success').then(() => {
           window.location.reload();
         });
       })
       .catch(error => {
-        Swal.fire('Erro!', 'Não foi possível salvar.', 'error');
+        Swal.fire('Erro!', 'Não foi possível alterar.', 'error');
       });
     }
   });

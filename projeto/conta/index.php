@@ -1,6 +1,7 @@
 <?php
 include("../header.php");
 include_once("../connect.php");
+include("../footer.php");
 
 if (session_status() === PHP_SESSION_NONE) {
   session_start();
@@ -32,8 +33,8 @@ if (isset($_GET["page"])) {
   } else if ($_GET["page"] == 3) {
     include("delete.php");
   } else {
-    include("pagUsuario.php");
+    include("conta.php");
   }
 } else {
-  include("pagUsuario.php");
+  include("conta.php");
 }

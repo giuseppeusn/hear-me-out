@@ -1,17 +1,11 @@
-function abrirAlterarMusica(musicaId) {
-  const container = document.getElementById(`musica-${musicaId}`);
-  const nome = container.getAttribute('data-nome');
-  const capa = container.getAttribute('data-capa');
-  const duracao = container.getAttribute('data-duracao');
-  const data = container.getAttribute('data-data');
-
+function abrirInserirMusica(albumId) {
   Swal.fire({
-    title: 'Alterar música',
+    title: 'Inserir música',
     html:
-      `<input id="nome" class="swal2-input" placeholder="Nome do Álbum" value="${nome}">` +
-      `<input id="capa" class="swal2-input" placeholder="Capa do Álbum" value="${capa}">` +
-      `<input id="duracao" class="swal2-input" type="number" placeholder="Duração da música" value="${duracao}">` +
-      `<input id="data" type="date" class="swal2-input" value="${data}">`,
+      `<input id="nome" class="swal2-input" placeholder="Nome da música">` +
+      `<input id="duracao" class="swal2-input" type="number" placeholder="Duração da música (em segundos)">` +
+      `<input id="capa" class="swal2-input" placeholder="Capa do Álbum (URL ou nome do arquivo)">` +
+      `<input id="data" type="date" class="swal2-input" placeholder="Data de Lançamento">`,
     confirmButtonText: 'Salvar',
     showCancelButton: true,
     showCloseButton: true,
@@ -19,8 +13,8 @@ function abrirAlterarMusica(musicaId) {
 
     preConfirm: () => {
       const nome = document.getElementById('nome').value.trim();
-      const capa = document.getElementById('capa').value.trim();
       const duracao = parseInt(document.getElementById('duracao').value.trim(), 10);
+      const capa = document.getElementById('capa').value.trim();
       const data = document.getElementById('data').value;
 
       if (!nome) {
@@ -37,11 +31,12 @@ function abrirAlterarMusica(musicaId) {
         Swal.showValidationMessage('A capa é obrigatória.');
         return false;
       }
-
+            
       if (!data) {
         Swal.showValidationMessage('A data de lançamento é obrigatória.');
         return false;
       }
+
 
       const capaValida = /\.(png|jpg)$/i.test(capa);
       if (!capaValida) {
@@ -51,24 +46,25 @@ function abrirAlterarMusica(musicaId) {
 
       return { nome, duracao, capa, data };
     }
-
   }).then((resultado) => {
     if (resultado.isConfirmed) {
-      fetch('/hear-me-out/projeto/musica/update.php', {
+      const { nome, duracao, capa, data } = resultado.value;
+
+      fetch('/hear-me-out/projeto/artista/meus-albuns/musicas/insert.php', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json'
         },
-        body: JSON.stringify({ ...resultado.value, id: musicaId })
+        body: JSON.stringify({ nome, duracao, capa, data, albumId })
       })
       .then(response => response.text())
       .then(data => {
-        Swal.fire('Alterado!', data, 'success').then(() => {
+        Swal.fire('Sucesso!', data, 'success').then(() => {
           window.location.reload();
         });
       })
       .catch(error => {
-        Swal.fire('Erro!', 'Não foi possível alterar.', 'error');
+        Swal.fire('Erro!', 'Não foi possível salvar.', 'error');
       });
     }
   });
