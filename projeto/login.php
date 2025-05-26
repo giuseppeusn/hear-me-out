@@ -108,33 +108,8 @@ if ((isset($_POST['email']) && isset($_POST['senha'])) && (!empty($_POST['email'
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Login</title>
-  <style>
-    .custom-container {
-      width: 30%;
-      min-width: 25%;
-      margin-top: 100px;
-      background-color: #2e2e2e;
-      color: white;
-    }
-
-    .custom-input {
-      padding: 10px;
-    }
-
-    .custom-button {
-      font-size: 18px;
-      padding: 7px 20px;
-    }
-
-    .custom-padding-right {
-      padding-right: 4px;
-    }
-
-    .custom-padding-left {
-      padding-left: 0px;
-    }
-  </style>
+  <link rel="stylesheet" href="styles/form.css" />
+  <link rel="stylesheet" href="styles/login.css" />
 </head>
 
 <body class="custom-body">
@@ -150,27 +125,27 @@ if ((isset($_POST['email']) && isset($_POST['senha'])) && (!empty($_POST['email'
     </div>
     <form method="POST">
       <div class="input-group has-validation pt-3 pb-3">
-        <span class="input-group-text" id="inputGroupPrepend">
+        <span class="input-icon" id="inputGroupPrepend">
           <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-person-fill"
             viewBox="0 0 16 16">
             <path d="M3 14s-1 0-1-1 1-4 6-4 6 3 6 4-1 1-1 1zm5-6a3 3 0 1 0 0-6 3 3 0 0 0 0 6" />
           </svg>
         </span>
-        <input type="email" name="email" class="form-control border-0 custom-input" id="validationCustomUsername"
+        <input type="email" name="email" class="input-field custom-input" id="validationCustomUsername"
           aria-describedby="inputGroupPrepend" placeholder="Digite o seu email.">
         <div class="invalid-feedback">
           Por favor digite seu email.
         </div>
       </div>
       <div class="input-group has-validation pt-1 pb-3">
-        <span class="input-group-text" id="inputGroupPrepend">
+        <span class="input-icon" id="inputGroupPrepend">
           <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-lock-fill"
             viewBox="0 0 16 16">
             <path fill-rule="evenodd"
               d="M8 0a4 4 0 0 1 4 4v2.05a2.5 2.5 0 0 1 2 2.45v5a2.5 2.5 0 0 1-2.5 2.5h-7A2.5 2.5 0 0 1 2 13.5v-5a2.5 2.5 0 0 1 2-2.45V4a4 4 0 0 1 4-4m0 1a3 3 0 0 0-3 3v2h6V4a3 3 0 0 0-3-3" />
           </svg>
         </span>
-        <input type="password" name="senha" class="form-control border-0 custom-input" id="validationCustomPassword"
+        <input type="password" name="senha" class="input-field custom-input" id="validationCustomPassword"
           aria-describedby="inputGroupPrepend" placeholder="Digite a sua senha.">
         <div class="invalid-feedback">
           Por favor digite sua senha.

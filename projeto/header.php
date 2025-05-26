@@ -18,7 +18,14 @@
     <?php
       $route = $_SERVER['REQUEST_URI'];
 
-      if ($route != "/hear-me-out/projeto/" && $route != "/hear-me-out/projeto/login.php" && $route != "/hear-me-out/projeto/cadastro.php") {
+      $dissallowedRoutes = [
+        "/hear-me-out/projeto/",
+        "/hear-me-out/projeto/login.php",
+        "/hear-me-out/projeto/cadastro.php",
+        "/hear-me-out/projeto/conta/",
+      ];
+
+      if (!in_array($route, $dissallowedRoutes)) {
         include __DIR__ . "/components/search.php";
         echo search(true);
       }
@@ -33,7 +40,7 @@
       } else {
         echo '
         <a class="user-wrapper" href="/hear-me-out/projeto/login.php">
-          <p class="user-text">LOGIN<p>
+          <p class="user-text">Login<p>
           <div class="user-icon-wrapper">
             <img src="/hear-me-out/projeto/assets/svg/user.svg" alt="User Icon" class="user-icon">
           </a>
