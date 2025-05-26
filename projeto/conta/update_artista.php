@@ -3,7 +3,7 @@ if (session_status() === PHP_SESSION_NONE) {
     session_start();
 }
 
-include_once("../connect.php"); 
+include_once("../connect.php");
 
 header('Content-Type: application/json');
 
@@ -26,13 +26,12 @@ function validarCampos($data, $camposObrigatorios) {
 
 function validarUrl($url) {
     if (empty(trim($url))) {
-        return true; 
+        return true;
     }
     return filter_var($url, FILTER_VALIDATE_URL);
 }
 
-$camposObrigatorios = ['id', 'nome', 'email', 'data_formacao', 'pais', 'genero'];
-
+$camposObrigatorios = ['id', 'nome', 'email', 'data_formacao', 'pais', 'genero']; // 'genero' aqui é o musical
 
 if (!validarCampos($data, $camposObrigatorios)) {
     http_response_code(400);
@@ -45,16 +44,15 @@ $nome = $data['nome'];
 $email = $data['email'];
 $data_formacao = $data['data_formacao'];
 $pais = $data['pais'];
-$genero = $data['genero'];
+$genero = $data['genero']; 
 
 $biografia = isset($data['biografia']) ? trim($data['biografia']) : null;
 $imagem = isset($data['imagem']) ? trim($data['imagem']) : null;
 $site_oficial = isset($data['site_oficial']) ? trim($data['site_oficial']) : null;
 
-if (empty($biografia)) $biografia = null;
-if (empty($imagem)) $imagem = null;
-if (empty($site_oficial)) $site_oficial = null;
-
+if (empty($biografia) && $biografia !== null) $biografia = null;
+if (empty($imagem) && $imagem !== null) $imagem = null;
+if (empty($site_oficial) && $site_oficial !== null) $site_oficial = null;
 
 if (!filter_var($email, FILTER_VALIDATE_EMAIL)) {
     http_response_code(400);
@@ -78,16 +76,13 @@ try {
     $dFormacao = new DateTime($data_formacao);
     $agora = new DateTime();
     if ($dFormacao > $agora || $dFormacao->format('Y') < 1900) {
-        http_response_code(400);
-        echo json_encode(["success" => false, "message" => "Data de formação inválida."]);
-        exit;
+        throw new Exception("Data de formação inválida.");
     }
 } catch (Exception $e) {
     http_response_code(400);
     echo json_encode(["success" => false, "message" => "Formato de data de formação inválido."]);
     exit;
 }
-
 
 $conexao = connect_db();
 

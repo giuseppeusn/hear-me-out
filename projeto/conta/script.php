@@ -1,31 +1,42 @@
 <script>
     document.getElementById('btnEditarPerfil').addEventListener('click', function() {
         const form = document.getElementById('formPerfil');
-        const inputs = form.querySelectorAll('input, select, textarea');
+        const inputs = form.querySelectorAll('input:not([type="hidden"]), select, textarea');
         inputs.forEach(function(input) {
-            if (input.name !== 'id' && input.name !== 'cpf') {
+    
+            if (input.name !== 'cpf') {
                 input.disabled = false;
             }
         });
+        const userType = form.querySelector('input[name="userType"]').value;
+        if (userType === 'artista') {
+            
+        }
+
         document.getElementById('btnEditarPerfil').style.display = 'none';
+        document.getElementById('btnExcluirConta').style.display = 'none'; 
         document.getElementById('btnSalvarPerfil').style.display = 'inline-block';
         document.getElementById('btnCancelarPerfil').style.display = 'inline-block';
-        document.getElementById('btnExcluirConta').style.display = 'none'; 
     });
-    
+
+    document.getElementById('btnCancelarPerfil').addEventListener('click', function() {
+        
+        window.location.reload();
+    });
+
     document.getElementById('formPerfil').addEventListener('submit', function(event) {
         event.preventDefault();
-    
+
         const form = event.target;
         const formData = new FormData(form);
         const jsonData = {};
         formData.forEach(function(value, key){
             jsonData[key] = value;
         });
-    
-        const userType = '<?= $userType ?>';
+
+        const userType = jsonData['userType']; 
         let url = '';
-    
+
         if (userType === 'usuario') {
             url = 'update.php';
         } else if (userType === 'critico') {
@@ -34,8 +45,8 @@
             url = 'update_artista.php';
         }
 
-        console.log('jsonData:', jsonData);
-    
+        console.log('Enviando para:', url, 'Dados:', jsonData);
+
         fetch(url, {
             method: 'POST',
             headers: {
@@ -51,7 +62,7 @@
                     data.message,
                     'success'
                 ).then(() => {
-                    window.location.reload();
+                    window.location.reload(); 
                 });
             } else {
                 Swal.fire(
@@ -71,18 +82,6 @@
         });
     });
 
-    document.getElementById('btnCancelarPerfil').addEventListener('click', function() {
-        const form = document.getElementById('formPerfil');
-        const inputs = form.querySelectorAll('input, select, textarea');
-        inputs.forEach(function(input) {
-            input.disabled = true;
-        });
-        document.getElementById('btnEditarPerfil').style.display = 'inline-block';
-        document.getElementById('btnSalvarPerfil').style.display = 'none';
-        document.getElementById('btnCancelarPerfil').style.display = 'none';
-        document.getElementById('btnExcluirConta').style.display = 'inline-block'; 
-    });
-    
     document.getElementById('btnExcluirConta').addEventListener('click', function() {
         Swal.fire({
             title: 'Tem certeza?',
@@ -95,7 +94,7 @@
             cancelButtonText: 'Cancelar'
         }).then((result) => {
             if (result.isConfirmed) {
-                const userId = <?= htmlspecialchars($userData['id']) ?>;
+                const userId = document.getElementById('formPerfil').querySelector('input[name="id"]').value;
                 fetch('delete.php', {
                     method: 'POST',
                     headers: {
