@@ -19,7 +19,7 @@ $id = intval($data['id']);
 $nome = $data['nome'];
 $email = $data['email'];
 $data_nasc = $data['data_nasc'];
-$genero = $data['genero'];
+$genero = $data['genero']; 
 $biografia = $data['biografia'];
 $site = $data['site'];
 
