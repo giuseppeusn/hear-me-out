@@ -215,6 +215,7 @@ try {
 
     $conexao->commit();
     session_destroy();
+    header('location: /hear-me-out/projeto');
     echo json_encode(["success" => true, "message" => "Conta excluída com sucesso!"]);
 } catch (Exception $e) {
     $conexao->rollback();
