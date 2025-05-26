@@ -30,75 +30,113 @@ if (isset($_SESSION['sucesso_cadastro2'])) {
 
 
 $mysql = connect_db();
-if ((isset($_POST['email']) && isset($_POST['senha'])) && (!empty($_POST['email']) && !empty($_POST['senha']))) {
-  $email = mysqli_real_escape_string($mysql, $_POST['email']);
-  $senha = $_POST['senha'];
+if (isset($_POST['login'])) {
+  $a = false;
+  if ((isset($_POST['email']) && isset($_POST['senha'])) && (!empty($_POST['email']) && !empty($_POST['senha']))) {
+    $email = mysqli_real_escape_string($mysql, $_POST['email']);
+    $senha = $_POST['senha'];
 
-  if (session_status() === PHP_SESSION_NONE) {
-    session_start();
-  }
+    if (session_status() === PHP_SESSION_NONE) {
+      session_start();
+    }
 
-  $queryUsuario = "SELECT * FROM usuario WHERE email = '$email'";
-  $usuario = $mysql->query($queryUsuario);
-  $usuario_array = mysqli_fetch_assoc($usuario);
+    $queryUsuario = "SELECT * FROM usuario WHERE email = '$email'";
+    $usuario = $mysql->query($queryUsuario);
+    $usuario_array = mysqli_fetch_assoc($usuario);
 
-  if ($usuario->num_rows > 0) {
-    if (password_verify($senha, $usuario_array['senha'])) {
-      $_SESSION['authenticated'] = true;
-      $_SESSION['nome'] = $usuario_array['nome'];
-      $_SESSION['id'] = $usuario_array['id'];
-      $_SESSION['permissao'] = $usuario_array['permissao'];
-      if ($usuario_array['permissao'] == 'admin') {
-        $_SESSION['admin'] = true;
+    if ($usuario->num_rows > 0) {
+      if (password_verify($senha, $usuario_array['senha'])) {
+        $_SESSION['authenticated'] = true;
+        $_SESSION['nome'] = $usuario_array['nome'];
+        $_SESSION['id'] = $usuario_array['id'];
+        $_SESSION['permissao'] = $usuario_array['permissao'];
+        if ($usuario_array['permissao'] == 'admin') {
+          $_SESSION['admin'] = true;
+        }
+        $mysql->close();
+        header("location: /hear-me-out/projeto");
+        exit();
       }
-      $mysql->close();
-      header("location: /hear-me-out/projeto");
-      exit();
     }
-  }
 
-  $queryArtista = "SELECT * FROM artista WHERE email = '$email'";
-  $artista = $mysql->query($queryArtista);
-  $artista_array = mysqli_fetch_assoc($artista);
+    $queryArtista = "SELECT * FROM artista WHERE email = '$email'";
+    $artista = $mysql->query($queryArtista);
+    $artista_array = mysqli_fetch_assoc($artista);
 
-  if ($artista->num_rows > 0) {
-    if (password_verify($senha, $artista_array['senha'])) {
-      $_SESSION['authenticated'] = true;
-      $_SESSION['id'] = $artista_array['id'];
-      $_SESSION['aprovado'] = $artista_array['aprovado']; // 0 para nao aprovado e 1 para aprovado
-      $_SESSION['permissao'] = 'artista';
-      $_SESSION['nome'] = $artista_array['nome'];
-      $mysql->close();
-      header("location: /hear-me-out/projeto");
-      exit();
+    if ($artista->num_rows > 0) {
+      if (password_verify($senha, $artista_array['senha'])) {
+        if ($artista_array['aprovado'] == 1) {
+          $_SESSION['aprovado'] = $artista_array['aprovado'];
+          $_SESSION['authenticated'] = true;
+          $_SESSION['id'] = $artista_array['id'];
+          $_SESSION['permissao'] = 'artista';
+          $_SESSION['nome'] = $artista_array['nome'];
+          $mysql->close();
+          header("location: /hear-me-out/projeto");
+          exit();
+        } elseif ($artista_array['aprovado'] == 0) {
+          $a = true; // flag -> senha correta mas nao aprovado, usado para nao mostrar alerta de Email ou senha incorretos
+          echo "<script src='https://cdn.jsdelivr.net/npm/sweetalert2@11'></script>";
+          echo "<script>
+          Swal.fire({
+              title: 'Seu cadastro como artista ainda não foi aprovado!',
+              icon: 'error',
+              draggable: true      
+              });
+          </script>";
+        }
+      }
     }
-  }
 
-  $queryCritico = "SELECT * FROM critico WHERE email = '$email'";
-  $critico = $mysql->query($queryCritico);
-  $critico_array = mysqli_fetch_assoc($critico);
+    $queryCritico = "SELECT * FROM critico WHERE email = '$email'";
+    $critico = $mysql->query($queryCritico);
+    $critico_array = mysqli_fetch_assoc($critico);
 
-  if ($critico->num_rows > 0) {
-    if (password_verify($senha, $critico_array['senha'])) {
-      $_SESSION['authenticated'] = true;
-      $_SESSION['id'] = $critico_array['id'];
-      $_SESSION['aprovado'] = $critico_array['aprovado']; // 0 para nao aprovado e 1 para aprovado
-      $_SESSION['permissao'] = 'critico';
-      $_SESSION['nome'] = $critico_array['nome'];
-      $mysql->close();
-      header("location: /hear-me-out/projeto");
-      exit();
+    if ($critico->num_rows > 0) {
+      if (password_verify($senha, $critico_array['senha'])) {
+        if ($critico_array['aprovado'] == 1) {
+          $_SESSION['authenticated'] = true;
+          $_SESSION['id'] = $critico_array['id'];
+          $_SESSION['aprovado'] = $critico_array['aprovado']; // 0 para nao aprovado e 1 para aprovado
+          $_SESSION['permissao'] = 'critico';
+          $_SESSION['nome'] = $critico_array['nome'];
+          $mysql->close();
+          header("location: /hear-me-out/projeto");
+          exit();
+        } elseif ($critico_array['aprovado'] == 0) {
+          $a = true; // flag -> senha correta mas nao aprovado, usado para nao mostrar alerta de Email ou senha incorretos
+          echo "<script src='https://cdn.jsdelivr.net/npm/sweetalert2@11'></script>";
+          echo "<script>
+          Swal.fire({
+              title: 'Seu cadastro como crítico ainda não foi aprovado!',
+              icon: 'error',
+              draggable: true      
+              });
+          </script>";
+        }
+      }
     }
-  }
-  $mysql->close();
-  echo "<script src='https://cdn.jsdelivr.net/npm/sweetalert2@11'></script>";
-  echo "<script>
+    $mysql->close();
+    if (!$a) {
+      echo "<script src='https://cdn.jsdelivr.net/npm/sweetalert2@11'></script>";
+      echo "<script>
+      Swal.fire({
+          title: 'Email ou senha incorretos!',
+          icon: 'error',
+          draggable: true      
+          });
+      </script>";
+    }
+  } else {
+    echo "<script src='https://cdn.jsdelivr.net/npm/sweetalert2@11'></script>";
+    echo "<script>
     Swal.fire({
-        title: 'Email ou senha incorretos!',
+        title: 'Email e/ou senha não foram preenchidos!',
         icon: 'error',
         draggable: true      
         });
     </script>";
+  }
 }
 ?>
 
@@ -132,7 +170,7 @@ if ((isset($_POST['email']) && isset($_POST['senha'])) && (!empty($_POST['email'
           </svg>
         </span>
         <input type="email" name="email" class="input-field custom-input" id="validationCustomUsername"
-          aria-describedby="inputGroupPrepend" placeholder="Digite o seu email.">
+          aria-describedby="inputGroupPrepend" placeholder="Digite o seu email." value="<?php echo $_POST['email'] ?? "" ?>">
         <div class="invalid-feedback">
           Por favor digite seu email.
         </div>
@@ -152,7 +190,7 @@ if ((isset($_POST['email']) && isset($_POST['senha'])) && (!empty($_POST['email'
         </div>
       </div>
       <div class="text-center">
-        <button type="submit" class="btn btn-success mt-2 custom-button">Entrar</button>
+        <button type="submit" name="login" class="btn btn-success mt-2 custom-button">Entrar</button>
       </div>
     </form>
     <div class="row mt-3 ms-2">
