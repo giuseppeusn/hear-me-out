@@ -44,6 +44,10 @@ try {
             http_response_code(500);
             echo "Erro ao excluir música!";
         }
+    } else {
+        $conn->rollback();
+        http_response_code(404);
+        echo "Nenhum vínculo de comentário ou avaliação para essa música foi encontrado.";
     }
 } catch (Exception $e) {
     $conn->rollback();
