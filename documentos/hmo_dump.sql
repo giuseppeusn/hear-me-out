@@ -32,7 +32,7 @@ CREATE TABLE `album` (
   `id_artista` int(11) NOT NULL,
   PRIMARY KEY (`id`),
   KEY `id_artista` (`id_artista`),
-  CONSTRAINT `album_ibfk_1` FOREIGN KEY (`id_artista`) REFERENCES `artista` (`id`)
+  CONSTRAINT `album_ibfk_1` FOREIGN KEY (`id_artista`) REFERENCES `artista` (`id`) ON DELETE CASCADE
 ) ENGINE=InnoDB AUTO_INCREMENT=25 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
@@ -95,8 +95,8 @@ CREATE TABLE `avaliacao` (
   PRIMARY KEY (`id`),
   KEY `id_usuario` (`id_usuario`),
   KEY `id_critico` (`id_critico`),
-  CONSTRAINT `avaliacao_ibfk_1` FOREIGN KEY (`id_usuario`) REFERENCES `usuario` (`id`),
-  CONSTRAINT `avaliacao_ibfk_2` FOREIGN KEY (`id_critico`) REFERENCES `critico` (`id`),
+  CONSTRAINT `avaliacao_ibfk_1` FOREIGN KEY (`id_usuario`) REFERENCES `usuario` (`id`) ON DELETE CASCADE,
+  CONSTRAINT `avaliacao_ibfk_2` FOREIGN KEY (`id_critico`) REFERENCES `critico` (`id`) ON DELETE CASCADE,
   CONSTRAINT `CONSTRAINT_1` CHECK (`id_usuario` is not null and `id_critico` is null or `id_usuario` is null and `id_critico` is not null)
 ) ENGINE=InnoDB AUTO_INCREMENT=12 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
@@ -123,8 +123,8 @@ CREATE TABLE `avaliacao_album` (
   `id_album` int(11) DEFAULT NULL,
   KEY `id_avaliacao` (`id_avaliacao`),
   KEY `id_album` (`id_album`),
-  CONSTRAINT `avaliacao_album_ibfk_1` FOREIGN KEY (`id_avaliacao`) REFERENCES `avaliacao` (`id`),
-  CONSTRAINT `avaliacao_album_ibfk_2` FOREIGN KEY (`id_album`) REFERENCES `album` (`id`)
+  CONSTRAINT `avaliacao_album_ibfk_1` FOREIGN KEY (`id_avaliacao`) REFERENCES `avaliacao` (`id`) ON DELETE CASCADE,
+  CONSTRAINT `avaliacao_album_ibfk_2` FOREIGN KEY (`id_album`) REFERENCES `album` (`id`) ON DELETE CASCADE
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
@@ -150,8 +150,8 @@ CREATE TABLE `avaliacao_musica` (
   `id_musica` int(11) DEFAULT NULL,
   KEY `id_avaliacao` (`id_avaliacao`),
   KEY `id_musica` (`id_musica`),
-  CONSTRAINT `avaliacao_musica_ibfk_1` FOREIGN KEY (`id_avaliacao`) REFERENCES `avaliacao` (`id`),
-  CONSTRAINT `avaliacao_musica_ibfk_2` FOREIGN KEY (`id_musica`) REFERENCES `musica` (`id`)
+  CONSTRAINT `avaliacao_musica_ibfk_1` FOREIGN KEY (`id_avaliacao`) REFERENCES `avaliacao` (`id`) ON DELETE CASCADE,
+  CONSTRAINT `avaliacao_musica_ibfk_2` FOREIGN KEY (`id_musica`) REFERENCES `musica` (`id`) ON DELETE CASCADE
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
@@ -202,8 +202,8 @@ CREATE TABLE `comentario_album` (
   `id_comentario` int(11) NOT NULL,
   KEY `id_album` (`id_album`),
   KEY `id_comentario` (`id_comentario`),
-  CONSTRAINT `comentario_album_ibfk_1` FOREIGN KEY (`id_album`) REFERENCES `album` (`id`),
-  CONSTRAINT `comentario_album_ibfk_2` FOREIGN KEY (`id_comentario`) REFERENCES `comentario` (`id`)
+  CONSTRAINT `comentario_album_ibfk_1` FOREIGN KEY (`id_album`) REFERENCES `album` (`id`) ON DELETE CASCADE,
+  CONSTRAINT `comentario_album_ibfk_2` FOREIGN KEY (`id_comentario`) REFERENCES `comentario` (`id`) ON DELETE CASCADE
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
@@ -229,8 +229,8 @@ CREATE TABLE `comentario_musica` (
   `id_comentario` int(11) NOT NULL,
   KEY `id_musica` (`id_musica`),
   KEY `id_comentario` (`id_comentario`),
-  CONSTRAINT `comentario_musica_ibfk_1` FOREIGN KEY (`id_musica`) REFERENCES `musica` (`id`),
-  CONSTRAINT `comentario_musica_ibfk_2` FOREIGN KEY (`id_comentario`) REFERENCES `comentario` (`id`)
+  CONSTRAINT `comentario_musica_ibfk_1` FOREIGN KEY (`id_musica`) REFERENCES `musica` (`id`) ON DELETE CASCADE,
+  CONSTRAINT `comentario_musica_ibfk_2` FOREIGN KEY (`id_comentario`) REFERENCES `comentario` (`id`) ON DELETE CASCADE
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
@@ -293,8 +293,8 @@ CREATE TABLE `musica` (
   PRIMARY KEY (`id`),
   KEY `id_artista` (`id_artista`),
   KEY `id_album` (`id_album`),
-  CONSTRAINT `musica_ibfk_1` FOREIGN KEY (`id_artista`) REFERENCES `artista` (`id`),
-  CONSTRAINT `musica_ibfk_2` FOREIGN KEY (`id_album`) REFERENCES `album` (`id`)
+  CONSTRAINT `musica_ibfk_1` FOREIGN KEY (`id_artista`) REFERENCES `artista` (`id`) ON DELETE CASCADE,
+  CONSTRAINT `musica_ibfk_2` FOREIGN KEY (`id_album`) REFERENCES `album` (`id`) ON DELETE CASCADE
 ) ENGINE=InnoDB AUTO_INCREMENT=84 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
@@ -490,4 +490,4 @@ SET character_set_client = @saved_cs_client;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2025-05-25 22:35:00
+-- Dump completed on 2025-05-27 16:30:29
