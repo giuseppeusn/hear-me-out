@@ -110,7 +110,7 @@
                             'Sua conta foi excluída com sucesso.',
                             'success'
                         ).then(() => {
-                            window.location.href = '../index.php';
+                            window.location.href = '../login.php';
                         });
                     } else {
                         Swal.fire(
