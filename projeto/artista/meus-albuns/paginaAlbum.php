@@ -11,7 +11,7 @@
 <body>
 
 <div class="container mt-3" style="color: white">
-    <?php
+<?php
     $conexao = connect_db();
 
     if (isset($_GET['id'])) {
@@ -35,7 +35,6 @@
             IFNULL(SUM(duracao), 0) AS duracao_total
         FROM musica
         WHERE id_album = $id_album";
-
         $resultadoResumo = $conexao->query($queryResumo);
         $resumo = $resultadoResumo->fetch_object();
 
@@ -47,14 +46,20 @@
             musica.data_lancamento AS musica_data
         FROM musica
         WHERE musica.id_album = $id_album";
-
         $resultadoMusicas = $conexao->query($queryMusicas);
+        $musica = $resultadoMusicas->fetch_object();
+
+        function obterMusicas($conexao, $id_album) {
+            $sql = "SELECT id AS musica_id, nome AS musica_nome, capa AS musica_capa, duracao AS musica_duracao, data_lancamento AS musica_data
+            FROM musica WHERE id_album = $id_album";
+            return $conexao->query($sql);
+        }
+        $musicas = obterMusicas($conexao, $id_album);
 
         $musicas_total = $resumo->musicas_total;
         $duracao_total = $resumo->duracao_total;
         $minutosAlbum = floor($duracao_total / 60);
         $segundosAlbum = $duracao_total % 60;
-
         $btnVoltar = "<a href='index.php?page=0' class='btn btn-light'>< Voltar</a>";
 
         echo "
@@ -64,8 +69,7 @@
                 <div class='p-4'>
                     <div class='d-flex align-items-center'>
                         <div class='me-4'>
-                            <img src='{$dadosAlbum->album_capa}' alt='Capa do álbum' 
-                                style='width: 200px; height: 200px; object-fit: cover; border-radius: 8px;'>
+                            <img src='{$dadosAlbum->album_capa}' alt='Capa do álbum' style='width: 200px; height: 200px; object-fit: cover; border-radius: 8px;'>
                         </div>
                         <div>
                             <p class='text-uppercase mb-1' style='font-size: 12px;'>Álbum</p>
@@ -82,57 +86,19 @@
             </div>
         </div>
         <hr>";
-    ?>
+        echo "<a class='btn btn-light me-2' href='/hear-me-out/projeto/album?id={$dadosAlbum->album_id} '>Ver página do álbum</a>";
+        echo "<button type='button' class='btn btn-light me-2' onclick='abrirInserirMusica({$dadosAlbum->album_id})'>Inserir nova música</button>";
+
+        include "musicas/coverCard.php";
+        include "musicas/renderList.php";
+        if (empty($musica->musica_id)) {
+            echo '<h3 style="text-align: center;"> Esse album ainda não tem música!</h3>';
+        } else {
+            echo renderList(true, $musicas);
+        }
     
-    <table class="table table-dark table-striped">
-    <button type="button" class="btn btn-success me-2" onclick="abrirInserirMusica(<?= $dadosAlbum->album_id ?>)">Inserir nova música</button>
-        <thead>
-            <tr>
-                <th>#</th>
-                <th>Músicas</th>
-                <th>Nota</th>
-                <th>Duração</th>
-                <th>Ações</th>
-            </tr>
-        </thead>
-        <tbody>
-        <?php
-            if ($resultadoMusicas->num_rows > 0) {
-                $numero = 1;
+?>
 
-                while ($musica = $resultadoMusicas->fetch_object()) {
-                    echo "<div id='musica-{$musica->musica_id}' 
-                    data-nome='" . htmlspecialchars($musica->musica_nome, ENT_QUOTES) . "' 
-                    data-capa='" . htmlspecialchars($musica->musica_capa, ENT_QUOTES) . "' 
-                    data-duracao='" . htmlspecialchars($musica->musica_duracao, ENT_QUOTES) . "'
-                    data-data='" . $musica->musica_data . "' 
-                    style='display: none;'></div>";
-
-                    $btnAlterarMusica = "<button type='button' class='btn btn-warning me-2' onclick='abrirAlterarMusica({$musica->musica_id})'>Alterar</button>";
-                    $btnExcluirMusica = "<button type='button' class='btn btn-danger' onclick='deleteMusica({$musica->musica_id})'>Excluir</button>";
-                    $minutosMusica = floor($musica->musica_duracao / 60);
-                    $segundosMusica = $musica->musica_duracao % 60;
-                    echo "<tr>";
-                    echo "<td>{$numero}</td>";
-                    echo "<td>{$musica->musica_nome}</td>";
-                    echo "<td>AINDA NAO FEITO</td>";
-                    echo "<td>" . ($musica->musica_duracao >= 60 
-                                    ? "{$minutosMusica} min {$segundosMusica} sec" 
-                                    : "{$segundosMusica} sec") . "</td>";
-                    echo "<td>{$btnAlterarMusica}{$btnExcluirMusica}</td>";
-                    echo "</tr>";
-
-                    $numero++;
-                }
-            } else {
-                echo "<tr><td colspan='5' class='text-center'>
-                <p> Adicione uma música!</p>
-                </td></tr>";
-            }
-
-        ?>
-        </tbody>
-    </table>
     <?php } ?>
 </div>
 

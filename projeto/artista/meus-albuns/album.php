@@ -41,22 +41,23 @@
                     data-capa='" . htmlspecialchars($linha->capa, ENT_QUOTES) . "' 
                     data-data='" . $linha->data_lancamento . "' 
                     style='display: none;'></div>";
-            $btnAlterar = "<button type='button' class='btn btn-warning me-2' onclick='abrirAlterarAlbum({$linha->album_id})'>Alterar</button>";
-            $btnExcluir = "<button type='button' class='btn btn-danger me-2' onclick='deleteAlbum({$linha->album_id})'>Excluir</button>";
-            $btnVerAlbum = "<a href='index.php?page=4&id=" . $linha->album_id . "' class='btn btn-primary'>Ver álbum</a>";
+            $btnAlterar = "<button type='button' class='btn btn-light me-2' onclick='abrirAlterarAlbum({$linha->album_id})'>Alterar</button>";
+            $btnExcluir = "<button type='button' class='btn btn-light me-2' onclick='deleteAlbum({$linha->album_id})'>Excluir</button>";
+            $btnVerAlbum = "<a href='index.php?page=4&id=" . $linha->album_id . "' class='btn btn-light' style='margin-right: 12px'>Ver álbum</a>";
 
 
             echo "
             <div class='col-md-4 mb-4' >
               <div class='card bg-dark text-white' style='width:100%'>
                 <img class='card-img-top' src='{$linha->capa}' alt='Capa do álbum'>
-                <div class='card-body'>
+                <div class='card-body' >
                   <h4 class='card-title'>{$linha->album_nome}</h4>
                   <p class='card-text'><b>Artista:</b> {$linha->artista_nome}</p>
+                  <div style='margin-right: 12px'>
                   $btnVerAlbum
                   $btnAlterar
                   $btnExcluir
-                  
+                  </div>
                 </div>
               </div>
             </div>
