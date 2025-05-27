@@ -86,7 +86,9 @@
             </div>
         </div>
         <hr>";
-        echo "<button type='button' class='btn btn-success me-2' onclick='abrirInserirMusica({$dadosAlbum->album_id})'>Inserir nova música</button>";
+        echo "<a class='btn btn-light me-2' href='/hear-me-out/projeto/album?id={$dadosAlbum->album_id} '>Ver página do álbum</a>";
+        echo "<button type='button' class='btn btn-light me-2' onclick='abrirInserirMusica({$dadosAlbum->album_id})'>Inserir nova música</button>";
+
         include "musicas/coverCard.php";
         include "musicas/renderList.php";
         if (empty($musica->musica_id)) {

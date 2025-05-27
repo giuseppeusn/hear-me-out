@@ -8,7 +8,7 @@ function coverCard($nome, $artista, $capa, $link, $duracao, $pesquisa = false, $
     $duracaoFormatada = ($duracao >= 60) ? "$minutos:$segundos" : $duracao;
 
     $duracaoHtml = '
-      <div class="cover-card-duration">
+      <div class="cover-card-duration" style="margin-right: 12px">
         <p>' . htmlspecialchars($duracaoFormatada) . '</p>
       </div>';
   }
@@ -17,19 +17,22 @@ function coverCard($nome, $artista, $capa, $link, $duracao, $pesquisa = false, $
     <a href="'. htmlspecialchars($link) . '" class="cover-card-wrapper ' . ($pesquisa ? 'cover-search' : 'cover-list') . '">
       <div class="cover-card">
         <img class="cover-card-img" src="' . htmlspecialchars($capa) . '" alt="Capa da música">
-        <div class="cover-card-text">
+        <div class="cover-card-text" style="width: 900px">
           <h5>' . htmlspecialchars($nome) . '</h5>
           ' . ($artista ? '<p>' . htmlspecialchars($artista) . '</p>' : '') . '
+          ' . $duracaoHtml . '
         </div>
-        </div>
-        ' . $duracaoHtml . '
+        
+        
     </a>
-    <button type="button" class="btn btn-warning me-2" onclick="abrirAlterarMusica(this, ' . $musica_id . ')" 
+    <button type="button" class="btn btn-secondary me-2" onclick="abrirAlterarMusica(this, ' . $musica_id . ')" 
     data-nome="' . htmlspecialchars($nome) . '" 
     data-capa="' . htmlspecialchars($capa) . '" 
     data-duracao="' . htmlspecialchars($duracao) . '" 
     data-data="' . htmlspecialchars($data) . '">Alterar</button>
-    <button type="button" class="btn btn-danger me-2" onclick="deleteMusica(' . $musica_id . ')">Excluir</button>
+    <button type="button" class="btn btn-secondary me-2" onclick="deleteMusica(' . $musica_id . ')">Excluir</button>
+    </div>
+    
     ';
   }
 ?>
