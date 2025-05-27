@@ -10,13 +10,46 @@ if (!$id) {
     exit;
 }
 
-$result = $conn->query("DELETE FROM musica WHERE id = $id");
+$conn->begin_transaction();
 
-if ($result) {
-    echo "Música excluída com sucesso!";
-} else {
+try {
+    $conn->query("DELETE FROM comentario_musica WHERE id_musica = $id");
+    $comentarioMusicaAfetado = $conn->affected_rows;
+
+    $conn->query("DELETE FROM avaliacao_musica WHERE id_musica = $id");
+    $avaliacaoMusicaAfetado = $conn->affected_rows;
+
+    if ($comentarioMusicaAfetado > 0 || $avaliacaoMusicaAfetado > 0) {
+
+        $conn->query("
+            DELETE FROM comentario
+            WHERE id NOT IN (SELECT id_comentario FROM comentario_musica)
+              AND id NOT IN (SELECT id_comentario FROM comentario_album)
+        ");
+
+        $conn->query("
+            DELETE FROM avaliacao
+            WHERE id NOT IN (SELECT id_avaliacao FROM avaliacao_musica)
+              AND id NOT IN (SELECT id_avaliacao FROM avaliacao_album)
+        ");
+
+        $result = $conn->query("DELETE FROM musica WHERE id = $id");
+        $musicaAfetado = $conn->affected_rows;
+
+        if ($musicaAfetado > 0) {
+            $conn->commit();
+            echo "Música excluída com sucesso!";
+        } else {
+            $conn->rollback();
+            http_response_code(500);
+            echo "Erro ao excluir música!";
+        }
+    }
+} catch (Exception $e) {
+    $conn->rollback();
     http_response_code(500);
     echo "Erro ao excluir música!";
 }
+
 $conn->close();
 ?>
