@@ -1,6 +1,4 @@
 function deleteMusica(musicaId) {
-  const container = document.getElementById(`musica-${musicaId}`);
-
   Swal.fire({
     title: 'Deseja realmente excluir esta música?',
     text: 'Essa ação não poderá ser desfeita.',
@@ -22,11 +20,11 @@ function deleteMusica(musicaId) {
       .then(response => response.text())
       .then(data => {
         Swal.fire('Excluído!', data, 'success').then(() => {
-          if (container) {
-            container.remove();}
-            window.location.reload();
-          }
-        );
+          window.location.reload();
+        });
+      })
+      .catch(error => {
+        Swal.fire('Erro!', 'Não foi possível excluir.', 'error');
       });
     }
   });

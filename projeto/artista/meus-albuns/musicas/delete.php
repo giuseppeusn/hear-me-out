@@ -1,16 +1,22 @@
 <?php
 $conn = new mysqli("localhost:3306", "root", "", "hear_me_out");
-if ($conn->connect_error) {
-    die("Erro na conexão: " . $conn->connect_error);
-}
-$data = json_decode(file_get_contents("php://input"), true);
-$id = intval($data['id']);
-$sql = "DELETE FROM musica WHERE id = $id";
 
-if ($conn->query($sql)) {
+$data = json_decode(file_get_contents("php://input"), true);
+$id = intval($data['id'] ?? 0);
+
+if (!$id) {
+    http_response_code(400);
+    echo "ID inválido";
+    exit;
+}
+
+$result = $conn->query("DELETE FROM musica WHERE id = $id");
+
+if ($result) {
     echo "Música excluída com sucesso!";
 } else {
-    echo "Erro ao excluir música: " . $conn->error;
+    http_response_code(500);
+    echo "Erro ao excluir música!";
 }
 $conn->close();
 ?>

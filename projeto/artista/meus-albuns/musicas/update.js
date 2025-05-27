@@ -1,9 +1,9 @@
-function abrirAlterarMusica(musicaId) {
-  const container = document.getElementById(`musica-${musicaId}`);
-  const nome = container.getAttribute('data-nome');
-  const capa = container.getAttribute('data-capa');
-  const duracao = container.getAttribute('data-duracao');
-  const data = container.getAttribute('data-data');
+function abrirAlterarMusica(botao, musicaId) {
+
+  const nome = botao.getAttribute('data-nome');
+  const capa = botao.getAttribute('data-capa');
+  const duracao = botao.getAttribute('data-duracao');
+  const data = botao.getAttribute('data-data');
 
   Swal.fire({
     title: 'Alterar música',
@@ -16,7 +16,6 @@ function abrirAlterarMusica(musicaId) {
     showCancelButton: true,
     showCloseButton: true,
     focusConfirm: false,
-
     preConfirm: () => {
       const nome = document.getElementById('nome').value.trim();
       const capa = document.getElementById('capa').value.trim();
@@ -51,7 +50,6 @@ function abrirAlterarMusica(musicaId) {
 
       return { nome, duracao, capa, data };
     }
-
   }).then((resultado) => {
     if (resultado.isConfirmed) {
       fetch('/hear-me-out/projeto/artista/meus-albuns/musicas/update.php', {
