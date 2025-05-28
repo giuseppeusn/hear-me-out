@@ -44,6 +44,6 @@ if (!empty($mensagem) && $id_musica > 0) {
 
     $connection->close();
 } else {
-    echo "Dados incompletos. Preencha todos os campos.";
+    echo "O comentário não pode ser vazio, por favor preencha o campo.";
 }
 ?>

@@ -1,7 +1,5 @@
 <script>
   async function alterarComentario(comentarioId, mensagem) {
-  console.log("ID do comentário:", comentarioId);
-  console.log("Mensagem do comentário:", mensagem);
   const { value: novaMensagem, isConfirmed } = await Swal.fire({
     title: "Alterar Comentário",
     input: "textarea",
@@ -19,8 +17,7 @@
       return textoTeste;
     },
   });
-  console.log("Confirmado:", isConfirmed);
-  console.log("Nova mensagem retornada:", novaMensagem);
+
   if (!isConfirmed || !novaMensagem) return;
 
   try {
@@ -45,7 +42,6 @@
     );
     window.location.reload();
   } catch (error) {
-    console.error("Erro completo:", error);
     Swal.fire("Erro!", error.message || "Erro desconhecido.", "error");
   }
 }
