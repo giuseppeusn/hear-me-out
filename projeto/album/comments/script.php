@@ -50,7 +50,7 @@ function excluirComentario(albumId) {
   const container = document.getElementById(`album-${albumId}`);
 
   Swal.fire({
-    title: "Deseja realmente excluir este álbum?",
+    title: "Deseja realmente excluir o comentário?",
     text: "Essa ação não poderá ser desfeita.",
     icon: "warning",
     confirmButtonText: "Sim, excluir",

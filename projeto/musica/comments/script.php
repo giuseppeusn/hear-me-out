@@ -50,7 +50,7 @@ function excluirComentario(musicaId) {
   const container = document.getElementById(`musica-${musicaId}`);
 
   Swal.fire({
-    title: "Deseja realmente excluir esta música?",
+    title: "Deseja realmente excluir o comentário?",
     text: "Essa ação não poderá ser desfeita.",
     icon: "warning",
     confirmButtonText: "Sim, excluir",
