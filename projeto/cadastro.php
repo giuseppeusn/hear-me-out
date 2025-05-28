@@ -619,26 +619,26 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
 
         <div class="form-area">
             <label class="input-label">Nome: *</label>
-            <input type="text" name="nome" class="input-field" placeholder="Digite aqui o seu nome."
+            <input type="text" name="nome" class="input-field" placeholder="Digite aqui o seu nome"
                 value="<?php echo $_POST['nome'] ?? ''; ?>">
         </div>
 
         <div class="form-area">
             <label class="input-label">Email: *</label>
-            <input type="text" name="email" class="input-field" placeholder="Digite aqui o seu email."
+            <input type="text" name="email" class="input-field" placeholder="Digite aqui o seu email"
                 value="<?php echo $_POST['email'] ?? ''; ?>">
         </div>
 
         <div class="form-area">
             <label class="input-label">CPF: *</label>
-            <input type="text" name="cpf" class="input-field" placeholder="Digite aqui o seu CPF." maxlength="14"
+            <input type="text" name="cpf" class="input-field" placeholder="Digite aqui o seu CPF" maxlength="14"
                 onkeypress="MascaraCPF(this, event)" value="<?php echo $_POST['cpf'] ?? ''; ?>">
         </div>
 
         <div class="form-area">
             <label class="input-label">Data de nascimento: *</label>
             <input type="date" name="data_nasc" class="input-field"
-                placeholder="Coloque a sua data de nascimento aqui." value="<?php echo $_POST['data_nasc'] ?? ''; ?>">
+                placeholder="Digite aqui a sua data de nascimento" value="<?php echo $_POST['data_nasc'] ?? ''; ?>">
         </div>
 
         <div class="form-area">
@@ -657,7 +657,7 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
 
         <div class="form-area">
             <label class="input-label">Senha: *</label>
-            <input type="password" name="senha" class="input-field" placeholder="Digite aqui a sua senha." class="mb-2">
+            <input type="password" name="senha" class="input-field" placeholder="Digite aqui a sua senha" class="mb-2">
         </div>
 
         <div class="text-center">
@@ -682,19 +682,19 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
 
         <div class="form-area">
             <label class="input-label">Nome: *</label>
-            <input type="text" id="nome" name="nome" class="input-field" placeholder="Digite aqui o seu nome."
+            <input type="text" id="nome" name="nome" class="input-field" placeholder="Digite aqui o seu nome"
                 value="<?php echo $_POST['nome'] ?? ''; ?>">
         </div>
 
         <div class="form-area">
             <label class="input-label">CPF: *</label>
-            <input type="text" id="cpf" name="cpf" class="input-field" onkeypress="MascaraCPF(this, event)" maxlength="14" placeholder="Digite seu CPF."
+            <input type="text" id="cpf" name="cpf" class="input-field" onkeypress="MascaraCPF(this, event)" maxlength="14" placeholder="Digite aqui o seu CPF"
                 value="<?php echo $_POST['cpf'] ?? ''; ?>">
         </div>
 
         <div class="form-area">
             <label class="input-label">Email: *</label>
-            <input type="email" id="email" name="email" class="input-field" placeholder="Digite seu email."
+            <input type="email" id="email" name="email" class="input-field" placeholder="Digite aqui o seu email"
                 value="<?php echo $_POST['email'] ?? ''; ?>">
         </div>
 
@@ -706,12 +706,12 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
 
         <div class="form-area">
             <label class="input-label">Biografia: *</label>
-            <textarea id="biografia" name="biografia" class="textarea-field" placeholder="Digite a biografia." rows="3"><?php echo $_POST['biografia'] ?? ''; ?></textarea>
+            <textarea id="biografia" name="biografia" class="textarea-field" placeholder="Digite aqui a sua biografia" rows="3"><?php echo $_POST['biografia'] ?? ''; ?></textarea>
         </div>
 
         <div class="form-area">
             <label class="input-label">Portifólio (site, linkedin, redes sociais): *</label>
-            <input type="url" id="site" name="site" class="input-field" placeholder="Digite o link."
+            <input type="url" id="site" name="site" class="input-field" placeholder="Digite aqui o link"
                 value="<?php echo $_POST['site'] ?? ''; ?>">
         </div>
 
@@ -727,7 +727,7 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
 
         <div class="form-area">
             <label class="input-label">Senha: *</label>
-            <input type="password" id="senha" name="senha" class="input-field" placeholder="Digite sua senha."
+            <input type="password" id="senha" name="senha" class="input-field" placeholder="Digite aqui a sua senha"
                 autocomplete="off">
         </div>
 
@@ -754,25 +754,25 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
 
         <div class="form-area">
             <label class="input-label">Nome: *</label>
-            <input type="text" id="nome" name="nome" class="input-field" placeholder="Digite o nome do artista."
+            <input type="text" id="nome" name="nome" class="input-field" placeholder="Digite aqui o seu nome"
                 value="<?php echo $_POST['nome'] ?? ''; ?>">
         </div>
 
         <div class="form-area">
             <label class="input-label">Email: *</label>
-            <input type="email" id="email" name="email" class="input-field" placeholder="Digite o email do artista."
+            <input type="email" id="email" name="email" class="input-field" placeholder="Digite aqui o seu email"
                 value="<?php echo $_POST['email'] ?? ''; ?>">
         </div>
 
         <div class="form-area">
             <label class="input-label">Biografia: *</label>
-            <textarea id="biografia" name="biografia" class="textarea-field" placeholder="Digite a biografia."
+            <textarea id="biografia" name="biografia" class="textarea-field" placeholder="Digite aqui a sua biografia"
                 rows="3"><?php echo $_POST['biografia'] ?? ''; ?></textarea>
         </div>
 
         <div class="form-area">
-            <label class="input-label">Imagem (URL): *</label>
-            <input type="url" id="imagem" name="imagem" class="input-field" placeholder="Link da imagem (.jpg/.png)"
+            <label class="input-label">Imagem de perfil: *</label>
+            <input type="url" id="imagem" name="imagem" class="input-field" placeholder="Digite aqui o link da imagem (.jpg/.png)"
                 value="<?php echo $_POST['imagem'] ?? ''; ?>">
         </div>
 
@@ -784,7 +784,7 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
 
         <div class="form-area">
             <label class="input-label">País: *</label>
-            <input type="text" id="pais" name="pais" class="input-field" placeholder="Digite o país de origem."
+            <input type="text" id="pais" name="pais" class="input-field" placeholder="Digite aqui o seu país de origem"
                 value="<?php echo $_POST['pais'] ?? ''; ?>">
         </div>
 
@@ -796,12 +796,12 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
 
         <div class="form-area">
             <label class="input-label">Gênero músical: *</label>
-            <input type="text" placeholder="Digite o gênero músical." id="genero" name="genero" class="input-field" value="<?php echo $_POST['genero'] ?? '';?>">
+            <input type="text" placeholder="Digite aqui o seu gênero musical" id="genero" name="genero" class="input-field" value="<?php echo $_POST['genero'] ?? '';?>">
         </div>
 
         <div class="form-area">
             <label class="input-label">Senha: *</label>
-            <input type="password" id="senha" name="senha" class="input-field" placeholder="Digite sua senha."
+            <input type="password" id="senha" name="senha" class="input-field" placeholder="Digite aqui a sua senha"
                 autocomplete="off">
         </div>
 
