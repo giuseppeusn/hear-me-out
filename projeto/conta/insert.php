@@ -187,8 +187,8 @@ if (isset($_POST['create'])) {
 	} else {
 		$oMysql = connect_db();
 		$cpf = preg_replace('/[^0-9]/', '', $_POST['cpf']); // remove mascara do cpf
-		$query = "INSERT INTO usuario (nome,email,cpf,data_nasc,senha,genero,permissao) 
-							VALUES ('" . $_POST['nome'] . "', '" . $_POST['email'] . "', '" . $cpf . "', '" . $_POST['data_nasc'] . "', '" . mysqli_real_escape_string($oMysql, password_hash($_POST['senha'], PASSWORD_DEFAULT)) . "', '" . $_POST['genero'] . "', 'normal')";
+		$query = "INSERT INTO usuario (nome,email,cpf,data_nasc,senha,genero,permissao,data_nsc) 
+							VALUES ('" . $_POST['nome'] . "', '" . $_POST['email'] . "', '" . $cpf . "', '" . $_POST['data_nasc'] . "', '" . mysqli_real_escape_string($oMysql, password_hash($_POST['senha'], PASSWORD_DEFAULT)) . "', '" . $_POST['genero'] . "', 'normal', '" . $_POST['data_nsc'] . "')";
 		$resultado = $oMysql->query($query);
 		$_SESSION['sucesso_cadastro'] = true;
 		header('location: index.php');

@@ -195,8 +195,8 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
         } else {
             $oMysql = connect_db();
             $cpf = preg_replace('/[^0-9]/', '', $_POST['cpf']); // remove mascara do cpf
-            $query = "INSERT INTO usuario (nome,email,cpf,data_nasc,senha,genero,permissao) 
-							VALUES ('" . $_POST['nome'] . "', '" . $_POST['email'] . "', '" . $cpf . "', '" . $_POST['data_nasc'] . "', '" . mysqli_real_escape_string($oMysql, password_hash($_POST['senha'], PASSWORD_DEFAULT)) . "', '" . $_POST['genero'] . "', 'normal')";
+            $query = "INSERT INTO usuario (nome,email,cpf,data_nasc,senha,genero,permissao,data_nsc) 
+							VALUES ('" . $_POST['nome'] . "', '" . $_POST['email'] . "', '" . $cpf . "', '" . $_POST['data_nasc'] . "', '" . mysqli_real_escape_string($oMysql, password_hash($_POST['senha'], PASSWORD_DEFAULT)) . "', '" . $_POST['genero'] . "', 'normal', '" . $_POST['data_nsc'] . "')";
             $resultado = $oMysql->query($query);
             $_SESSION['sucesso_cadastro'] = true;
             header('location: login.php');
@@ -659,6 +659,11 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
             <label class="input-label">Senha: *</label>
             <input type="password" name="senha" class="input-field" placeholder="Digite aqui a sua senha." class="mb-2">
         </div>
+            <div class="form-area">
+            <label class="input-label">data nscie: *</label>
+            <input type="date" name="data_nsc" class="input-field" placeholder="Digite aqui a sua senha." class="mb-2">
+        </div>
+
 
         <div class="text-center">
             <button type="submit" name="create_usuario" class="btn btn-success mt-4 custom-btn-size">Cadastrar</button>

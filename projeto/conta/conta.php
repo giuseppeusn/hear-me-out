@@ -87,6 +87,18 @@
             <label class="input-label">CPF</label>
             <input type="text" class="input-field" placeholder="CPF" value="<?= htmlspecialchars($userData['cpf']) ?>" name="cpf" disabled>
           </div>
+            <div class="form-area">
+            <label class="input-label">Data de ciacao:</label>
+            <input type="date" class="input-field" placeholder="data de criacao" value="<?= $userData['data_nsc'] ?>" name="data_nsc" disabled>
+          </div>
+          <div class="row mt-3 ms-2">
+            <div class="col-7 text-end custom-padding-right">
+              <p>deseja mudar de senha?</p>
+            </div>
+            <div class="col-5 custom-padding-left">
+              <a class="link-primary link-offset-2 link-underline-opacity-25 link-underline-opacity-100-hover"href="alterars.php">Registrar-se</a>
+        </div>
+      </div>
           <?php elseif ($userType === 'critico'): ?>
           <div class="form-area">
             <label class="input-label">Data de Nascimento</label>
