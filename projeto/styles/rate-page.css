@@ -310,6 +310,7 @@
 .review-area {
   display: flex;
   flex-direction: column;
+  margin-top: 10px;
 }
 
 .review-area input {

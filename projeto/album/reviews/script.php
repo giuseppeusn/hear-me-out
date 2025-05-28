@@ -26,13 +26,14 @@
       title: 'Adicionar avaliação',
       html: `
         <form id="avaliacaoForm">
+          <p style="color:gray" class="mb-1">Campo obrigatório *</p>
           <div class="review-area">
-            <label for="nota">Nota (0 a 5)</label>
+            <label for="nota">* Nota (0 a 5)</label>
             <input type="number" class="form-control" id="nota" name="nota" min="0" max="5" step="0.1" required>
           </div>
           <div class="review-area">
-            <label for="mensagem">Mensagem</label>
-            <textarea class="form-control" id="mensagem" name="mensagem" maxlength="500" required></textarea>
+            <label for="mensagem">* Mensagem (máx. 500 letras)</label>
+            <textarea class="form-control" id="mensagem" name="mensagem" maxlength="500" placeholder="Digite uma mensagem para a sua avaliação..." required></textarea>
           </div>
           <input type="hidden" name="album_id" value="<?= $album->album_id ?>">
           <input type="hidden" name="avaliador_id" value="<?= isset($_SESSION['id']) ? $_SESSION['id'] : null ?>">
@@ -41,6 +42,14 @@
       `,
       confirmButtonText: 'Adicionar',
       showCloseButton: true,
+      preConfirm: () => {
+        const form = document.getElementById('avaliacaoForm');
+        if (!form.checkValidity()) {
+          Swal.showValidationMessage('Preencha todos os campos corretamente');
+          return false;
+        }
+        return true;
+      },
     }).then((resultado) => {
       if (resultado.isConfirmed) {
         insertReview();
@@ -71,18 +80,19 @@
       title: 'Alterar avaliação',
       html: `
         <form id="avaliacaoForm">
+          <p style="color:gray" class="mb-1">Campo obrigatório *</p>
           <div class="review-area">
-            <label for="nota">Nota (0 a 5)</label>
+            <label for="nota">* Nota (0 a 5)</label>
             <input type="number" class="form-control" id="nota" name="nota" min="0" max="5" step="0.1" required value="${avaliacoes.minhaAvaliacao.nota}">
           </div>
           <div class="review-area">
-            <label for="mensagem">Mensagem</label>
-            <textarea class="form-control" id="mensagem" name="mensagem" maxlength="500" required>${avaliacoes.minhaAvaliacao.mensagem}</textarea>
+            <label for="mensagem">* Mensagem (máx. 500 letras)</label>
+            <textarea class="form-control" id="mensagem" name="mensagem" maxlength="500" placeholder="Digite uma mensagem para a sua avaliação" required>${avaliacoes.minhaAvaliacao.mensagem}</textarea>
           </div>
           <input type="hidden" name="avaliacao_id" value="${avaliacoes.minhaAvaliacao.id_avaliacao}">
           <input type="hidden" name="album_id" value="<?= $album->album_id ?>">
           <div class="review-actions">
-            <button type="button" class="review-update" onclick="updateReview()">
+            <button type="button" class="review-update" onclick="validateUpdate()">
               Atualizar avaliação
             </button>
             <button type="button" class="review-delete" onclick="deleteReview(${avaliacoes.minhaAvaliacao.id_avaliacao})">
@@ -111,6 +121,17 @@
         this.value = 0;
       }
     });
+  }
+
+  function validateUpdate() {
+    const form = document.getElementById('avaliacaoForm');
+    if (!form.checkValidity()) {
+      console.log('Form inválido');
+      Swal.showValidationMessage('Preencha todos os campos corretamente');
+      return;
+    }
+
+    updateReview();
   }
 
   function deleteReview(id) {
@@ -184,9 +205,6 @@
   }
 
   function insertReview() {
-    const form = document.getElementById('avaliacaoForm');
-    const formData = new FormData(form);
-
     fetch('../album/reviews/insert.php', {
       method: 'POST',
       body: formData

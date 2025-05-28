@@ -28,13 +28,14 @@
       title: 'Adicionar avaliação',
       html: `
         <form id="avaliacaoForm">
+          <p style="color:gray" class="mb-1">Campo obrigatório *</p>
           <div class="review-area">
-            <label for="nota">Nota (0 a 5)</label>
+            <label for="nota">* Nota (0 a 5)</label>
             <input type="number" class="form-control" id="nota" name="nota" min="0" max="5" step="0.1" required>
           </div>
           <div class="review-area">
-            <label for="mensagem">Mensagem</label>
-            <textarea class="form-control" id="mensagem" name="mensagem" maxlength="500" required></textarea>
+            <label for="mensagem">* Mensagem (máx. 500 letras)</label>
+            <textarea class="form-control" id="mensagem" name="mensagem" maxlength="500" placeholder="Digite uma mensagem para a sua avaliação..." required></textarea>
           </div>
           <input type="hidden" name="musica_id" value="<?= $musica->musica_id ?>">
           <input type="hidden" name="avaliador_id" value="<?= isset($_SESSION['id']) ? $_SESSION['id'] : null ?>">
@@ -42,8 +43,15 @@
         </form>
       `,
       confirmButtonText: 'Adicionar',
-      showCancelButton: true,
-      cancelButtonText: 'Fechar',
+      showCloseButton: true,
+      preConfirm: () => {
+        const form = document.getElementById('avaliacaoForm');
+        if (!form.checkValidity()) {
+          Swal.showValidationMessage('Preencha todos os campos corretamente');
+          return false;
+        }
+        return true;
+      },
     }).then((resultado) => {
       if (resultado.isConfirmed) {
         insertReview();
@@ -65,24 +73,39 @@
             <input type="number" class="form-control" id="nota" name="nota" min="0" max="5" step="0.1" required value="${avaliacoes.minhaAvaliacao.nota}">
           </div>
           <div class="review-area">
-            <label for="mensagem">Mensagem</label>
+            <label for="mensagem">Mensagem (máx. 500 letras)</label>
             <textarea class="form-control" id="mensagem" name="mensagem" maxlength="500" required>${avaliacoes.minhaAvaliacao.mensagem}</textarea>
           </div>
           <input type="hidden" name="avaliacao_id" value="${avaliacoes.minhaAvaliacao.id_avaliacao}">
           <input type="hidden" name="musica_id" value="<?= $musicas->musica_id ?>">
-          <button type="button" class="review-delete" onclick="deleteReview(${avaliacoes.minhaAvaliacao.id_avaliacao})">
-            Excluir avaliação
-          </button>
+          <div class="review-actions">
+            <button type="button" class="review-update" onclick="validateUpdate()">
+              Atualizar avaliação
+            </button>
+            <button type="button" class="review-delete" onclick="deleteReview(${avaliacoes.minhaAvaliacao.id_avaliacao})">
+              Excluir avaliação
+            </button>
+          </div>
         </form>
       `,
-      confirmButtonText: 'Atualizar',
-      showCancelButton: true,
-      cancelButtonText: 'Fechar',
+      showConfirmButton: false,
+      showCloseButton: true,
     }).then((resultado) => {
       if (resultado.isConfirmed) {
         updateReview();
       }
     });
+  }
+
+  function validateUpdate() {
+    const form = document.getElementById('avaliacaoForm');
+    if (!form.checkValidity()) {
+      console.log('Form inválido');
+      Swal.showValidationMessage('Preencha todos os campos corretamente');
+      return;
+    }
+
+    updateReview();
   }
 
   function deleteReview(id) {
