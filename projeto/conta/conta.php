@@ -87,18 +87,77 @@
             <label class="input-label">CPF</label>
             <input type="text" class="input-field" placeholder="CPF" value="<?= htmlspecialchars($userData['cpf']) ?>" name="cpf" disabled>
           </div>
-            <div class="form-area">
-            <label class="input-label">Data de ciacao:</label>
-            <input type="date" class="input-field" placeholder="data de criacao" value="<?= $userData['data_nsc'] ?>" name="data_nsc" disabled>
-          </div>
+
           <div class="row mt-3 ms-2">
             <div class="col-7 text-end custom-padding-right">
               <p>deseja mudar de senha?</p>
             </div>
             <div class="col-5 custom-padding-left">
-              <a class="link-primary link-offset-2 link-underline-opacity-25 link-underline-opacity-100-hover"href="alterars.php">Registrar-se</a>
+              <a class="link-primary link-offset-2 link-underline-opacity-25 link-underline-opacity-100-hover"name="senhaa"onclick="mostrarModalAlterarSenha()">Mudar de senha</a>
         </div>
       </div>
+      <script>
+          function mostrarModalAlterarSenha() {
+            Swal.fire({
+                title: 'Alterar Senha',
+                html:
+                    '<input id="swal-input-nova-senha" class="swal2-input" type="password" placeholder="Nova Senha">' +
+                    '<input id="swal-input-confirmar-senha" class="swal2-input" type="password" placeholder="Confirmar Nova Senha">',
+                focusConfirm: false,
+                showCancelButton: true,
+                confirmButtonText: 'Alterar',
+                cancelButtonText: 'Cancelar',
+                preConfirm: () => {
+                    const novaSenha = Swal.getPopup().querySelector('#swal-input-nova-senha').value;
+                    const confirmarSenha = Swal.getPopup().querySelector('#swal-input-confirmar-senha').value;
+
+                    if (!novaSenha || !confirmarSenha) {
+                        Swal.showValidationMessage('Por favor, preencha todos os campos da senha.');
+                        return false;
+                    }
+                    if (novaSenha !== confirmarSenha) {
+                        Swal.showValidationMessage('As senhas não coincidem.');
+                        return false;
+                    }
+                    return { nova_senha: novaSenha, confirmar_senha: confirmarSenha };
+                }
+            }).then((result) => {
+                if (result.isConfirmed) {
+                
+                    Swal.fire({
+                        title: 'Deseja realmente alterar a senha?',
+                        icon: 'question',
+                        showCancelButton: true,
+                        confirmButtonText: 'Sim, alterar!',
+                        cancelButtonText: 'Não, cancelar',
+                    }).then((confirmResult) => {
+                        if (confirmResult.isConfirmed) {
+                          
+                            fetch('/hear-me-out/projeto/conta/alterars.php', { 
+                                method: 'POST',
+                                headers: {
+                                    'Content-Type': 'application/x-www-form-urlencoded',
+                                },
+                                body: `action=alterar_senha&nova_senha=${encodeURIComponent(result.value.nova_senha)}&confirmar_senha=${encodeURIComponent(result.value.confirmar_senha)}`,
+                            })
+                            .then(response => response.json())
+                            .then(data => {
+                                if (data.success) {
+                                    Swal.fire('Sucesso!', data.message, 'success');
+                                } else {
+                                    Swal.fire('Erro!', data.message, 'error');
+                                }
+                            })
+                            .catch(error => {
+                                console.error('Erro na requisição AJAX:', error);
+                                Swal.fire('Erro!', 'Ocorreu um erro ao comunicar com o servidor.', 'error');
+                            });
+                        }
+                    });
+                }
+            });
+        }
+      </script>
           <?php elseif ($userType === 'critico'): ?>
           <div class="form-area">
             <label class="input-label">Data de Nascimento</label>
