@@ -28,7 +28,7 @@
             echo '<h2 class="text-white mb-3 mt-3 fw-bold">Músicas</h2>';
 
             while ($data = $resultado_musica->fetch_object()) {
-              echo coverCard($data->nome_musica, $data->nome_artista, $data->capa, '/hear-me-out/projeto/musica?id=' . $data->id_musica . '', $data->duracao, true);
+              echo coverCard($data->nome_musica, $data->nome_artista, $data->capa, '/hear-me-out/projeto/musica?id=' . $data->id_musica . '', $data->duracao, 'pesquisa');
             }
 
             echo '</div>';
@@ -39,7 +39,7 @@
             echo '<h2 class="text-white mb-3 mt-3 fw-bold">Álbuns</h2>';
 
             while ($data = $resultado_album->fetch_object()) {
-              echo coverCard($data->nome_album, $data->nome_artista, $data->capa, '/hear-me-out/projeto/album?id=' . $data->album_id . '', null, true);
+              echo coverCard($data->nome_album, $data->nome_artista, $data->capa, '/hear-me-out/projeto/album?id=' . $data->album_id . '', null, 'pesquisa');
             }
 
             echo '</div>';

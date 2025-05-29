@@ -14,25 +14,31 @@ function coverCard($nome, $artista, $capa, $link, $duracao, $pesquisa = false, $
   }
 
   return '
-    <a href="'. htmlspecialchars($link) . '" class="cover-card-wrapper ' . ($pesquisa ? 'cover-search' : 'cover-list') . '">
-      <div class="cover-card">
-        <img class="cover-card-img" src="' . htmlspecialchars($capa) . '" alt="Capa da música">
-        <div class="cover-card-text" style="width: 900px">
-          <h5>' . htmlspecialchars($nome) . '</h5>
-          ' . ($artista ? '<p>' . htmlspecialchars($artista) . '</p>' : '') . '
-          ' . $duracaoHtml . '
+    <div class="cover-card-wrapper ' . ($pesquisa ? 'cover-search' : 'cover-list') . '">
+      <a href="'. htmlspecialchars($link) . '" class="text-decoration-none text-white">
+        <div class="cover-card">
+          <img class="cover-card-img" src="' . htmlspecialchars($capa) . '" alt="Capa da música">
+          <div class="cover-card-text">
+            <h5>' . htmlspecialchars($nome) . '</h5>
+            ' . ($artista ? '<p>' . htmlspecialchars($artista) . '</p>' : '') . '
+            ' . $duracaoHtml . '
+          </div>
         </div>
-        
-        
-    </a>
-    <button type="button" class="btn btn-secondary me-2" onclick="abrirAlterarMusica(this, ' . $musica_id . ')" 
-    data-nome="' . htmlspecialchars($nome) . '" 
-    data-capa="' . htmlspecialchars($capa) . '" 
-    data-duracao="' . htmlspecialchars($duracao) . '" 
-    data-data="' . htmlspecialchars($data) . '">Alterar</button>
-    <button type="button" class="btn btn-secondary me-2" onclick="deleteMusica(' . $musica_id . ')">Excluir</button>
-    </div>
-    
-    ';
+      </a>
+      <div class="cover-card-btns">
+        <button type="button" class="btn-update" onclick="abrirAlterarMusica(this, ' . $musica_id . ')" 
+          data-nome="' . htmlspecialchars($nome) . '" 
+          data-capa="' . htmlspecialchars($capa) . '" 
+          data-duracao="' . htmlspecialchars($duracao) . '" 
+          data-data="' . htmlspecialchars($data) . '">
+          <img src="/hear-me-out/projeto/assets/svg/edit.svg" alt="Editar" class="action-icon">
+          <span class="action-text">Alterar<span>
+        </button>
+        <button type="button" class="btn-delete" onclick="deleteMusica(' . $musica_id . ')">
+          <img src="/hear-me-out/projeto/assets/svg/trash.svg" alt="Excluir" class="action-icon">
+          <span class="action-text">Excluir<span>
+        </button>
+      </div>  
+    </div>';
   }
 ?>

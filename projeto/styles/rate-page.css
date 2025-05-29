@@ -361,35 +361,3 @@
   justify-content: space-between;
   margin-top: 20px;
 }
-
-.review-update,
-.review-delete {
-  color: white;
-  border: none;
-  padding: 10px 20px;
-  border-radius: 15px;
-  font-weight: bold;
-  cursor: pointer;
-  width: 45%;
-}
-
-.review-update {
-  background-color: #c59100;
-}
-
-.review-update:hover {
-  background-color: #b38000;
-}
-
-.review-delete {
-  background-color: red;
-}
-
-.review-delete:hover {
-  background-color: #b80000;
-}
-
-.review-delete img {
-  width: 20px;
-  height: 20px;
-}

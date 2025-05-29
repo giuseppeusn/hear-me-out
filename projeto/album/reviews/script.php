@@ -92,10 +92,10 @@
           <input type="hidden" name="avaliacao_id" value="${avaliacoes.minhaAvaliacao.id_avaliacao}">
           <input type="hidden" name="album_id" value="<?= $album->album_id ?>">
           <div class="review-actions">
-            <button type="button" class="review-update" onclick="validateUpdate()">
+            <button type="button" class="btn-update" onclick="validateUpdate()">
               Atualizar avaliação
             </button>
-            <button type="button" class="review-delete" onclick="deleteReview(${avaliacoes.minhaAvaliacao.id_avaliacao})">
+            <button type="button" class="btn-delete" onclick="deleteReview(${avaliacoes.minhaAvaliacao.id_avaliacao})">
               Excluir avaliação
             </button>
           </div>

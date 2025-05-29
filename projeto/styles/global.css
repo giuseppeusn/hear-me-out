@@ -232,6 +232,7 @@ input:-webkit-autofill::placeholder {
   color: white;
   padding: 20px;
   border-radius: 10px;
+  width: 100%;
 }
 
 .cover-card-wrapper.cover-list:hover {
@@ -260,8 +261,63 @@ input:-webkit-autofill::placeholder {
   border-radius: 5px;
 }
 
+.cover-card-btns {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  width: 30%;
+}
+
+.btn-update,
+.btn-delete {
+  display: flex;
+  justify-content: center;
+  color: white;
+  border: none;
+  padding: 10px 20px;
+  border-radius: 15px;
+  font-weight: bold;
+  cursor: pointer;
+  width: 45%;
+}
+
+.btn-update {
+  background-color: #c59100;
+}
+
+.btn-update:hover {
+  background-color: #b38000;
+}
+
+.cover-card-btns .action-icon {
+  width: 20px;
+  height: 20px;
+  display: none;
+}
+
+.btn-delete {
+  background-color: red;
+}
+
+.btn-delete:hover {
+  background-color: #b80000;
+}
+
 @media screen and (max-width: 768px) {
   .content {
     width: 95% !important;
+  }
+
+  .cover-card-btns .action-icon {
+    display: block;
+  }
+
+  .cover-card-btns .action-text {
+    display: none;
+  }
+
+  .btn-update,
+  .btn-delete {
+    padding: 5px 10px;
   }
 }
