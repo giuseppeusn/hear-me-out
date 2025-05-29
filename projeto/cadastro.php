@@ -305,7 +305,7 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
                 return [false, ""];
             }
         }
-
+      
         function validarSenha($senha)
         {
             $erros = [];
@@ -398,6 +398,7 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
             header('location: login.php');
         }
     }
+     
 
     if (isset($_POST['create_artista'])) {
         function camposPreenchidos($campos)
