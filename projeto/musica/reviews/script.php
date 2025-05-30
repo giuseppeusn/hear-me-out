@@ -29,13 +29,13 @@
       html: `
         <form id="avaliacaoForm">
           <p style="color:gray" class="mb-1">Campo obrigatório *</p>
-          <div class="review-area">
-            <label for="nota">* Nota (0 a 5)</label>
-            <input type="number" class="form-control" id="nota" name="nota" min="0" max="5" step="0.1" required>
+          <div class="form-area">
+            <label for="nota" class="input-label">* Nota (0 a 5)</label>
+            <input type="number" class="input-field" id="nota" name="nota" min="0" max="5" step="0.1" required>
           </div>
-          <div class="review-area">
-            <label for="mensagem">* Mensagem (máx. 500 letras)</label>
-            <textarea class="form-control" id="mensagem" name="mensagem" maxlength="500" placeholder="Digite uma mensagem para a sua avaliação..." required></textarea>
+          <div class="form-area">
+            <label for="mensagem" class="input-label">* Mensagem (máx. 500 letras)</label>
+            <textarea class="textarea-field" id="mensagem" name="mensagem" maxlength="500" placeholder="Digite uma mensagem para a sua avaliação..." required></textarea>
           </div>
           <input type="hidden" name="musica_id" value="<?= $musica->musica_id ?>">
           <input type="hidden" name="avaliador_id" value="<?= isset($_SESSION['id']) ? $_SESSION['id'] : null ?>">
@@ -68,13 +68,13 @@
       title: 'Alterar avaliação',
       html: `
         <form id="avaliacaoForm">
-          <div class="review-area">
-            <label for="nota">Nota (0 a 5)</label>
-            <input type="number" class="form-control" id="nota" name="nota" min="0" max="5" step="0.1" required value="${avaliacoes.minhaAvaliacao.nota}">
+          <div class="form-area">
+            <label for="nota" class="input-label">Nota (0 a 5)</label>
+            <input type="number" class="input-field" id="nota" name="nota" min="0" max="5" step="0.1" required value="${avaliacoes.minhaAvaliacao.nota}">
           </div>
-          <div class="review-area">
-            <label for="mensagem">Mensagem (máx. 500 letras)</label>
-            <textarea class="form-control" id="mensagem" name="mensagem" maxlength="500" required>${avaliacoes.minhaAvaliacao.mensagem}</textarea>
+          <div class="form-area">
+            <label for="mensagem" class="input-label">Mensagem (máx. 500 letras)</label>
+            <textarea class="textarea-field" id="mensagem" name="mensagem" maxlength="500" required>${avaliacoes.minhaAvaliacao.mensagem}</textarea>
           </div>
           <input type="hidden" name="avaliacao_id" value="${avaliacoes.minhaAvaliacao.id_avaliacao}">
           <input type="hidden" name="musica_id" value="<?= $musicas->musica_id ?>">

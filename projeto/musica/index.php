@@ -39,6 +39,7 @@
 <head>
   <link rel="stylesheet" href="../styles/rate-page.css">
   <link rel="stylesheet" href="../styles/search.css">
+  <link rel="stylesheet" href="../styles/form.css">
   <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 </head>
 <body>
