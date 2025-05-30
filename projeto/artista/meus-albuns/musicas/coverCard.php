@@ -15,7 +15,7 @@ function coverCard($nome, $capa, $link, $duracao, $pesquisa = false, $musica_id,
 
   return '
     <div class="cover-card-wrapper ' . ($pesquisa ? 'cover-search' : 'cover-list') . '">
-      <a href="'. htmlspecialchars($link) . '" class="text-decoration-none text-white">
+      <a target="_blank" href="'. htmlspecialchars($link) . '" class="text-decoration-none text-white">
         <div class="cover-card">
           <img class="cover-card-img" src="' . htmlspecialchars($capa) . '" alt="Capa da música">
           <div class="cover-card-text">
