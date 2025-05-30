@@ -31,11 +31,11 @@ function validarUrl($url) {
     return filter_var($url, FILTER_VALIDATE_URL);
 }
 
-$camposObrigatorios = ['id', 'nome', 'email', 'data_formacao', 'pais', 'genero']; // 'genero' aqui é o musical
+$camposObrigatorios = ['id', 'nome', 'email', 'data_formacao', 'pais', 'genero', 'biografia', 'imagem', 'site_oficial']; // 'genero' aqui é o musical
 
 if (!validarCampos($data, $camposObrigatorios)) {
     http_response_code(400);
-    echo json_encode(["success" => false, "message" => "Preencha os campos obrigatórios: Nome, E-mail, Data de Formação, País e Gênero Musical."]);
+    echo json_encode(["success" => false, "message" => "Preencha os campos obrigatórios: Nome, E-mail, Data de Formação, País, Gênero Musical, Biografia, Imagem e Site."]);
     exit;
 }
 

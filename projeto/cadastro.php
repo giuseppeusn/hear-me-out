@@ -504,7 +504,7 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
             }
         }
 
-        if (!camposPreenchidos(['nome', 'email', 'biografia', 'data_formacao', 'pais', 'site_oficial', 'genero', 'senha'])) {
+        if (!camposPreenchidos(['nome', 'email', 'biografia', 'imagem', 'data_formacao', 'pais', 'site_oficial', 'genero', 'senha'])) {
             echo "<script src='https://cdn.jsdelivr.net/npm/sweetalert2@11'></script>";
             echo "<script>
 			Swal.fire({
@@ -550,8 +550,8 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
 		</script>";
         } else {
             $oMysql = connect_db();
-            $query = "INSERT INTO artista (nome,email,biografia,data_formacao,pais,site_oficial,genero,senha) 
-						VALUES ('" . $_POST['nome'] . "', '" . $_POST['email'] . "', '" . $_POST['biografia'] . "', '" . $_POST['data_formacao'] . "', '" . $_POST['pais'] . "', '" . $_POST['site_oficial'] . "', '" . $_POST['genero'] . "', '" . mysqli_real_escape_string($oMysql, password_hash($_POST['senha'], PASSWORD_DEFAULT)) . "' )";
+            $query = "INSERT INTO artista (nome,email,biografia,imagem,data_formacao,pais,site_oficial,genero,senha) 
+						VALUES ('" . $_POST['nome'] . "', '" . $_POST['email'] . "', '" . $_POST['biografia'] . "', '" . $_POST['imagem'] . "','" . $_POST['data_formacao'] . "', '" . $_POST['pais'] . "', '" . $_POST['site_oficial'] . "', '" . $_POST['genero'] . "', '" . mysqli_real_escape_string($oMysql, password_hash($_POST['senha'], PASSWORD_DEFAULT)) . "' )";
             $resultado = $oMysql->query($query);
             $_SESSION['sucesso_cadastro2'] = true;
             header('location: login.php');
@@ -769,7 +769,13 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
             <textarea id="biografia" name="biografia" class="textarea-field" placeholder="Digite aqui a sua biografia"
                 rows="3"><?php echo $_POST['biografia'] ?? ''; ?></textarea>
         </div>
-        
+
+        <div class="form-area">
+            <label for="imagem" class="input-label">Imagem (URL): *</label>
+            <input type="url" id="imagem" name="imagem" class="input-field" placeholder="Link da imagem (.jpg/.png)"
+                value="<?php echo $_POST['imagem'] ?? ''; ?>">
+        </div>
+
         <div class="form-area">
             <label class="input-label">Data de formação da banda: *</label>
             <input type="date" id="data_formacao" name="data_formacao" class="input-field"
@@ -790,7 +796,7 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
 
         <div class="form-area">
             <label class="input-label">Gênero músical: *</label>
-            <input type="text" placeholder="Digite aqui o seu gênero musical" id="genero" name="genero" class="input-field" value="<?php echo $_POST['genero'] ?? '';?>">
+            <input type="text" placeholder="Digite aqui o seu gênero musical" id="genero" name="genero" class="input-field" value="<?php echo $_POST['genero'] ?? ''; ?>">
         </div>
 
         <div class="form-area">
