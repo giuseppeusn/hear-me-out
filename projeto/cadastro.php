@@ -771,8 +771,8 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
         </div>
 
         <div class="form-area">
-            <label class="input-label">Imagem de perfil: *</label>
-            <input type="url" id="imagem" name="imagem" class="input-field" placeholder="Digite aqui o link da imagem (.jpg/.png)"
+            <label for="imagem" class="input-label">Imagem (URL): *</label>
+            <input type="url" id="imagem" name="imagem" class="input-field" placeholder="Link da imagem (.jpg/.png)"
                 value="<?php echo $_POST['imagem'] ?? ''; ?>">
         </div>
 
@@ -796,7 +796,7 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
 
         <div class="form-area">
             <label class="input-label">Gênero músical: *</label>
-            <input type="text" placeholder="Digite aqui o seu gênero musical" id="genero" name="genero" class="input-field" value="<?php echo $_POST['genero'] ?? '';?>">
+            <input type="text" placeholder="Digite aqui o seu gênero musical" id="genero" name="genero" class="input-field" value="<?php echo $_POST['genero'] ?? ''; ?>">
         </div>
 
         <div class="form-area">

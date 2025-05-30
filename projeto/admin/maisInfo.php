@@ -10,7 +10,7 @@ $conexao = connect_db();
 $id = $_GET['id'];
 $query = "SELECT * FROM artista WHERE id = $id";
 $resultado_query = mysqli_query($conexao, $query);
-if(!mysqli_num_rows($resultado_query) > 0){
+if (!mysqli_num_rows($resultado_query) > 0) {
     header("location: index.php?page=1");
     exit;
 }

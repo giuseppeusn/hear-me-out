@@ -31,11 +31,11 @@ function validarUrl($url) {
     return filter_var($url, FILTER_VALIDATE_URL);
 }
 
-$camposObrigatorios = ['id', 'nome', 'email', 'data_formacao', 'pais', 'genero']; // 'genero' aqui é o musical
+$camposObrigatorios = ['id', 'nome', 'email', 'data_formacao', 'pais', 'genero', 'biografia', 'imagem', 'site_oficial']; // 'genero' aqui é o musical
 
 if (!validarCampos($data, $camposObrigatorios)) {
     http_response_code(400);
-    echo json_encode(["success" => false, "message" => "Preencha os campos obrigatórios: Nome, E-mail, Data de Formação, País e Gênero Musical."]);
+    echo json_encode(["success" => false, "message" => "Preencha os campos obrigatórios: Nome, E-mail, Data de Formação, País, Gênero Musical, Biografia, Imagem e Site."]);
     exit;
 }
 
@@ -122,6 +122,17 @@ if ($stmt->execute()) {
     http_response_code(500);
     echo json_encode(["success" => false, "message" => "Erro ao atualizar o perfil: " . $stmt->error]);
 }
+
+$id = $_SESSION['id'];
+$stmt = $conexao->prepare("SELECT nome FROM artista WHERE id = ?");
+$stmt->bind_param("i", $id);
+$stmt->execute();
+
+$result = $stmt->get_result();
+if ($row = $result->fetch_assoc()) {
+    $_SESSION['nome'] = $row['nome'];
+}
+
 
 $stmt->close();
 $conexao->close();
