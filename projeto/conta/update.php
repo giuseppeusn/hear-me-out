@@ -45,6 +45,15 @@ $email = $data['email'];
 $data_nasc = $data['data_nasc'];
 $genero = $data['genero']; 
 
+
+// meus amigos, esse campo faz a validação do nome do usuario, nao pode ser vazio;
+if (empty(trim($nome)) || empty(trim($email)) || empty(trim($data_nasc)) || empty(trim($genero))) {
+    http_response_code(400);
+    echo json_encode(["success" => false, "message" => "Preencha os campos obrigatórios: nome, email, data de nascimento e genero."]);
+    exit;
+}
+
+
 if (!filter_var($email, FILTER_VALIDATE_EMAIL)) {
     http_response_code(400);
     echo json_encode(["success" => false, "message" => "Formato de e-mail inválido."]);
