@@ -9,6 +9,10 @@ header('Content-Type: application/json');
 
 $data = json_decode(file_get_contents("php://input"), true);
 
+
+
+
+
 if (!$data) {
     http_response_code(400);
     echo json_encode(["success" => false, "message" => "Dados inválidos!"]);
@@ -31,11 +35,11 @@ function validarUrl($url) {
     return filter_var($url, FILTER_VALIDATE_URL);
 }
 
-$camposObrigatorios = ['id', 'nome', 'email', 'data_formacao', 'pais', 'genero']; // 'genero' aqui é o musical
+$camposObrigatorios = ['id', 'nome', 'email', 'data_formacao', 'pais', 'genero','biografia', 'imagem','site_oficial']; // 'genero' aqui é o musical
 
 if (!validarCampos($data, $camposObrigatorios)) {
     http_response_code(400);
-    echo json_encode(["success" => false, "message" => "Preencha os campos obrigatórios: Nome, E-mail, Data de Formação, País e Gênero Musical."]);
+    echo json_encode(["success" => false, "message" => "Preencha os campos obrigatórios: Nome, E-mail, Data de Formação, País, Gênero Musical, biografia da banda, foto da banda e site."]);
     exit;
 }
 
@@ -49,6 +53,8 @@ $genero = $data['genero'];
 $biografia = isset($data['biografia']) ? trim($data['biografia']) : null;
 $imagem = isset($data['imagem']) ? trim($data['imagem']) : null;
 $site_oficial = isset($data['site_oficial']) ? trim($data['site_oficial']) : null;
+
+
 
 if (empty($biografia) && $biografia !== null) $biografia = null;
 if (empty($imagem) && $imagem !== null) $imagem = null;

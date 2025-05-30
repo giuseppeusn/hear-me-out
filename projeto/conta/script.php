@@ -37,6 +37,18 @@
         const userType = jsonData['userType']; 
         let url = '';
 
+        const nome = jsonData['nome']?.trim(); // certifique-se que o campo se chama exatamente "nome"
+	    if (!nome || nome.length === 0) {
+	        Swal.fire(
+	            'Atenção!',
+	            'O nome não pode estar vazio.',
+	            'warning'
+	        );
+	        return; // Impede o envio do formulário
+        }
+
+
+
         if (userType === 'usuario') {
             url = 'update.php';
         } else if (userType === 'critico') {
