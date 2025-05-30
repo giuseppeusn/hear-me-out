@@ -66,6 +66,17 @@ if ($stmt->execute()) {
     echo json_encode(["success" => false, "message" => "Erro ao atualizar o perfil: " . $stmt->error]);
 }
 
+$id = $_SESSION['id'];
+$stmt = $conexao->prepare("SELECT nome FROM usuario WHERE id = ?");
+$stmt->bind_param("i", $id);
+$stmt->execute();
+
+$result = $stmt->get_result();
+if ($row = $result->fetch_assoc()) {
+    $_SESSION['nome'] = $row['nome'];
+}
+
+
 $stmt->close();
 $conexao->close();
 ?>
