@@ -24,7 +24,7 @@
  
     $queries = [
         'usuario' => "SELECT id, nome, email, data_nasc, genero, cpf FROM usuario WHERE id = ? AND nome = ?",
-        'critico' => "SELECT id, nome, email, data_nasc, genero, biografia, site FROM critico WHERE id = ? AND nome = ?",
+        'critico' => "SELECT id, nome, email, data_nasc, genero, biografia, cpf, site FROM critico WHERE id = ? AND nome = ?",
         'artista' => "SELECT id, nome, email, biografia, imagem, data_formacao, pais, site_oficial, genero FROM artista WHERE id = ? AND nome = ?"
     ];
 
