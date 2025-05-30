@@ -126,7 +126,6 @@
   function validateUpdate() {
     const form = document.getElementById('avaliacaoForm');
     if (!form.checkValidity()) {
-      console.log('Form inválido');
       Swal.showValidationMessage('Preencha todos os campos corretamente');
       return;
     }
@@ -205,6 +204,9 @@
   }
 
   function insertReview() {
+    const form = document.getElementById('avaliacaoForm');
+    const formData = new FormData(form);
+
     fetch('../album/reviews/insert.php', {
       method: 'POST',
       body: formData
