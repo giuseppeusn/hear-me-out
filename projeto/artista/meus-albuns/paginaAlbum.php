@@ -7,6 +7,7 @@
     <script src="/hear-me-out/projeto/artista/meus-albuns/musicas/insert.js"></script>
     <script src="/hear-me-out/projeto/artista/meus-albuns/musicas/update.js"></script>
     <script src="/hear-me-out/projeto/artista/meus-albuns/musicas/delete.js"></script>
+    <link rel="stylesheet" href="/hear-me-out/projeto/styles/form.css">
 </head>
 <body>
 
@@ -60,12 +61,14 @@
         $duracao_total = $resumo->duracao_total;
         $minutosAlbum = floor($duracao_total / 60);
         $segundosAlbum = $duracao_total % 60;
-        $btnVoltar = "<a href='index.php?page=0' class='btn btn-light'>< Voltar</a>";
 
         echo "
         <div class='row'>
-            <div class='col-1'>$btnVoltar</div>
             <div class='col-7'>
+                <a href='index.php?page=0' class='text-white text-decoration-none text-bold d-flex align-items-center'>
+                    <img src='/hear-me-out/projeto/assets/svg/arrow-left.svg' alt='Seta para esquerda' style='width: 28px; height: 28px; margin-left: 4px;'>
+                    <span class='ms-2'>Voltar para meus álbuns</span>
+                </a>
                 <div class='p-4'>
                     <div class='d-flex align-items-center'>
                         <div class='me-4'>
@@ -78,16 +81,20 @@
                                 <b>{$dadosAlbum->artista_nome}</b> • {$musicas_total} músicas, " . 
                                 ($duracao_total >= 60 
                                     ? "{$minutosAlbum} min {$segundosAlbum} sec" 
-                                    : "{$segundosAlbum} sec") . 
-                            "</p>
+                                    : "{$segundosAlbum} sec") . "
+                            </p>
+                            <a class='cs-btn action' target='_blank' href='/hear-me-out/projeto/album?id={$dadosAlbum->album_id} '>
+                                Ver página do álbum
+                                <img src='/hear-me-out/projeto/assets/svg/external.svg' alt='Seta para saindo' style='width: 20px; height: 20px; margin-left: 4px;'>
+                            </a>
                         </div>
                     </div>
                 </div>
             </div>
         </div>
         <hr>";
-        echo "<a class='btn btn-light me-2' href='/hear-me-out/projeto/album?id={$dadosAlbum->album_id} '>Ver página do álbum</a>";
-        echo "<button type='button' class='btn btn-light me-2' onclick='abrirInserirMusica({$dadosAlbum->album_id})'>Inserir nova música</button>";
+        echo "";
+        echo "<button type='button' class='cs-btn confirm' onclick='abrirInserirMusica({$dadosAlbum->album_id})'>Inserir nova música</button>";
 
         include "musicas/coverCard.php";
         include "musicas/renderList.php";

@@ -12,6 +12,24 @@ input:-webkit-autofill::placeholder {
   -webkit-text-fill-color: white !important;
 }
 
+.swal2-input {
+  padding: 10px;
+  border-radius: 15px;
+  border: none;
+  background-color: #212121;
+  color: white;
+  border: 1px solid #212121;
+  transition: all 0.3s ease-in-out;
+}
+
+.swal2-input:focus {
+  border: 1px solid #ff0000;
+  background-color: #212121;
+  color: white;
+  outline: 0px;
+  box-shadow: none;
+}
+
 .swal2-container .swal2-modal {
   background: #2e2e2e !important;
   color: white !important;
@@ -21,6 +39,36 @@ input:-webkit-autofill::placeholder {
   background-color: #212121 !important;
   color: white !important;
   font-weight: 700 !important;
+}
+
+.cs-btn {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  color: white;
+  border: none;
+  padding: 10px 20px;
+  border-radius: 15px;
+  font-weight: bold;
+  cursor: pointer;
+  width: fit-content;
+  text-decoration: none;
+}
+
+.cs-btn.action {
+  background-color: #7066e0;
+}
+
+.cs-btn.action:hover {
+  background-color: #5f57c0;
+}
+
+.cs-btn.confirm {
+  background-color: #198754;
+}
+
+.cs-btn.confirm:hover {
+  background-color: #147a43;
 }
 
 .navbar-brand {

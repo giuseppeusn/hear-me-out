@@ -1,5 +1,5 @@
 <?php
-function coverCard($nome, $artista, $capa, $link, $duracao, $pesquisa = false, $musica_id, $data) {
+function coverCard($nome, $capa, $link, $duracao, $pesquisa = false, $musica_id, $data) {
   $duracaoHtml = '';
 
   if ($duracao) {
@@ -20,7 +20,6 @@ function coverCard($nome, $artista, $capa, $link, $duracao, $pesquisa = false, $
           <img class="cover-card-img" src="' . htmlspecialchars($capa) . '" alt="Capa da música">
           <div class="cover-card-text">
             <h5>' . htmlspecialchars($nome) . '</h5>
-            ' . ($artista ? '<p>' . htmlspecialchars($artista) . '</p>' : '') . '
             ' . $duracaoHtml . '
           </div>
         </div>
