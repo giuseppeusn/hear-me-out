@@ -19,7 +19,7 @@ try {
     $conn->query("DELETE FROM avaliacao_musica WHERE id_musica = $id");
     $avaliacaoMusicaAfetado = $conn->affected_rows;
 
-    if ($comentarioMusicaAfetado > 0 || $avaliacaoMusicaAfetado > 0) {
+    if ($comentarioMusicaAfetado >= 0 || $avaliacaoMusicaAfetado >= 0) {
 
         $conn->query("
             DELETE FROM comentario
