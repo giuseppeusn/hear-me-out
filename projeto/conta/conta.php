@@ -11,6 +11,7 @@
   }
 
   $id = $_SESSION['id'];
+  $nome = $_SESSION['nome'];
   $userData = null;
   $userType = '';
 
@@ -27,22 +28,22 @@
         'artista' => "SELECT id, nome, email, biografia, imagem, data_formacao, pais, site_oficial, genero FROM artista WHERE id = ? AND nome = ?"
     ];
 
-  foreach ($queries as $type => $sql) {
-      $stmt = $conexao->prepare($sql);
-      if ($stmt) {
-          $stmt->bind_param("is", $id,$nome);
-          $stmt->execute();
-          $resultado = $stmt->get_result();
+    foreach ($queries as $type => $sql) {
+        $stmt = $conexao->prepare($sql);
+        if ($stmt) {
+            $stmt->bind_param("is", $id, $nome);
+            $stmt->execute();
+            $resultado = $stmt->get_result();
 
-          if ($resultado && $resultado->num_rows > 0) {
-              $userData = $resultado->fetch_assoc();
-              $userType = $type;
-              $stmt->close();
-              break;
-          }
-          $stmt->close();
-      }
-  }
+            if ($resultado && $resultado->num_rows > 0) {
+                $userData = $resultado->fetch_assoc();
+                $userType = $type;
+                $stmt->close();
+                break;
+            }
+            $stmt->close();
+        }
+    }
 
   $conexao->close();
 
