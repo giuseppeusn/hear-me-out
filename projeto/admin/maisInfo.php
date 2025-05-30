@@ -49,7 +49,7 @@ $resultado_array = mysqli_fetch_assoc($resultado_query);
         </div>
         <div class="row">
             <div class="col">
-                <img src="https://static.vecteezy.com/ti/vetor-gratis/p1/9292244-default-avatar-icon-vector-of-social-media-user-vetor.jpg" alt="" class="img-fluid rounded" style="width: 250px; height: 250px; object-fit: cover;">
+                <img src="<?php echo $resultado_array['imagem']; ?>" alt="imagem" class="img-fluid rounded" style="width: 250px; height: 250px; object-fit: cover;">
             </div>
             <div class="col d-flex align-items-center">
                 <h1 class="text-white"><?php echo $resultado_array['nome'] ?></h1>

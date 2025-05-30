@@ -11,7 +11,6 @@
   }
 
   $id = $_SESSION['id'];
-  $nome = $_SESSION['nome'];
   $userData = null;
   $userType = '';
 
@@ -22,16 +21,18 @@
   }
 
  
-    $queries = [
-        'usuario' => "SELECT id, nome, email, data_nasc, genero, cpf FROM usuario WHERE id = ? AND nome = ?",
-        'critico' => "SELECT id, nome, email, data_nasc, genero, biografia, cpf, site FROM critico WHERE id = ? AND nome = ?",
-        'artista' => "SELECT id, nome, email, biografia, imagem, data_formacao, pais, site_oficial, genero FROM artista WHERE id = ? AND nome = ?"
-    ];
+    if ($_SESSION['permissao']=== 'critico') {
+        $queries = ['critico' => "SELECT id, nome, email, data_nasc, genero, biografia, cpf, site FROM critico WHERE id = ?"];
+    } else if ($_SESSION['permissao'] === 'artista'){
+        $queries = ['artista' => "SELECT id, nome, email, biografia, imagem, data_formacao, pais, site_oficial, genero FROM artista WHERE id = ?"];
+    } else {
+        $queries = ['usuario' => "SELECT id, nome, email, data_nasc, genero, cpf FROM usuario WHERE id = ?"];
+    }
 
     foreach ($queries as $type => $sql) {
         $stmt = $conexao->prepare($sql);
         if ($stmt) {
-            $stmt->bind_param("is", $id, $nome);
+            $stmt->bind_param("i", $id);
             $stmt->execute();
             $resultado = $stmt->get_result();
 

@@ -15,6 +15,30 @@ if (!$data) {
     exit;
 }
 
+function validarCampos($data, $camposObrigatorios) {
+    foreach ($camposObrigatorios as $campo) {
+        if (!isset($data[$campo]) || (is_string($data[$campo]) && empty(trim($data[$campo])))) {
+            return false;
+        }
+    }
+    return true;
+}
+
+function validarUrl($url) {
+    if (empty(trim($url))) {
+        return true;
+    }
+    return filter_var($url, FILTER_VALIDATE_URL);
+}
+
+$camposObrigatorios = ['id', 'nome', 'email', 'data_nasc', 'genero'];
+
+if (!validarCampos($data, $camposObrigatorios)) {
+    http_response_code(400);
+    echo json_encode(["success" => false, "message" => "Preencha os campos obrigatórios: Nome, E-mail, Data de Nascimento e Gênero."]);
+    exit;
+}
+
 $id = intval($data['id']);
 $nome = $data['nome'];
 $email = $data['email'];
@@ -74,6 +98,17 @@ if ($stmt->execute()) {
     http_response_code(500);
     echo json_encode(["success" => false, "message" => "Erro ao atualizar o perfil: " . $stmt->error]);
 }
+
+$id = $_SESSION['id'];
+$stmt = $conexao->prepare("SELECT nome FROM usuario WHERE id = ?");
+$stmt->bind_param("i", $id);
+$stmt->execute();
+
+$result = $stmt->get_result();
+if ($row = $result->fetch_assoc()) {
+    $_SESSION['nome'] = $row['nome'];
+}
+
 
 $stmt->close();
 $conexao->close();
