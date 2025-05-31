@@ -1,6 +1,6 @@
 .albums-header {
   display: flex;
-  justify-content: space-between;
+  justify-content: space-around;
   align-items: center;
   margin-top: 20px;
   margin-bottom: 20px;

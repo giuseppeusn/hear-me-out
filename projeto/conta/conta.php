@@ -82,7 +82,7 @@
     <link rel="stylesheet" href="../styles/form.css"> <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 </head>
 <body>
-    <div class="cs-container">
+    <div class="cs-container mt-3">
         <div class="form-wrapper">
             <div class="d-flex justify-content-between align-items-center mb-3">
                 <h4 class="text-right">Configurações de perfil</h4>
@@ -169,13 +169,15 @@
                     <label class="input-label">Site Oficial</label>
                     <input type="text" class="input-field" value="<?= htmlspecialchars($userData['site_oficial']) ?>" name="site_oficial" disabled>
                 </div>
+                <div class="d-flex justify-content-center align-conten-center mt-3">
+                    <button class="cs-btn action" type="button" id="btnAlterarSenhaa"onclick="mostrarModalAlterarSenha()">Atualizar senha</button>
+                </div>
                 <?php endif; ?>
-                <div class="mt-5 text-center">
-                    <button class="btn btn-primary profile-button" type="button" id="btnEditarPerfil">Editar</button>
-                    <button class="btn btn-danger profile-button" type="button" id="btnExcluirConta">Excluir</button>
-                    <button class="btn btn-secondary" type="button"name="senhaa" id="btnAlterarSenhaa"onclick="mostrarModalAlterarSenha()">Mudar de senha</button>
-                    <button class="btn btn-success profile-button" type="submit" id="btnSalvarPerfil" style="display:none;">Salvar</button>
-                    <button class="btn btn-secondary profile-button" type="reset" id="btnCancelarPerfil" style="display:none;">Cancelar</button>
+                <div class="d-flex justify-content-around mt-5 text-center">
+                    <button class="btn-update" type="button" id="btnEditarPerfil">Editar</button>
+                    <button class="btn-delete" type="button" id="btnExcluirConta">Excluir</button>
+                    <button class="cs-btn confirm" type="submit" id="btnSalvarPerfil" style="display:none; width:45%">Salvar</button>
+                    <button class="cs-btn cancel" type="reset" id="btnCancelarPerfil" style="display:none; width:45%">Cancelar</button>
                 </div>
             </form>
         </div>
@@ -183,60 +185,56 @@
     <script>
           function mostrarModalAlterarSenha() {
             Swal.fire({
-                title: 'Alterar Senha',
-                html:
-                    '<input id="swal-input-nova-senha" class="swal2-input" type="password" placeholder="Nova Senha">' +
-                    '<input id="swal-input-confirmar-senha" class="swal2-input" type="password" placeholder="Confirmar Nova Senha">',
+                title: 'Alterar senha',
+                html:`<form>
+                    <p style="color:gray" class="mb-1">Campo obrigatório *</p>
+                    <div class="form-area">
+                        <label for="nova-senha" class="input-label">* Nova senha</label>
+                        <input id="nova-senha" class="input-field" type="password" placeholder="Digite sua nova senha">
+                    <div class="form-area">
+                        <label for="confirmar-senha" class="input-label">* Confirme a senha</label>
+                        <input id="confirmar-senha" class="input-field" type="password" placeholder="Confirme sua nova senha">
+                    </div>
+                </form>`,
                 focusConfirm: false,
-                showCancelButton: true,
-                confirmButtonText: 'Alterar',
-                cancelButtonText: 'Cancelar',
+                showCloseButton: true,
+                confirmButtonText: 'Salvar',
                 preConfirm: () => {
-                    const novaSenha = Swal.getPopup().querySelector('#swal-input-nova-senha').value;
-                    const confirmarSenha = Swal.getPopup().querySelector('#swal-input-confirmar-senha').value;
+                    const novaSenha = Swal.getPopup().querySelector('#nova-senha').value;
+                    const confirmarSenha = Swal.getPopup().querySelector('#confirmar-senha').value;
 
                     if (!novaSenha || !confirmarSenha) {
-                        Swal.showValidationMessage('Por favor, preencha todos os campos da senha.');
+                        Swal.showValidationMessage('Por favor, preencha todos os campos da senha');
                         return false;
                     }
+
                     if (novaSenha !== confirmarSenha) {
-                        Swal.showValidationMessage('As senhas não coincidem.');
+                        Swal.showValidationMessage('As senhas não coincidem');
                         return false;
                     }
+
                     return { nova_senha: novaSenha, confirmar_senha: confirmarSenha };
                 }
             }).then((result) => {
-                if (result.isConfirmed) {
-                
-                    Swal.fire({
-                        title: 'Deseja realmente alterar a senha?',
-                        icon: 'question',
-                        showCancelButton: true,
-                        confirmButtonText: 'Sim, alterar!',
-                        cancelButtonText: 'Não, cancelar',
-                    }).then((confirmResult) => {
-                        if (confirmResult.isConfirmed) {
-                          
-                            fetch('/hear-me-out/projeto/conta/alterarsenha.php', { 
-                                method: 'POST',
-                                headers: {
-                                    'Content-Type': 'application/x-www-form-urlencoded',
-                                },
-                                body: `action=alterar_senha&nova_senha=${encodeURIComponent(result.value.nova_senha)}&confirmar_senha=${encodeURIComponent(result.value.confirmar_senha)}`,
-                            })
-                            .then(response => response.json())
-                            .then(data => {
-                                if (data.success) {
-                                    Swal.fire('Sucesso!', data.message, 'success');
-                                } else {
-                                    Swal.fire('Erro!', data.message, 'error');
-                                }
-                            })
-                            .catch(error => {
-                                console.error('Erro na requisição AJAX:', error);
-                                Swal.fire('Erro!', 'Ocorreu um erro ao comunicar com o servidor.', 'error');
-                            });
+                if (result.isConfirmed) {                          
+                    fetch('/hear-me-out/projeto/conta/alterarsenha.php', { 
+                        method: 'POST',
+                        headers: {
+                            'Content-Type': 'application/x-www-form-urlencoded',
+                        },
+                        body: `action=alterar_senha&nova_senha=${encodeURIComponent(result.value.nova_senha)}&confirmar_senha=${encodeURIComponent(result.value.confirmar_senha)}`,
+                    })
+                    .then(response => response.json())
+                    .then(data => {
+                        if (data.success) {
+                            Swal.fire('Sucesso!', data.message, 'success');
+                        } else {
+                            Swal.fire('Erro!', data.message, 'error');
                         }
+                    })
+                    .catch(error => {
+                        console.error('Erro na requisição:', error);
+                        Swal.fire('Erro!', 'Ocorreu um erro ao comunicar com o servidor.', 'error');
                     });
                 }
             });

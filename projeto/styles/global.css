@@ -71,6 +71,14 @@ input:-webkit-autofill::placeholder {
   background-color: #147a43;
 }
 
+.cs-btn.cancel {
+  background-color: #212121;
+}
+
+.cs-btn.cancel:hover {
+  background-color: #1a1a1a;
+}
+
 .navbar-brand {
   display: flex;
   align-items: center;
