@@ -5,8 +5,9 @@ include("../connect.php");
 if (session_status() === PHP_SESSION_NONE) {
     session_start();
 }
+
 if (!isset($_SESSION['admin']) || $_SESSION['admin'] !== true) {
-    header("location: /hear-me-out/projeto/login.php");
+    header("location: /hear-me-out/projeto/");
     exit();
 }
 
