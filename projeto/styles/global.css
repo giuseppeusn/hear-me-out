@@ -352,6 +352,10 @@ input:-webkit-autofill::placeholder {
 }
 
 @media screen and (max-width: 768px) {
+  .cs-navbar {
+    padding: 15px 15px;
+  }
+
   .content {
     width: 95% !important;
   }
@@ -367,5 +371,11 @@ input:-webkit-autofill::placeholder {
   .btn-update,
   .btn-delete {
     padding: 5px 10px;
+  }
+}
+
+@media screen and (max-width: 555px) {
+  .navbar-search {
+    display: none;
   }
 }

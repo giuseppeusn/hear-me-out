@@ -1,12 +1,21 @@
+<?php
+  include("../../../header.php");
+  include_once("../../../connect.php");
+
+  if (session_status() === PHP_SESSION_DISABLED) {
+    session_start();
+  }
+
+  if (!isset($_SESSION['authenticated']) || $_SESSION['authenticated'] !== true) {
+    header("location: /hear-me-out/projeto/login.php");
+    exit();
+  }
+?>
 <!DOCTYPE html>
 <html lang="pt-BR">
 <head>
     <meta charset="UTF-8">
-    <title>Detalhes do Álbum</title>
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
-    <script src="/hear-me-out/projeto/artista/meus-albuns/musicas/insert.js"></script>
-    <script src="/hear-me-out/projeto/artista/meus-albuns/musicas/update.js"></script>
-    <script src="/hear-me-out/projeto/artista/meus-albuns/musicas/delete.js"></script>
     <link rel="stylesheet" href="/hear-me-out/projeto/styles/form.css">
 </head>
 <body>
@@ -65,7 +74,7 @@
         echo "
         <div class='row'>
             <div class='col-7'>
-                <a href='index.php?page=0' class='text-white text-decoration-none text-bold d-flex align-items-center'>
+                <a href='/hear-me-out/projeto/artista/meus-albuns' class='text-white text-decoration-none text-bold d-flex align-items-center' style='width: fit-content;'>
                     <img src='/hear-me-out/projeto/assets/svg/arrow-left.svg' alt='Seta para esquerda' style='width: 28px; height: 28px; margin-left: 4px;'>
                     <span class='ms-2'>Voltar para meus álbuns</span>
                 </a>
@@ -94,10 +103,10 @@
         </div>
         <hr>";
         echo "";
-        echo "<button type='button' class='cs-btn confirm' onclick='abrirInserirMusica({$dadosAlbum->album_id})'>Inserir nova música</button>";
+        echo "<button type='button' class='cs-btn confirm' onclick='abrirInserirMusica({$dadosAlbum->album_id})'>Nova música</button>";
 
-        include "musicas/coverCard.php";
-        include "musicas/renderList.php";
+        include "coverCard.php";
+        include "renderList.php";
         if (empty($musica->musica_id)) {
             echo '<h3 style="text-align: center;"> Esse album ainda não tem música!</h3>';
         } else {
@@ -108,6 +117,6 @@
 
     <?php } ?>
 </div>
-
+<?php include "script.php"; ?>
 </body>
 </html>

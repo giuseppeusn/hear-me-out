@@ -1,0 +1,74 @@
+.albums-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-top: 20px;
+  margin-bottom: 20px;
+}
+
+.cs-card-link {
+  text-decoration: none;
+  color: inherit;
+}
+
+.cs-card-wrapper {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 15px;
+}
+
+.cs-card {
+  width: 350px;
+  height: 500px;
+  border-radius: 10px;
+  background-color: #2e2e2e;
+  color: white;
+  overflow: hidden;
+}
+
+.cs-card:hover .cs-card-img {
+  filter: brightness(0.7);
+  transition: 0.3s ease;
+  transform: scale(1.05);
+}
+
+.cs-card-img {
+  width: 100%;
+  height: 350px;
+  border-radius: 10px 10px 0 0;
+}
+
+.cs-card-text {
+  display: flex;
+  flex-direction: column;
+  margin-top: 10px;
+  justify-content: center;
+  align-items: center;
+}
+
+.cs-card-year {
+  font-size: 1.2rem;
+  font-weight: 400;
+  margin: 0;
+}
+
+.cs-card-btns {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 10px 20px;
+  margin-top: 10px;
+}
+
+@media screen and (max-width: 865px) {
+  .albums-header {
+    flex-direction: column;
+    align-items: center;
+  }
+
+  .cs-card-wrapper {
+    flex-direction: column;
+    align-items: center;
+  }
+}

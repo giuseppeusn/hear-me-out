@@ -1,26 +1,20 @@
 <!DOCTYPE html>
 <html lang="pt-BR">
 <head>  
-
+  <link rel="stylesheet" href="/hear-me-out/projeto/styles/my-albums.css">
+  <link rel="stylesheet" href="/hear-me-out/projeto/styles/form.css">
   <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
-  <script src="/hear-me-out/projeto/artista/meus-albuns/insert.js"></script>
-  <script src="/hear-me-out/projeto/artista/meus-albuns/update.js"></script>
-  <script src="/hear-me-out/projeto/artista/meus-albuns/delete.js"></script>
-
 </head>
 <body>
-<div class="container mt-3">
-
-
-  <div class="row" style = "color: white">
-
+<div class="cs-container">
+  <div class="content">
     <?php
     $conexao = connect_db(); 
     $id_artista = intval($_SESSION['id']);
-    echo "<h2>Meus álbuns</h2>";
-    echo "<div class='container mt-3'>
-      <button type='button' class='btn btn-success' onclick='abrirFormularioAlbum()'>Cadastrar Álbum</button> <br><br> 
-      </div>";
+    echo "<div class='albums-header'>
+      <h1 class='text-white'>Meus álbuns</h1>
+      <button type='button' class='cs-btn confirm' onclick='abrirFormularioAlbum()'>Novo álbum</button>
+    </div>";
     $query = "
       SELECT 
         album.id AS album_id,
@@ -34,39 +28,35 @@
 
     $resultado = $conexao->query($query);
 
+    echo "<div class='cs-card-wrapper'>";
     if ($resultado) {
         while ($linha = $resultado->fetch_object()) {
-            echo "<div id='album-{$linha->album_id}' 
-                    data-nome='" . htmlspecialchars($linha->album_nome, ENT_QUOTES) . "' 
-                    data-capa='" . htmlspecialchars($linha->capa, ENT_QUOTES) . "' 
-                    data-data='" . $linha->data_lancamento . "' 
-                    style='display: none;'></div>";
-            $btnAlterar = "<button type='button' class='btn btn-light me-2' onclick='abrirAlterarAlbum({$linha->album_id})'>Alterar</button>";
-            $btnExcluir = "<button type='button' class='btn btn-light me-2' onclick='deleteAlbum({$linha->album_id})'>Excluir</button>";
-            $btnVerAlbum = "<a href='index.php?page=4&id=" . $linha->album_id . "' class='btn btn-light' style='margin-right: 12px'>Ver álbum</a>";
+            $lancamento = new DateTime($linha->data_lancamento);
+            echo "<div class='cs-card'>
+              <div id='album-{$linha->album_id}' 
+                data-nome='" . htmlspecialchars($linha->album_nome, ENT_QUOTES) . "' 
+                data-capa='" . htmlspecialchars($linha->capa, ENT_QUOTES) . "' 
+                data-data='" . $linha->data_lancamento . "' 
+                style='display: none;'></div>";
 
-
-            echo "
-            <div class='col-md-4 mb-4' >
-              <div class='card bg-dark text-white' style='width:100%'>
-                <img class='card-img-top' src='{$linha->capa}' alt='Capa do álbum'>
-                <div class='card-body' >
+            echo "<a href='musicas?id=" . $linha->album_id . "' class='cs-card-link'>
+                <img class='cs-card-img' src='{$linha->capa}' alt='Capa do álbum'>
+                <div class='cs-card-text'>
                   <h4 class='card-title'>{$linha->album_nome}</h4>
-                  <p class='card-text'><b>Artista:</b> {$linha->artista_nome}</p>
-                  <div style='margin-right: 12px'>
-                  $btnVerAlbum
-                  $btnAlterar
-                  $btnExcluir
-                  </div>
+                  <p class='cs-card-year'>{$lancamento->format('Y')}</p>
                 </div>
+              </a>
+              <div class='cs-card-btns'>
+                <button type='button' class='btn-update' onclick='abrirAlterarAlbum({$linha->album_id})'>Alterar</button>
+                <button type='button' class='btn-delete' onclick='deleteAlbum({$linha->album_id})'>Excluir</button>
               </div>
-            </div>
-            ";
+            </div>";
         }
     }
+    echo "</div>";
     ?>
   </div>
 </div>
+<?php include "script.php"; ?>
 </body>
-
 </html>
