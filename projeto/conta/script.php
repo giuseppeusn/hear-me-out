@@ -9,9 +9,6 @@
             }
         });
         const userType = form.querySelector('input[name="userType"]').value;
-        if (userType === 'artista') {
-            
-        }
 
         document.getElementById('btnEditarPerfil').style.display = 'none';
         document.getElementById('btnExcluirConta').style.display = 'none'; 
@@ -52,9 +49,9 @@
         if (userType === 'usuario') {
             url = 'update.php';
         } else if (userType === 'critico') {
-            url = 'update_critico.php';
+            url = 'updateCritico.php';
         } else if (userType === 'artista') {
-            url = 'update_artista.php';
+            url = 'updateArtista.php';
         }
 
         console.log('Enviando para:', url, 'Dados:', jsonData);

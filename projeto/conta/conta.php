@@ -82,7 +82,7 @@
     <link rel="stylesheet" href="../styles/form.css"> <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 </head>
 <body>
-    <div class="cs-container mt-3">
+    <div class="cs-container mt-3" style="min-height: 100vh;">
         <div class="form-wrapper">
             <div class="d-flex justify-content-between align-items-center mb-3">
                 <h4 class="text-right">Configurações de perfil</h4>
@@ -169,10 +169,10 @@
                     <label class="input-label">Site Oficial</label>
                     <input type="text" class="input-field" value="<?= htmlspecialchars($userData['site_oficial']) ?>" name="site_oficial" disabled>
                 </div>
+                <?php endif; ?>
                 <div class="d-flex justify-content-center align-conten-center mt-3">
                     <button class="cs-btn action" type="button" id="btnAlterarSenhaa"onclick="mostrarModalAlterarSenha()">Atualizar senha</button>
                 </div>
-                <?php endif; ?>
                 <div class="d-flex justify-content-around mt-5 text-center">
                     <button class="btn-update" type="button" id="btnEditarPerfil">Editar</button>
                     <button class="btn-delete" type="button" id="btnExcluirConta">Excluir</button>
@@ -217,7 +217,7 @@
                 }
             }).then((result) => {
                 if (result.isConfirmed) {                          
-                    fetch('/hear-me-out/projeto/conta/alterarsenha.php', { 
+                    fetch('/hear-me-out/projeto/conta/alterarSenha.php', { 
                         method: 'POST',
                         headers: {
                             'Content-Type': 'application/x-www-form-urlencoded',

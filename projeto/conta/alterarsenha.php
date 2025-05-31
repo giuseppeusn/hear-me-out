@@ -54,7 +54,7 @@ if ($_SERVER["REQUEST_METHOD"] === "POST" && isset($_POST['action']) && $_POST['
             $senha_hashed = password_hash($nova_senha, PASSWORD_DEFAULT);
 
             $tabela = '';
-            if ($permissao_usuario === 'normal') {
+            if ($permissao_usuario === 'normal' || $permissao_usuario === 'admin') {
                 $tabela = 'usuario';
             } elseif ($permissao_usuario === 'critico') {
                 $tabela = 'critico';
