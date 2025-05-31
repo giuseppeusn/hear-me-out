@@ -38,3 +38,17 @@
   background-color: red;
   border-radius: 0.375rem;
 }
+
+@media screen and (max-width: 1200px) and (min-width: 866px) {
+  .custom-container {
+    width: 50%;
+    margin-top: 50px;
+  }
+}
+
+@media screen and (max-width: 865px) {
+  .custom-container {
+    width: 90%;
+    margin-top: 50px;
+  }
+}

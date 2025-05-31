@@ -66,3 +66,15 @@
   font-weight: bold;
   text-align: left;
 }
+
+@media screen and (max-width: 1200px) and (min-width: 866px) {
+  .form-wrapper {
+    width: 50%;
+  }
+}
+
+@media screen and (max-width: 865px) {
+  .form-wrapper {
+    width: 90%;
+  }
+}

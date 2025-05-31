@@ -568,24 +568,6 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="styles/form.css">
     <style>
-        .borda {
-            border-width: 2px !important;
-        }
-
-        .custom-container {
-            width: 50%;
-        }
-
-        .custom-btn-size {
-            font-size: 18px;
-            width: 100%;
-        }
-
-        .custom-background {
-            background-color: #2e2e2e;
-            color: white
-        }
-
         .select-user-button {
             margin-top: 25px;
             margin-bottom: 30px;
@@ -608,211 +590,217 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
     </form>
 </div>
 
-<div class="container mt-3 custom-container rounded-5 pt-3 pb-3 px-4 custom-background form-usuario" hidden>
-    <div class="text-center">
-        <h2>Cadastre-se</h2>
-    </div>
-    <p style="color:gray" class="mb-1">Campo obrigatório *</p>
-
-    <form method="POST">
-        <input type="hidden" name="tipo_cadastro" value="usuario">
-
-        <div class="form-area">
-            <label class="input-label">Nome: *</label>
-            <input type="text" name="nome" class="input-field" placeholder="Digite aqui o seu nome"
-                value="<?php echo $_POST['nome'] ?? ''; ?>">
-        </div>
-
-        <div class="form-area">
-            <label class="input-label">Email: *</label>
-            <input type="text" name="email" class="input-field" placeholder="Digite aqui o seu email"
-                value="<?php echo $_POST['email'] ?? ''; ?>">
-        </div>
-
-        <div class="form-area">
-            <label class="input-label">CPF: *</label>
-            <input type="text" name="cpf" class="input-field" placeholder="Digite aqui o seu CPF" maxlength="14"
-                onkeypress="MascaraCPF(this, event)" value="<?php echo $_POST['cpf'] ?? ''; ?>">
-        </div>
-
-        <div class="form-area">
-            <label class="input-label">Data de nascimento: *</label>
-            <input type="date" name="data_nasc" class="input-field"
-                placeholder="Digite aqui a sua data de nascimento" value="<?php echo $_POST['data_nasc'] ?? ''; ?>">
-        </div>
-
-        <div class="form-area">
-            <label class="input-label">Gênero: *</label>
-            <select name="genero" class="select-field">
-                <option value="" disabled <?php echo empty($_POST['genero']) ? 'selected' : ''; ?>>Selecione</option>
-                <option value="M" <?php if (isset($_POST['genero']) && $_POST['genero'] == 'M')
-                                        echo 'selected'; ?>>
-                    Masculino</option>
-                <option value="F" <?php if (isset($_POST['genero']) && $_POST['genero'] == 'F')
-                                        echo 'selected'; ?>>
-                    Feminino</option>
-                <option value="I" <?php echo ($_POST['genero'] ?? '') === 'I' ? 'selected' : ''; ?>>Indefinido</option>
-            </select>
-        </div>
-
-        <div class="form-area">
-            <label class="input-label">Senha: *</label>
-            <input type="password" name="senha" class="input-field" placeholder="Digite aqui a sua senha" class="mb-2">
-        </div>
-
+<div class="cs-container mt-3 form-usuario" hidden>
+    <div class="form-wrapper">
         <div class="text-center">
-            <button type="submit" name="create_usuario" class="btn btn-success mt-4 custom-btn-size">Cadastrar</button>
+            <h2>Cadastre-se</h2>
         </div>
-        <div class="mt-2 text-center">
-            <a class="link-primary link-offset-2 link-underline-opacity-25 link-underline-opacity-100-hover"
-                href="login.php">Já possuo uma conta.</a>
-        </div>
+        <p style="color:gray" class="mb-1">Campo obrigatório *</p>
 
-    </form>
+        <form method="POST" style="width: 100%;">
+            <input type="hidden" name="tipo_cadastro" value="usuario">
+
+            <div class="form-area">
+                <label class="input-label">Nome: *</label>
+                <input type="text" name="nome" class="input-field" placeholder="Digite aqui o seu nome"
+                    value="<?php echo $_POST['nome'] ?? ''; ?>">
+            </div>
+
+            <div class="form-area">
+                <label class="input-label">Email: *</label>
+                <input type="text" name="email" class="input-field" placeholder="Digite aqui o seu email"
+                    value="<?php echo $_POST['email'] ?? ''; ?>">
+            </div>
+
+            <div class="form-area">
+                <label class="input-label">CPF: *</label>
+                <input type="text" name="cpf" class="input-field" placeholder="Digite aqui o seu CPF" maxlength="14"
+                    onkeypress="MascaraCPF(this, event)" value="<?php echo $_POST['cpf'] ?? ''; ?>">
+            </div>
+
+            <div class="form-area">
+                <label class="input-label">Data de nascimento: *</label>
+                <input type="date" name="data_nasc" class="input-field"
+                    placeholder="Digite aqui a sua data de nascimento" value="<?php echo $_POST['data_nasc'] ?? ''; ?>">
+            </div>
+
+            <div class="form-area">
+                <label class="input-label">Gênero: *</label>
+                <select name="genero" class="select-field">
+                    <option value="" disabled <?php echo empty($_POST['genero']) ? 'selected' : ''; ?>>Selecione</option>
+                    <option value="M" <?php if (isset($_POST['genero']) && $_POST['genero'] == 'M')
+                                            echo 'selected'; ?>>
+                        Masculino</option>
+                    <option value="F" <?php if (isset($_POST['genero']) && $_POST['genero'] == 'F')
+                                            echo 'selected'; ?>>
+                        Feminino</option>
+                    <option value="I" <?php echo ($_POST['genero'] ?? '') === 'I' ? 'selected' : ''; ?>>Indefinido</option>
+                </select>
+            </div>
+
+            <div class="form-area">
+                <label class="input-label">Senha: *</label>
+                <input type="password" name="senha" class="input-field" placeholder="Digite aqui a sua senha" class="mb-2">
+            </div>
+
+            <div class="d-flex justify-content-center mt-3">
+                <button type="submit" name="create_usuario" class="cs-btn confirm w-100">Cadastrar</button>
+            </div>
+            <div class="mt-2 text-center">
+                <a class="link-primary link-offset-2 link-underline-opacity-25 link-underline-opacity-100-hover"
+                    href="login.php">Já possuo uma conta.</a>
+            </div>
+
+        </form>
+    </div>
 </div>
 
-<div class="container mt-3 mb-5 custom-container rounded-5 pt-3 pb-3 px-4 custom-background form-critico" hidden>
-    <div class="text-center">
-        <h2>Cadastre-se como crítico</h2>
-    </div>
-    <p style="color:gray" class="mb-1">Campo obrigatório *</p>
-
-    <form method="POST">
-        <input type="hidden" name="tipo_cadastro" value="critico">
-
-        <div class="form-area">
-            <label class="input-label">Nome: *</label>
-            <input type="text" id="nome" name="nome" class="input-field" placeholder="Digite aqui o seu nome"
-                value="<?php echo $_POST['nome'] ?? ''; ?>">
-        </div>
-
-        <div class="form-area">
-            <label class="input-label">CPF: *</label>
-            <input type="text" id="cpf" name="cpf" class="input-field" onkeypress="MascaraCPF(this, event)" maxlength="14" placeholder="Digite aqui o seu CPF"
-                value="<?php echo $_POST['cpf'] ?? ''; ?>">
-        </div>
-
-        <div class="form-area">
-            <label class="input-label">Email: *</label>
-            <input type="email" id="email" name="email" class="input-field" placeholder="Digite aqui o seu email"
-                value="<?php echo $_POST['email'] ?? ''; ?>">
-        </div>
-
-        <div class="form-area">
-            <label class="input-label">Data de nascimento: *</label>
-            <input type="date" id="data_nasc" name="data_nasc" class="input-field"
-                value="<?php echo $_POST['data_nasc'] ?? ''; ?>">
-        </div>
-
-        <div class="form-area">
-            <label class="input-label">Biografia: *</label>
-            <textarea id="biografia" name="biografia" class="textarea-field" placeholder="Digite aqui a sua biografia" rows="3"><?php echo $_POST['biografia'] ?? ''; ?></textarea>
-        </div>
-
-        <div class="form-area">
-            <label class="input-label">Portifólio (site, linkedin, redes sociais): *</label>
-            <input type="url" id="site" name="site" class="input-field" placeholder="Digite aqui o link"
-                value="<?php echo $_POST['site'] ?? ''; ?>">
-        </div>
-
-        <div class="form-area">
-            <label class="input-label">Gênero: *</label>
-            <select name="genero" id="genero" class="select-field">
-                <option value="" disabled <?php echo empty($_POST['genero']) ? 'selected' : ''; ?>>Selecione</option>
-                <option value="M" <?php echo ($_POST['genero'] ?? '') === 'M' ? 'selected' : ''; ?>>Masculino</option>
-                <option value="F" <?php echo ($_POST['genero'] ?? '') === 'F' ? 'selected' : ''; ?>>Feminino</option>
-                <option value="I" <?php echo ($_POST['genero'] ?? '') === 'I' ? 'selected' : ''; ?>>Indefinido</option>
-            </select>
-        </div>
-
-        <div class="form-area">
-            <label class="input-label">Senha: *</label>
-            <input type="password" id="senha" name="senha" class="input-field" placeholder="Digite aqui a sua senha"
-                autocomplete="off">
-        </div>
-
+<div class="cs-container form-critico" hidden>
+    <div class="form-wrapper">
         <div class="text-center">
-            <button type="submit" name="create_critico" class="btn btn-success mt-4 custom-btn-size">Cadastrar</button>
+            <h2>Cadastre-se como crítico</h2>
         </div>
+        <p style="color:gray" class="mb-1">Campo obrigatório *</p>
 
-        <div class="mt-2 text-center">
-            <a class="link-primary link-offset-2 link-underline-opacity-25 link-underline-opacity-100-hover"
-                href="login.php">Já possuo uma conta.</a>
-        </div>
+        <form method="POST" style="width: 100%;">
+            <input type="hidden" name="tipo_cadastro" value="critico">
 
-    </form>
+            <div class="form-area">
+                <label class="input-label">Nome: *</label>
+                <input type="text" id="nome" name="nome" class="input-field" placeholder="Digite aqui o seu nome"
+                    value="<?php echo $_POST['nome'] ?? ''; ?>">
+            </div>
+
+            <div class="form-area">
+                <label class="input-label">CPF: *</label>
+                <input type="text" id="cpf" name="cpf" class="input-field" onkeypress="MascaraCPF(this, event)" maxlength="14" placeholder="Digite aqui o seu CPF"
+                    value="<?php echo $_POST['cpf'] ?? ''; ?>">
+            </div>
+
+            <div class="form-area">
+                <label class="input-label">Email: *</label>
+                <input type="email" id="email" name="email" class="input-field" placeholder="Digite aqui o seu email"
+                    value="<?php echo $_POST['email'] ?? ''; ?>">
+            </div>
+
+            <div class="form-area">
+                <label class="input-label">Data de nascimento: *</label>
+                <input type="date" id="data_nasc" name="data_nasc" class="input-field"
+                    value="<?php echo $_POST['data_nasc'] ?? ''; ?>">
+            </div>
+
+            <div class="form-area">
+                <label class="input-label">Biografia: *</label>
+                <textarea id="biografia" name="biografia" class="textarea-field" placeholder="Digite aqui a sua biografia" rows="3"><?php echo $_POST['biografia'] ?? ''; ?></textarea>
+            </div>
+
+            <div class="form-area">
+                <label class="input-label">Portifólio (site, linkedin, redes sociais): *</label>
+                <input type="url" id="site" name="site" class="input-field" placeholder="Digite aqui o link"
+                    value="<?php echo $_POST['site'] ?? ''; ?>">
+            </div>
+
+            <div class="form-area">
+                <label class="input-label">Gênero: *</label>
+                <select name="genero" id="genero" class="select-field">
+                    <option value="" disabled <?php echo empty($_POST['genero']) ? 'selected' : ''; ?>>Selecione</option>
+                    <option value="M" <?php echo ($_POST['genero'] ?? '') === 'M' ? 'selected' : ''; ?>>Masculino</option>
+                    <option value="F" <?php echo ($_POST['genero'] ?? '') === 'F' ? 'selected' : ''; ?>>Feminino</option>
+                    <option value="I" <?php echo ($_POST['genero'] ?? '') === 'I' ? 'selected' : ''; ?>>Indefinido</option>
+                </select>
+            </div>
+
+            <div class="form-area">
+                <label class="input-label">Senha: *</label>
+                <input type="password" id="senha" name="senha" class="input-field" placeholder="Digite aqui a sua senha"
+                    autocomplete="off">
+            </div>
+
+            <div class="d-flex justify-content-center mt-3">
+                <button type="submit" name="create_critico" class="cs-btn confirm w-100">Cadastrar</button>
+            </div>
+
+            <div class="mt-2 text-center">
+                <a class="link-primary link-offset-2 link-underline-opacity-25 link-underline-opacity-100-hover"
+                    href="login.php">Já possuo uma conta.</a>
+            </div>
+
+        </form>
+    </div>
 </div>
 
-<div class="container mt-3 mb-5 custom-container rounded-5 pt-3 pb-3 px-4 custom-background form-artista" hidden>
-    <div class="text-center">
-        <h2>Cadastre-se como artista</h2>
-    </div>
-    <p style="color:gray" class="mb-1">Campo obrigatório *</p>
-
-    <form method="POST">
-        <input type="hidden" name="tipo_cadastro" value="artista">
-
-        <div class="form-area">
-            <label class="input-label">Nome: *</label>
-            <input type="text" id="nome" name="nome" class="input-field" placeholder="Digite aqui o seu nome"
-                value="<?php echo $_POST['nome'] ?? ''; ?>">
-        </div>
-
-        <div class="form-area">
-            <label class="input-label">Email: *</label>
-            <input type="email" id="email" name="email" class="input-field" placeholder="Digite aqui o seu email"
-                value="<?php echo $_POST['email'] ?? ''; ?>">
-        </div>
-
-        <div class="form-area">
-            <label class="input-label">Biografia: *</label>
-            <textarea id="biografia" name="biografia" class="textarea-field" placeholder="Digite aqui a sua biografia"
-                rows="3"><?php echo $_POST['biografia'] ?? ''; ?></textarea>
-        </div>
-
-        <div class="form-area">
-            <label for="imagem" class="input-label">Imagem (URL): *</label>
-            <input type="url" id="imagem" name="imagem" class="input-field" placeholder="Link da imagem (.jpg/.png)"
-                value="<?php echo $_POST['imagem'] ?? ''; ?>">
-        </div>
-
-        <div class="form-area">
-            <label class="input-label">Data de formação da banda: *</label>
-            <input type="date" id="data_formacao" name="data_formacao" class="input-field"
-                value="<?php echo $_POST['data_formacao'] ?? ''; ?>">
-        </div>
-
-        <div class="form-area">
-            <label class="input-label">País: *</label>
-            <input type="text" id="pais" name="pais" class="input-field" placeholder="Digite aqui o seu país de origem"
-                value="<?php echo $_POST['pais'] ?? ''; ?>">
-        </div>
-
-        <div class="form-area">
-            <label class="input-label">Site Oficial: *</label>
-            <input type="url" id="site_oficial" name="site_oficial" class="input-field"
-                placeholder="Digite o site oficial." value="<?php echo $_POST['site_oficial'] ?? ''; ?>">
-        </div>
-
-        <div class="form-area">
-            <label class="input-label">Gênero músical: *</label>
-            <input type="text" placeholder="Digite aqui o seu gênero musical" id="genero" name="genero" class="input-field" value="<?php echo $_POST['genero'] ?? ''; ?>">
-        </div>
-
-        <div class="form-area">
-            <label class="input-label">Senha: *</label>
-            <input type="password" id="senha" name="senha" class="input-field" placeholder="Digite aqui a sua senha"
-                autocomplete="off">
-        </div>
-
+<div class="cs-container form-artista" hidden>
+    <div class="form-wrapper">
         <div class="text-center">
-            <button type="submit" name="create_artista" class="btn btn-success mt-4 custom-btn-size">Cadastrar</button>
+            <h2>Cadastre-se como artista</h2>
         </div>
-        <div class="mt-2 text-center">
-            <a class="link-primary link-offset-2 link-underline-opacity-25 link-underline-opacity-100-hover"
-                href="login.php">Já possuo uma conta.</a>
-        </div>
-    </form>
+        <p style="color:gray" class="mb-1">Campo obrigatório *</p>
+
+        <form method="POST" style="width: 100%;">
+            <input type="hidden" name="tipo_cadastro" value="artista">
+
+            <div class="form-area">
+                <label class="input-label">Nome: *</label>
+                <input type="text" id="nome" name="nome" class="input-field" placeholder="Digite aqui o seu nome"
+                    value="<?php echo $_POST['nome'] ?? ''; ?>">
+            </div>
+
+            <div class="form-area">
+                <label class="input-label">Email: *</label>
+                <input type="email" id="email" name="email" class="input-field" placeholder="Digite aqui o seu email"
+                    value="<?php echo $_POST['email'] ?? ''; ?>">
+            </div>
+
+            <div class="form-area">
+                <label class="input-label">Biografia: *</label>
+                <textarea id="biografia" name="biografia" class="textarea-field" placeholder="Digite aqui a sua biografia"
+                    rows="3"><?php echo $_POST['biografia'] ?? ''; ?></textarea>
+            </div>
+
+            <div class="form-area">
+                <label for="imagem" class="input-label">Imagem (URL): *</label>
+                <input type="url" id="imagem" name="imagem" class="input-field" placeholder="Link da imagem (.jpg/.png)"
+                    value="<?php echo $_POST['imagem'] ?? ''; ?>">
+            </div>
+
+            <div class="form-area">
+                <label class="input-label">Data de formação da banda: *</label>
+                <input type="date" id="data_formacao" name="data_formacao" class="input-field"
+                    value="<?php echo $_POST['data_formacao'] ?? ''; ?>">
+            </div>
+
+            <div class="form-area">
+                <label class="input-label">País: *</label>
+                <input type="text" id="pais" name="pais" class="input-field" placeholder="Digite aqui o seu país de origem"
+                    value="<?php echo $_POST['pais'] ?? ''; ?>">
+            </div>
+
+            <div class="form-area">
+                <label class="input-label">Site Oficial: *</label>
+                <input type="url" id="site_oficial" name="site_oficial" class="input-field"
+                    placeholder="Digite o site oficial." value="<?php echo $_POST['site_oficial'] ?? ''; ?>">
+            </div>
+
+            <div class="form-area">
+                <label class="input-label">Gênero músical: *</label>
+                <input type="text" placeholder="Digite aqui o seu gênero musical" id="genero" name="genero" class="input-field" value="<?php echo $_POST['genero'] ?? ''; ?>">
+            </div>
+
+            <div class="form-area">
+                <label class="input-label">Senha: *</label>
+                <input type="password" id="senha" name="senha" class="input-field" placeholder="Digite aqui a sua senha"
+                    autocomplete="off">
+            </div>
+
+            <div class="d-flex justify-content-center mt-3">
+                <button type="submit" name="create_artista" class="cs-btn confirm w-100">Cadastrar</button>
+            </div>
+            <div class="mt-2 text-center">
+                <a class="link-primary link-offset-2 link-underline-opacity-25 link-underline-opacity-100-hover"
+                    href="login.php">Já possuo uma conta.</a>
+            </div>
+        </form>
+    </div>
 </div>
 
 <script>
