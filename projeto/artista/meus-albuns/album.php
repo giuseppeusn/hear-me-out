@@ -1,3 +1,12 @@
+<?php
+  $route = $_SERVER['REQUEST_URI'];
+
+  if (strpos($route, '/hear-me-out/projeto/artista/meus-albuns/album.php') !== false) {
+    header("Location: /hear-me-out/projeto/artista/meus-albuns");
+    exit();
+  }
+?>
+
 <!DOCTYPE html>
 <html lang="pt-BR">
 <head>  
