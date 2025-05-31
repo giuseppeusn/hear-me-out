@@ -601,31 +601,31 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
             <input type="hidden" name="tipo_cadastro" value="usuario">
 
             <div class="form-area">
-                <label class="input-label">Nome: *</label>
+                <label class="input-label">* Nome</label>
                 <input type="text" name="nome" class="input-field" placeholder="Digite aqui o seu nome"
                     value="<?php echo $_POST['nome'] ?? ''; ?>">
             </div>
 
             <div class="form-area">
-                <label class="input-label">Email: *</label>
+                <label class="input-label">* Email</label>
                 <input type="text" name="email" class="input-field" placeholder="Digite aqui o seu email"
                     value="<?php echo $_POST['email'] ?? ''; ?>">
             </div>
 
             <div class="form-area">
-                <label class="input-label">CPF: *</label>
+                <label class="input-label">* CPF</label>
                 <input type="text" name="cpf" class="input-field" placeholder="Digite aqui o seu CPF" maxlength="14"
                     onkeypress="MascaraCPF(this, event)" value="<?php echo $_POST['cpf'] ?? ''; ?>">
             </div>
 
             <div class="form-area">
-                <label class="input-label">Data de nascimento: *</label>
+                <label class="input-label">* Data de nascimento</label>
                 <input type="date" name="data_nasc" class="input-field"
                     placeholder="Digite aqui a sua data de nascimento" value="<?php echo $_POST['data_nasc'] ?? ''; ?>">
             </div>
 
             <div class="form-area">
-                <label class="input-label">Gênero: *</label>
+                <label class="input-label">* Gênero</label>
                 <select name="genero" class="select-field">
                     <option value="" disabled <?php echo empty($_POST['genero']) ? 'selected' : ''; ?>>Selecione</option>
                     <option value="M" <?php if (isset($_POST['genero']) && $_POST['genero'] == 'M')
@@ -639,7 +639,7 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
             </div>
 
             <div class="form-area">
-                <label class="input-label">Senha: *</label>
+                <label class="input-label">* Senha</label>
                 <input type="password" name="senha" class="input-field" placeholder="Digite aqui a sua senha" class="mb-2">
             </div>
 
@@ -666,42 +666,42 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
             <input type="hidden" name="tipo_cadastro" value="critico">
 
             <div class="form-area">
-                <label class="input-label">Nome: *</label>
+                <label class="input-label">* Nome</label>
                 <input type="text" id="nome" name="nome" class="input-field" placeholder="Digite aqui o seu nome"
                     value="<?php echo $_POST['nome'] ?? ''; ?>">
             </div>
 
             <div class="form-area">
-                <label class="input-label">CPF: *</label>
+                <label class="input-label">* CPF</label>
                 <input type="text" id="cpf" name="cpf" class="input-field" onkeypress="MascaraCPF(this, event)" maxlength="14" placeholder="Digite aqui o seu CPF"
                     value="<?php echo $_POST['cpf'] ?? ''; ?>">
             </div>
 
             <div class="form-area">
-                <label class="input-label">Email: *</label>
+                <label class="input-label">* Email</label>
                 <input type="email" id="email" name="email" class="input-field" placeholder="Digite aqui o seu email"
                     value="<?php echo $_POST['email'] ?? ''; ?>">
             </div>
 
             <div class="form-area">
-                <label class="input-label">Data de nascimento: *</label>
+                <label class="input-label">* Data de nascimento</label>
                 <input type="date" id="data_nasc" name="data_nasc" class="input-field"
                     value="<?php echo $_POST['data_nasc'] ?? ''; ?>">
             </div>
 
             <div class="form-area">
-                <label class="input-label">Biografia: *</label>
+                <label class="input-label">* Biografia</label>
                 <textarea id="biografia" name="biografia" class="textarea-field" placeholder="Digite aqui a sua biografia" rows="3"><?php echo $_POST['biografia'] ?? ''; ?></textarea>
             </div>
 
             <div class="form-area">
-                <label class="input-label">Portifólio (site, linkedin, redes sociais): *</label>
+                <label class="input-label">* Portifólio (site, linkedin, redes sociais)</label>
                 <input type="url" id="site" name="site" class="input-field" placeholder="Digite aqui o link"
                     value="<?php echo $_POST['site'] ?? ''; ?>">
             </div>
 
             <div class="form-area">
-                <label class="input-label">Gênero: *</label>
+                <label class="input-label">* Gênero</label>
                 <select name="genero" id="genero" class="select-field">
                     <option value="" disabled <?php echo empty($_POST['genero']) ? 'selected' : ''; ?>>Selecione</option>
                     <option value="M" <?php echo ($_POST['genero'] ?? '') === 'M' ? 'selected' : ''; ?>>Masculino</option>
@@ -711,7 +711,7 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
             </div>
 
             <div class="form-area">
-                <label class="input-label">Senha: *</label>
+                <label class="input-label">* Senha</label>
                 <input type="password" id="senha" name="senha" class="input-field" placeholder="Digite aqui a sua senha"
                     autocomplete="off">
             </div>
@@ -740,54 +740,54 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
             <input type="hidden" name="tipo_cadastro" value="artista">
 
             <div class="form-area">
-                <label class="input-label">Nome: *</label>
+                <label class="input-label">* Nome</label>
                 <input type="text" id="nome" name="nome" class="input-field" placeholder="Digite aqui o seu nome"
                     value="<?php echo $_POST['nome'] ?? ''; ?>">
             </div>
 
             <div class="form-area">
-                <label class="input-label">Email: *</label>
+                <label class="input-label">* Email</label>
                 <input type="email" id="email" name="email" class="input-field" placeholder="Digite aqui o seu email"
                     value="<?php echo $_POST['email'] ?? ''; ?>">
             </div>
 
             <div class="form-area">
-                <label class="input-label">Biografia: *</label>
+                <label class="input-label">* Biografia</label>
                 <textarea id="biografia" name="biografia" class="textarea-field" placeholder="Digite aqui a sua biografia"
                     rows="3"><?php echo $_POST['biografia'] ?? ''; ?></textarea>
             </div>
 
             <div class="form-area">
-                <label for="imagem" class="input-label">Imagem (URL): *</label>
+                <label for="imagem" class="input-label">* Foto perfil (URL)</label>
                 <input type="url" id="imagem" name="imagem" class="input-field" placeholder="Link da imagem (.jpg/.png)"
                     value="<?php echo $_POST['imagem'] ?? ''; ?>">
             </div>
 
             <div class="form-area">
-                <label class="input-label">Data de formação da banda: *</label>
+                <label class="input-label">* Data de formação da banda</label>
                 <input type="date" id="data_formacao" name="data_formacao" class="input-field"
                     value="<?php echo $_POST['data_formacao'] ?? ''; ?>">
             </div>
 
             <div class="form-area">
-                <label class="input-label">País: *</label>
+                <label class="input-label">* País</label>
                 <input type="text" id="pais" name="pais" class="input-field" placeholder="Digite aqui o seu país de origem"
                     value="<?php echo $_POST['pais'] ?? ''; ?>">
             </div>
 
             <div class="form-area">
-                <label class="input-label">Site Oficial: *</label>
+                <label class="input-label">* Site oficial</label>
                 <input type="url" id="site_oficial" name="site_oficial" class="input-field"
-                    placeholder="Digite o site oficial." value="<?php echo $_POST['site_oficial'] ?? ''; ?>">
+                    placeholder="Digite o site oficial" value="<?php echo $_POST['site_oficial'] ?? ''; ?>">
             </div>
 
             <div class="form-area">
-                <label class="input-label">Gênero músical: *</label>
+                <label class="input-label">* Gênero musical</label>
                 <input type="text" placeholder="Digite aqui o seu gênero musical" id="genero" name="genero" class="input-field" value="<?php echo $_POST['genero'] ?? ''; ?>">
             </div>
 
             <div class="form-area">
-                <label class="input-label">Senha: *</label>
+                <label class="input-label">* Senha</label>
                 <input type="password" id="senha" name="senha" class="input-field" placeholder="Digite aqui a sua senha"
                     autocomplete="off">
             </div>
