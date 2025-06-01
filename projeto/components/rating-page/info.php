@@ -3,7 +3,7 @@ function infoCard($titulo, $nome, $artista, $data, $duracao, $resumo) {
   $lancamento = new DateTime($data);
 
   return '
-  <div class="section">
+  <div class="section mt-4" id="info">
     <h4 class="section-title">' . htmlspecialchars($titulo) . '</h4>
     <p class="info-nome">' . htmlspecialchars($nome) . '</p>
     <div class="info-texts">
