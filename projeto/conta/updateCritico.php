@@ -59,7 +59,6 @@ $resposta = [
     ]
 ];
 
-// Validação dos campos obrigatórios
 if (empty(trim($nome)) || empty(trim($email)) || empty(trim($data_nasc)) || empty(trim($genero)) || empty(trim($biografia)) || empty(trim($site))) {
     http_response_code(400);
     $resposta["profile"]["message"] = "Preencha os campos obrigatórios: nome, email, data de nascimento, genero, biografia, site.";
@@ -90,7 +89,6 @@ if (!$conexao) {
     exit;
 }
 
-// Verifica se já existe email igual para outro crítico
 $stmt = $conexao->prepare("SELECT id FROM critico WHERE email = ? AND id != ?");
 $stmt->bind_param("si", $email, $id);
 $stmt->execute();
@@ -105,7 +103,6 @@ if ($resultado->num_rows > 0) {
 }
 $stmt->close();
 
-// Atualiza perfil do crítico
 $stmt = $conexao->prepare("UPDATE critico SET nome = ?, email = ?, data_nasc = ?, genero = ?, biografia = ?, site = ? WHERE id = ?");
 if ($stmt === false) {
     http_response_code(500);
