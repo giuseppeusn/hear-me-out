@@ -34,6 +34,19 @@
     <?php
       session_start();
 
+      $tempo_maximo = 3600;
+
+      if (!isset($_SESSION['START_TIME'])) {
+          $_SESSION['START_TIME'] = time();
+      } else {
+          if (time() - $_SESSION['START_TIME'] > $tempo_maximo) {
+              session_unset();
+              session_destroy();
+              header("Location: /hear-me-out/projeto/login.php?session_expired=true");
+              exit;
+          }
+      }
+
       if (isset($_SESSION['authenticated']) && $_SESSION['authenticated'] === true) {
         include __DIR__ . "/components/dropdown.php";
         echo dropdown($_SESSION['nome'], $_SESSION['permissao']);

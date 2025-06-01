@@ -2,6 +2,22 @@
 include("header.php");
 include("connect.php");
 
+$route = $_SERVER['REQUEST_URI'];
+
+if (isset($_GET['session_expired']) && $_GET['session_expired'] == 'true') {
+  echo "<script src='https://cdn.jsdelivr.net/npm/sweetalert2@11'></script>";
+  echo "<script>
+    Swal.fire({
+      title: 'Sessão expirada!',
+      text: 'Por favor, faça o login novamente.',
+      icon: 'warning',
+      draggable: true,
+      timer: 4000,
+      });
+      </script>";
+  unset($_GET['session_expired']);
+}
+
 if (isset($_SESSION['sucesso_cadastro'])) {
   echo "<script src='https://cdn.jsdelivr.net/npm/sweetalert2@11'></script>";
   echo "<script>
