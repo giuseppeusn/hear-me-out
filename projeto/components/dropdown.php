@@ -37,8 +37,8 @@
       case 'admin':
         $dropdown = $dropdown . ' <li>
             <a class="dropdown-item" href="/hear-me-out/projeto/admin">
-              <img src="/hear-me-out/projeto/assets/svg/edit-adm.svg" alt="Edit Icon" style="width: 20px;">
-              <p>Gerenciar</p>
+              <img src="/hear-me-out/projeto/assets/svg/approve.svg" alt="Approve Icon" style="width: 20px;">
+              <p>Aprovações</p>
             </a>
           </li>';
         break;
