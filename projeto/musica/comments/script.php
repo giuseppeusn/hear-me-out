@@ -1,20 +1,25 @@
 <script>
   async function alterarComentario(comentarioId, mensagem) {
   const { value: novaMensagem, isConfirmed } = await Swal.fire({
-    title: "Alterar Comentário",
-    input: "textarea",
-    inputValue: mensagem || "",
-    inputPlaceholder: "Comentário",
-    showCancelButton: true,
+    title: "Alterar comentário",
+    html: `<form>
+      <p style="color:gray" class="mb-1">Campo obrigatório *</p>
+      <div class="form-area">
+        <label for="comentario" class="input-label">* Comentário</label>
+        <textarea class="textarea-field" id="comentario" placeholder="Escreva seu comentário..." required>${mensagem}</textarea>
+      </div>
+    </form>`,
     showCloseButton: true,
     confirmButtonText: "Salvar",
-    preConfirm: (texto) => {
-      const textoTeste = texto ? texto.trim() : "";
-      if (!textoTeste) {
+    preConfirm: () => {
+      const texto = document.getElementById("comentario").value;
+
+      const validateText = texto ? texto.trim() : "";
+      if (!validateText) {
         Swal.showValidationMessage("O comentário não pode estar vazio.");
         return;
       }
-      return textoTeste;
+      return validateText;
     },
   });
 
