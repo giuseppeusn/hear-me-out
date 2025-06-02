@@ -608,7 +608,7 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
 
             <div class="form-area">
                 <label class="input-label">* Email</label>
-                <input type="text" name="email" class="input-field" placeholder="Digite aqui o seu email"
+                <input type="email" name="email" class="input-field" placeholder="Digite aqui o seu email"
                     value="<?php echo $_POST['email'] ?? ''; ?>">
             </div>
 
