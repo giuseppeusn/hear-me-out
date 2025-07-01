@@ -32,7 +32,7 @@ if ($novaMensagem === '') {
     echo json_encode(["erro" => "O comentário não pode estar vazio."]);
     exit;
 }
-$conn = new mysqli("localhost:3306", "root", "", "hear_me_out");
+$conn = new mysqli("localhost:3307", "root", "", "hear_me_out");
 
 if ($conn->connect_error) {
     echo json_encode(["erro" => "Erro na conexão: " . $conn->connect_error]);

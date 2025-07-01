@@ -1,5 +1,5 @@
 <?php
-$oMysql = new mysqli("localhost:3306", "root", "", "hear_me_out");
+$oMysql = new mysqli("localhost:3307", "root", "", "hear_me_out");
 $data = json_decode(file_get_contents("php://input"), true);
 
 if (isset($data['id'])) {
